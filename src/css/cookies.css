@@ -1,0 +1,10 @@
+.container{
+    flex: 1;
+  }
+  .pageCar{
+    background: url(/cisnatura/resources/img/backgroundCanva.png) repeat fixed;
+    min-height: 83vh;
+    display: flex;
+    flex-direction: column;
+  }
+

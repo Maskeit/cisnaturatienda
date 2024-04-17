@@ -1,0 +1,106 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,700;1,400;1,600&family=Poppins&family=Roboto&display=swap');
+
+:root{
+    --nandor-50: #f5f8f5;
+    --nandor-100: #e0e7e2;
+    --nandor-200: #c0cfc3;
+    --nandor-300: #99af9f;
+    --nandor-400: #738e7a;
+    --nandor-500: #597360;
+    --nandor-600: #4c6353;
+    --nandor-700: #3a4b3f;
+    --nandor-800: #313e35;
+    --nandor-900: #2c352f;
+    --nandor-950: #161d19;
+}
+
+
+.page{
+    display: grid;
+    margin-top: 80px;
+    font-family: 'Poppins', sans-serif ; 
+}
+.letters{
+    display: grid;
+    text-align: center;
+    justify-content: center;
+    align-content: center;
+    background: var(--nandor-500) ;
+    width: 100%;
+    min-height: 60vh;
+    margin-bottom: 1rem;
+
+
+}
+
+.cisnatura {
+    font-size: 4rem;
+    font-weight: 400;
+    color: #f5f8f5;
+    display: block;
+}
+
+.help{
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 12px;
+}
+.help div{
+    display: grid;
+    /* background: lightblue;
+    border: 2px solid #09f;
+    border-radius: 6px; */
+    padding-left: 20px;
+    width: 100%;
+    height: 100%;
+    justify-content: start;
+    align-content: center;
+}
+
+.help div:nth-child(2){
+    justify-content: stretch;
+}
+.descripcion {
+    font-size: 3rem;
+    font-weight: 300;
+    color: #f5f8f5;
+    display: block;
+}
+.desc-horario,
+.desc-location {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #acacac;
+}
+.desc-titulo{
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: #3b3b3b;
+}
+.maps{
+    width: 100%;
+    border-radius: 8px;
+}
+@media(width < 767px){
+    .help{
+        grid-template-columns: repeat(1, 1fr);
+        grid-template-rows: auto auto;
+    }
+    .maps{
+        max-width: 90%;
+    }
+    .cisnatura{
+        font-size: 10vw;
+    }
+    .descripcion{
+        font-size: 6vw;
+    }
+    .desc-titulo,
+    .desc-horario,
+    .desc-location {
+        font-size: 3vw; /* Tamaño menor para dispositivos pequeños */
+    }
+}

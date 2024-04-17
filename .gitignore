@@ -1,0 +1,11 @@
+
+#No subir - el proyecto se reconstruira con los .json
+/vendor/
+/node_modules/
+
+
+# Agregar manualmente la clave en un archivo .env con el siguiente en la carpeta /payments y agregar las claves como variables de entorno
+.env
+config.php
+
+# resp.json

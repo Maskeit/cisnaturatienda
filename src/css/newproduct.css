@@ -1,0 +1,29 @@
+.card {
+    width: 50%; /* Ancho del 70% en pantallas normales */
+    margin: 0 auto; /* Centrar el card horizontalmente */
+    text-align: left; /* Centrar el contenido del card */
+    margin-bottom: 30px;
+}
+
+/* Media query para dispositivos móviles con un ancho máximo de 768px */
+@media (max-width: 768px) {
+    .card {
+        width: 100%; /* Ancho del 100% en dispositivos móviles */
+    }
+}
+.title-card {
+    text-align: center;
+    display: block; /* Asegurarse de que la imagen ocupe todo el ancho disponible */
+    margin: 2 auto; /* Centrar la imagen horizontalmente */
+    margin-bottom: 1;
+    max-width: 100%; /* Limitar el tamaño máximo de la imagen */
+ /*   max-height: 100px; /* Ajustar la altura máxima de la imagen */
+}
+
+body{
+    background-color: 	#ffffff;
+}
+
+.price-form{
+    max-width: 30%;
+}

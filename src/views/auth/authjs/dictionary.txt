@@ -1,0 +1,5 @@
+eNotEmpty // quiere decir si el email no esta vacio
+pNotEmpty // quiere decir si el password no esta vacio
+
+eNotEmpty != false
+pNotEmpty != false

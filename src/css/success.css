@@ -1,0 +1,47 @@
+.resumen-compra {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  /*gap: 20px;*/
+}
+
+.row h4{
+  margin: 16px;
+}
+
+.card {
+  border:none;
+  gap: 16px;
+  margin-bottom: 1rem;
+}
+
+
+/*CANCEL PAGE*/
+
+.algo-mal{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+}
+
+.row-bad{
+  display: flex;
+  flex-wrap: wrap;
+  /*gap: 20px;*/
+}
+
+.row-bad h4{
+  margin: 16px;
+} 

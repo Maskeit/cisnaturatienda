@@ -1,0 +1,131 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,700;1,400;1,600&family=Poppins&family=Roboto&display=swap');
+
+main {
+    padding-top: 0px;
+    min-height: 83vh;
+    font-family: 'Poppins', sans-serif ; 
+}
+
+
+.container {
+    display: flex;
+    justify-content: space-between;
+}
+@media (max-width:1100px) {
+    .container {
+        align-items: center;
+        flex-direction: column;
+        justify-content: space-between;
+    }       
+}
+/*history source*/
+.title-historial{
+    color: #505f2b;
+}
+.card-historial { /*container card*/
+    padding: 20px 10px;
+    border: none;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    width: auto;
+    border-radius: 8px;
+}
+.card-pedido {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+.card-pedido-content {
+    display: flex;
+    align-items: flex-start; /* Alinea el contenido en la parte superior */
+    padding: 15px;
+    border-radius: 8px;
+    border: none;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #F1F1F1;
+    overflow: hidden; /* Para contener el contenido y evitar que se superponga */
+}
+
+.card-pedido-content img {
+    border-radius: 8px;
+    width: 100px;
+    height: 100px;
+    margin-right: 20px; /* Espacio entre la imagen y el texto */
+}
+.view-details{
+    display: end;
+    color: #999898;
+}
+.body-card-pedido {
+    flex-grow: 1; /* Permitir que el contenido ocupe el espacio disponible */
+}
+
+.body-card-pedido small,
+.body-card-pedido span {
+    font-size: 1.0rem;
+    display: block; /* Hacer que los elementos de texto sean bloques para tener saltos de línea */
+}
+
+.body-card-pedido small {
+    color: #b5b5b5;
+}
+
+/**Este es el apartado de las cards de datos del usuario**/
+
+.title-perfil{
+    color: #505f2b;
+}
+
+.card-data {
+    /* margin-top: 20px; */
+    margin-bottom: 20px;
+    margin-right: 20px;
+    display: flex;
+    align-items: center; /* Alinea verticalmente al centro */
+    padding: 15px;
+    border-radius: 8px;
+    border: none;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #F1F1F1;
+    overflow: hidden; /* Para contener el contenido y evitar que se superponga */
+}
+
+.icon {
+    margin-right: 10px; /* Espacio entre el ícono y el contenido */
+}
+
+.personal-data {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column; /* Cambiar la dirección de los elementos a columna */
+}
+
+.card-data span{
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+/*card de direcciones*/
+.card-data-add {
+    /* margin-top: 20px; */
+    margin-bottom: 20px;
+    margin-right: 20px;
+    display: flex;
+    align-items: center; /* Alinea verticalmente al centro */
+    padding: 15px;
+    border-radius: 8px;
+    border: none;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #F1F1F1;
+    overflow: hidden; /* Para contener el contenido y evitar que se superponga */
+}
+
+.card-data-add:hover{
+    cursor: pointer;
+}
+/**/
+@media(max-width:390px){
+    .card-data span{
+        font-size: 1rem;
+        font-weight: 500;
+    }
+}

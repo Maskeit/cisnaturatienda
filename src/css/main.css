@@ -1,0 +1,206 @@
+/*Estilo y altura general **/
+/* html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+} */
+
+.container-main {
+  display: flex;
+  flex-direction: column;
+  min-height: 1vh;
+}
+
+.page-content {
+  flex: 1;
+}
+
+/*Estilo y altura general **/
+main > .container {
+  padding: 100px 15px 0;
+}
+.container-car{
+  padding: 20px 0 0;
+}
+/*separacion del navbar en home*/
+.main { 
+  padding: 80px 0 0;
+}
+/* Estilo para el botón rectangular del navbar */
+
+.button-navbar {
+  display: inline-block;
+  text-align: center !important;
+  padding: 10px 25px !important;
+  cursor: pointer !important;
+  box-sizing: border-box; /* Agregar esta propiedad */
+  text-decoration: none;
+  color: #000000d5; /* Color del texto */
+  font-size: 1.3em;
+  font-family: 'Poppins', sans-serif;
+  border-radius: 5px; /* Bordes redondeados */
+  transition: background-color 0.3s, transform 0.3s; /* Agregar transición para el cambio de color y efecto de escala en el hover */
+}
+/* Estilo para el hover del botón del navbar */
+.button-navbar:hover {
+  background-color: #e4e4e4;
+  border-bottom:  #000;
+}
+
+.button-session{
+  font-size: 110%;
+  padding: 5px 10px ;
+  margin-top: 3px;
+}
+.button-session:hover{
+  background-color: #e4e4e4;
+}
+.button-register{
+  margin-top: 3px;
+  align-items: center;
+  padding: 5px 10px;
+  font-size: 110%;
+  background-color: #636e59;
+  /* border-color: #6f8a6c; */
+  color: #ffffffd7;
+}
+.button-register:hover{
+  background-color: #afc49d;
+}
+.align-items-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+
+/* Estilo para la etiqueta <a> que contiene el logo en el navbar */
+.navbar-logo{
+  margin-top: 0;
+  margin-bottom: 5px;
+  margin-left: 20px;
+  height: 60px;
+  transition: height 0.25s linear;
+  text-align: center !important;
+  /*box-sizing: border-box;*/
+}
+.nav-collapse{
+  text-align: center !important;
+}
+
+.pagina-cisnatura{
+  /*background-image: url('/cisnatura/resources/img/verdeoliva.png'); 
+  background-size:auto;*/
+  background-color: #ffffffe3;
+}
+.footer-contain{
+  background-color: #cdcdcd2a;
+  padding: 40px 10px 20px 10px;
+  margin-top: 30px;
+}
+.footer-elements ul{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  width: auto;
+}
+@media(max-width:767px ){
+  .footer-elements ul{
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+  }
+  .footer-elements ul li{
+    margin-bottom: 15px;
+  }
+}
+
+
+/*Aviso de cookies*/
+  .aviso-cookies p {
+    margin-bottom: 20px;
+    line-height: 150%;
+  }
+
+.aviso-cookies {
+  display: none;
+  background: #fff;
+  padding: 20px;
+  width: calc(100% - 40px);
+  max-width: 300px;
+  line-height: 150%;
+  border-radius: 10px;
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 100;
+  padding-top: 60px;
+  box-shadow: 0px 2px 20px 10px rgba(222,222,222,.25);
+  text-align: center;
+}
+
+.aviso-cookies.activo {
+  display: block;
+  /* display: none; */
+}
+
+.aviso-cookies .galleta {
+  max-width: 100px;
+  position: absolute;
+  top: -50px;
+  left: calc(50% - 50px);
+}
+
+.aviso-cookies .titulo,
+.aviso-cookies .parrafo {
+  margin-bottom: 15px;
+}
+
+.aviso-cookies .boton {
+  width: 100%;
+  background: #5797f8;
+  border: none;
+  color: #fff;
+  font-family: 'Roboto', sans-serif;
+  text-align: center;
+  padding: 15px 20px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: .3s ease all;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+
+.aviso-cookies .boton:hover {
+  background: #000;
+}
+
+.aviso-cookies .enlace {
+  color: #4DBFFF;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.aviso-cookies .enlace:hover {
+  text-decoration: underline;
+}
+
+.fondo-aviso-cookies {
+  display: none;
+  background: rgba(0,0,0,.20);
+  position: fixed;
+  z-index: 99;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+}
+
+.fondo-aviso-cookies.activo {
+  display: block;
+  /* display: none; */
+}
