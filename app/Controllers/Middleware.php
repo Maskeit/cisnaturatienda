@@ -134,7 +134,9 @@ class Middleware
 			echo 'error: ' . $th;
 		}
 	}
-
+	public function getId($id){
+		return $id;
+	}
 	public function autorization($_HEADERS, $pwdHasher)
 	{
 		//making the main validations
@@ -266,10 +268,11 @@ class Middleware
 					'system',
 					$time
 				];
-				$binnacle->create();
+				$binnacle->create();			
 				return false;
 			}
 
+			/*
 			//now we are going to validate if the user has the privileges to execute the actually route...
 			$request_uri = $_SERVER["REQUEST_URI"];
 			$privileges = new privileges();
@@ -293,7 +296,48 @@ class Middleware
 				return false;
 			}
 
-			return true;
+			*/
+
+
+			/*Nuevo metodo para verificar rutas
+			$request_uri = explode('?', $_SERVER['REQUEST_URI'])[0];  // Elimina la parte de query string
+			$privileges = new privileges();
+			$result_uri = $privileges->where([['route', $request_uri]])->get();
+			if(!$result_uri) {
+				echo "Ruta no definida para control de acceso.";
+				return false;
+			}
+			$resPrivileges = json_decode($result_uri, true);
+			if (empty($resPrivileges)) {
+				echo "No hay datos de privilegios para esta ruta.";
+				return false;
+			}
+			
+			$access = $resPrivileges[0]['access'];
+			$user_type = $resPrivileges[0]['user_type'];
+			
+			if($user_type !== $tipo || $access !== '1'){
+				echo "No tienes permisos para ejecutar esta ruta.";
+				// Registro en bitácora
+				$binnacle = new binnacle();
+				$binnacle->valores = [
+					'autorization middleware',
+					'Urgent request denied, this user doesn´t have permissions to execute the next request: ' . $request_uri,
+					'URGENT id: '. $id,
+					'system',
+					$time
+				];
+				$binnacle->create();                
+				return false;
+			}
+			*/
+			$userId = $this->getId($id);
+
+			//return true;
+			return [
+				'success' => true,
+				'userId' => $userId
+			];
 		} catch (\Throwable $th) {
 			//throw $th;
 			echo 'error: ' . $th;

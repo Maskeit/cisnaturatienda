@@ -133,16 +133,7 @@ class LoginController
         session_write_close();
         return json_encode(["r" => true]);
     }
-
-    public function sessionValidate(){
-        $autorization = new Middleware();
-        $sessionAut = $autorization->autorization();
-        if (!$autorization) {
-            return false;
-        } else {
-            return 'succes';
-        }
-    }
+    
 
     // private function sessionDestroy()
     // {

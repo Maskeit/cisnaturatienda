@@ -5,7 +5,7 @@
     use Models\carrito;
     use Models\product_order;
     use Models\products;
-    require_once("../app/Controllers/auth/LoginController.php");
+    //require_once("../app/Controllers/auth/LoginController.php");
     use Controllers\auth\LoginController as LoginController;
 class CarritoController {
 
@@ -14,9 +14,6 @@ class CarritoController {
 
     public function __construct(){
 
-        $ua = new LoginController();
-        $ua->sessionValidate();
-        $this->userId = $ua->id;
     }
 
     /**
@@ -36,7 +33,7 @@ class CarritoController {
     
     public function agregarProducto($pid, $uid, $tt) {
         // Verificar si el producto ya está en el carrito del usuario
-        $cantidad = $this->cantProductos($uid);
+        //$cantidad = $this->cantProductos($uid);
         $productoExistente = $this->buscarProductoEnCarrito($pid, $uid);
         $carrito = new carrito();
         if (empty($productoExistente))  {

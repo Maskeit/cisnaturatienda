@@ -32,7 +32,7 @@ var url = V_Global + "app/services/routes/catalogo.route.php";
       singleproduct: url, //pedir el producto seleccionado
 
       //botones de compra y add
-      addproduct: url + "?_ap",
+      addproduct: url,
       vercant: url,
 
     },
@@ -142,7 +142,7 @@ var url = V_Global + "app/services/routes/catalogo.route.php";
             Authorization: system.http.send.authorization(),
           },
           success: function (products){
-            console.log(products);
+            //console.log(products);
             if (products.length > 0) {
               app.productos = products;
               loaderContainer.style.display = "none";
@@ -168,8 +168,7 @@ var url = V_Global + "app/services/routes/catalogo.route.php";
                                   <span class="product-name ">${product.product_name}</span>
                                   <span class="product-price">MX $${product.price}</span>
                                   <div class="gap-2 btnAddBuy ">
-                                      <button id="product-${product.id}-button" type="button" class="boton-agregar w-100 my-2" 
-                                          onclick="event.stopPropagation(); app.agregarProducto(${product.id}, 1, 1)">
+                                      <button id="product-${product.id}-button" type="button" class="boton-agregar w-100 my-2">
                                           <i class="bi bi-plus-circle-fill"></i>  Añadir al carrito
                                       </button>
                                   </div>
@@ -188,6 +187,12 @@ var url = V_Global + "app/services/routes/catalogo.route.php";
                   $('.product-card').on('click', function() {
                     const productId = $(this).data('product-id');
                     app.singleProduct(productId);
+                  });
+
+                  $('.boton-agregar').on('click', function(e) {
+                    e.stopPropagation();
+                    const productId = $(this).closest('.product-card').data('product-id');
+                    app.agregarProducto(productId, 1);
                   });
               } else {
                   // No se encontraron productos que coincidan con la búsqueda
@@ -210,6 +215,36 @@ var url = V_Global + "app/services/routes/catalogo.route.php";
           system.hideLoader(loaderContainer);
       }
     },
+    agregarProducto: async function (pid, cantidad) {
+      try {
+        // Construye el cuerpo de la petición POST
+        const body = new URLSearchParams();
+        body.append('pid', pid);
+        body.append('cantidad', cantidad);
+        body.append('_ap', '1'); // Este podría ser tu indicador en el servidor para añadir al carrito
+    
+        const resp = await fetch(this.routes.addproduct, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            Authorization: system.http.send.authorization(),
+          },
+          body: body
+        });
+    
+        const response = await resp.json();
+        if (response.r === "success") {
+          console.log("Producto agregado al carrito:", response);
+        } else {
+          console.error("Error agregando producto:", response);
+        }
+      } catch (error) {
+        console.error("Error en la petición para agregar producto:", error);
+      }
+    },
+    
+
+    
     //Modal donde se muestra la descripcion del producto
     singleProduct: function (productId) {
       console.log(productId);
@@ -222,7 +257,7 @@ var url = V_Global + "app/services/routes/catalogo.route.php";
           <p>${product.description}</p>                    
           <div class="gap-2 btnAddBuy">
             <button id="product-${product.id}-button" type="button" class="boton-agregar w-100 my-2" 
-              onclick="app.agregarProducto(${product.id}, 1); $('#productModal').modal('hide');">
+              onclick="app.agregarProducto(${product.id}, 1, 1); $('#productModal').modal('hide');">
               <i class="bi bi-plus-circle-fill"></i>  Añadir al carrito
             </button>
           </div>
@@ -234,7 +269,8 @@ var url = V_Global + "app/services/routes/catalogo.route.php";
       }
     },
 
-    // //metodo para agregar un producto al carrito
+
+    //metodo para agregar un producto al carrito
     // agregarProducto: async function (pid, uid, tt) {
     //   const resp = await fetch(
     //     this.routes.addproduct + "&pid=" + pid + "&uid=" + uid + "&tt=" + tt
@@ -316,5 +352,6 @@ var url = V_Global + "app/services/routes/catalogo.route.php";
     //   }
     // },
   };
+  window.app = app;
   app.productView();
 });

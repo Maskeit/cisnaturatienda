@@ -164,6 +164,30 @@ class DB {
         $result = $this->table->query($sql);
         return $result;
     }
+
+    //metodo para actualizar sobre todo numeros
+    public function updateNumbers($sets) {
+        $set = [];
+        foreach ($sets as $key => $value) {
+            if (is_numeric($value) && !preg_match('/[^\d.]/', $value)) {
+                // Asumiendo que es un número y no contiene caracteres no numéricos (solo dígitos y punto)
+                $set[] = "$key = $value";
+            } else {
+                // Escapar y añadir comillas para valores no numéricos o numéricos que incluyen operaciones
+                $set[] = "$key = '" . $this->conex->real_escape_string($value) . "'";
+            }
+        }
+        $sql = 'update ' . str_replace("Models\\", "", get_class($this)) .
+               ' SET ' . implode(", ", $set) .
+               ' WHERE ' . $this->w;
+        $result = $this->conex->query($sql);
+        if (!$result) {
+            throw new \Exception("Error SQL: " . $this->conex->error . "\nSQL: $sql");
+        }
+        return $result;
+    }
+    
+    
     
     
     public function delete($id){
