@@ -44,7 +44,7 @@ class PostController {
                                  $_FILES['thumb']['name'], 
                                  $datos['price']];
             $result = $product->create();
-            header('Location: /cisnatura/resources/views/admin/newproduct.php');
+            header('Location: /cisnaturatienda/src/views/admin/newproduct.php');
         } else {
             echo "Error al subir el archivo";
         }

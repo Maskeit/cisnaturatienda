@@ -6,7 +6,7 @@ html {
 
 .banner {
     /* Fondo */
-    background: url('/cisnatura/resources/img/bg/aura.jpg') center;
+    background: url('/cisnaturatienda/public/img/bg/aura.webp') center;
     background-size: cover;
     padding: 8rem 2rem 4rem 2rem;
 }

@@ -42,7 +42,7 @@ var url = V_Global + "app/services/routes/home.route.php";
                     return `
                         <div class="product-card" data-product-id="${product.id}" onclick="">
                             <div class="product-image">
-                                <img src="/cisnatura/app/pimg/${product.thumb}" alt="Product Image">
+                                <img src="/cisnaturatienda/app/pimg/${product.thumb}" alt="Product Image">
                                 <div class="card-overlay">
                                     <span class="ovtext">
                                         Ver detalles <i class="bi bi-eye-fill eyeColor"></i>
@@ -89,7 +89,7 @@ var url = V_Global + "app/services/routes/home.route.php";
       if (product) {
         let html = `
           <h5>${product.product_name}  MX $${product.price}</h5>
-          <img src="/cisnatura/app/pimg/${product.thumb}" class="card-img-top" alt="...">
+          <img src="/cisnaturatienda/app/pimg/${product.thumb}" class="card-img-top" alt="...">
           <p>${product.description}</p>                    
           <div class="gap-2 btnAddBuy">
             <button id="product-${product.id}-button" type="button" class="boton-agregar w-100 my-2" 
