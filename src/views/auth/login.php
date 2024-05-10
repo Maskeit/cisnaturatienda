@@ -1,13 +1,18 @@
 <?php
+
 namespace views;
-include "../../components/layout/main.php";
+
+include "../../components/layout/login.php";
 head();
 css('register');
 ?>
 
 <main class="pageCar">
-  <div class="card-container">
-    <img class="form-image" src="/cisnatura/resources/img/icons/iconoSession.png" alt="">
+  <section class="banner">
+    <h1>Hola de nuevo!</h1>
+  </section>
+  <section class="card-container">
+    <img class="form-image" src="/cisnatura/resources/img/icons/iconoSession.png" alt="login icon">
     <div class="card mt-3 shadow">
       <div class="card-body">
         <h1>Inicia Sesión</h1>
@@ -28,20 +33,17 @@ css('register');
             <button class="btn btn-success" type="button" id="login-button">
               Iniciar sesión <i class="bi bi-box-arrow-in-right"></i>
             </button>
-            <a href="" class="btn btn-link floant-end">
+            <a href="./register.php" class="btn btn-link floant-end">
               ¿No tienes una cuenta? Registrate aquí
             </a>
           </div>
         </form>
       </div>
     </div>
-  </div>
+  </section>
 </main>
 
 <?php
-    scripts();
+scripts();
 ?>
 <script src="./authjs/log.js" type="module"></script>
-
-<?php
-foot();

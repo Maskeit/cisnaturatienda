@@ -1,6 +1,6 @@
 # Documentacion del proyecto CISNATURA TIENDA
 
- ![Banner Home](./resources/img/social.jpg).
+ ![Banner Home](./public/img/social.jpg).
 
 ## - Descripción del Proyecto: E-commerce PHP con Stripe
 Este proyecto es un sistema de comercio electrónico (e-commerce) desarrollado en PHP, con tecnologías web nativas como HTML, CSS y JavaScript, aprovechando bibliotecas populares como jQuery y Bootstrap para una experiencia de usuario moderna y receptiva.
@@ -56,7 +56,3 @@ autoloader.php    # Carga las clases de documentos del proyecto
 /img        # directorio de imagenes de las interfaces
 /js         # documentos JavaScript con la logica de operaciones para el control dinamico de la pagina, peticiones y animaciones.
 /views      # directorio principal que contiene el frontend de la pagina web completa, rutas y sus archivos
-
-## Catalogo de productos
-
- ![Catalogo](./resources/img/CATALOGO.jpg).

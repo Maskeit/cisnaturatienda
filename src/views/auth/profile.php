@@ -59,7 +59,7 @@ head($ua);
                 <div id="history-cards"><!-- se genera con javascript -->
                     <div class="card-pedido">
                         <div class="card-pedido-content">
-                            <img src="/cisnatura/app/pimg/OPUNTIA.jpeg" alt="">
+                            <img src="/cisnaturatienda/app/pimg/OPUNTIA.jpeg" alt="">
                             <div class="body-card-pedido">
                                 <span>Pedido realizado el dia 24 de agosto de 2023</span>
                                 <span>Productos cisnatura por $860</span>

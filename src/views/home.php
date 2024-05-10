@@ -20,36 +20,23 @@ css('home');
                 </a>
             </article>
 
-            <img id="interactive-image" src="/cisnatura/resources/img/info/8.png" alt="">
+            <img id="interactive-image" src="/cisnaturatienda/public/info/8.webp" alt="Gotero Presentacion">
         </div>
         <div class="redes">
-            <a href="https://acortar.link/K9IKSS"  target="_blank"><img class="" src="/cisnatura/resources/img/icons/instagram.png"></a>
-            <a href="https://www.facebook.com/cisnaturasofiageovana"  target="_blank"><img class="" src="/cisnatura/resources/img/icons/facebook.png"></a>
+            <a href="https://acortar.link/K9IKSS"  target="_blank"><img class="" src="/cisnaturatienda/public/icons/instagram.png"></a>
+            <a href="https://www.facebook.com/cisnaturasofiageovana"  target="_blank"><img class="" src="/cisnaturatienda/public/icons/facebook.png"></a>
         </div>
     </section>
-
-    <!--
-        <p class="informacion-titulo">Tienda CISnatura</p>
-        <h1 class="informacion-descripcion">Fábrica de productos herbolarios y ClO2</h1>
-
-        <button type="button" onclick="app_home.view('catalogo')">Ver productos</button>
-
-
-        <ul class="iconos">
-                        <li><a href="https://acortar.link/K9IKSS"  target="_blank"><img class="imgI" src="/cisnatura/resources/img/icons/instagram.png"></a></li>
-                        <li><a href="https://www.facebook.com/cisnaturasofiageovana"  target="_blank"><img class="imgI" src="/cisnatura/resources/img/icons/facebook.png"></a></li>
-                    </ul>
-    -->
 
     <div class="container">
         <div class="row justify-content-center mt-4 mb-3">
             <div class="col-md-6 text-center align-items-center">
                 <div class="image-container">
-                    <img src="/cisnatura/resources/img/sofia1.jpg" alt="Imagen" class="img-thumbnail rounded">
+                    <img src="/cisnaturatienda/public/res/sofia1.webp" alt="Sofia Gevoana" class="img-thumbnail rounded">
                 </div>
                 <h2 class="fw-normal">Sofia Geovana</h2>
                 <p>Terapeuta en medicina complementaria y alternativas de salud.</p>
-                <p><a class="btnContacto" href="/cisnatura/resources/views/contacto.php">Ver Contacto &raquo;</a></p>
+                <p><a class="btnContacto" href="/cisnaturatienda/src/views/contacto.php">Ver Contacto &raquo;</a></p>
             </div>
             <div class="col-md-6 rounded-3" id="informacion">
                 <h1 class="pTitle">Nuestra Misión</h1>
@@ -148,13 +135,13 @@ css('home');
                         <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
                             <div class="carousel-inner">
                                 <div class="carousel-item active">
-                                    <img src="/cisnatura/resources/img/plc1.jpg" class="d-block w-100" alt="...">
+                                    <img src="/cisnaturatienda/public/res/plc1.webp" class="d-block w-100" alt="...">
                                 </div>
                                 <div class="carousel-item">
-                                    <img src="/cisnatura/resources/img/plc2.jpg" class="d-block w-100" alt="...">
+                                    <img src="/cisnaturatienda/public/res/plc2.webp" class="d-block w-100" alt="...">
                                 </div>
                                 <div class="carousel-item">
-                                    <img src="/cisnatura/resources/img/plc3.jpg" class="d-block w-100" alt="...">
+                                    <img src="/cisnaturatienda/public/res/plc3.webp" class="d-block w-100" alt="...">
                                 </div>
                             </div>
                             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">

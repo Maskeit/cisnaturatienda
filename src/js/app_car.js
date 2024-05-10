@@ -65,9 +65,9 @@ const app_car = {
                             <p class="product-name">${product.product_name}</p>
                         </div>                                
                             <div class="card-body-product"> 
-                                <img src="/cisnatura/app/pimg/${product.thumb}">
+                                <img src="/cisnaturatienda/app/pimg/${product.thumb}">
                                 <div>
-                                    <img src="/cisnatura/app/pimg/${product.thumb}" class="img-r">
+                                    <img src="/cisnaturatienda/app/pimg/${product.thumb}" class="img-r">
                                     <p class="product-name">${product.product_name}</p>
                                 </div>
                                     <a href="javascript:void(0);" onclick="app_car.delProduct(${product.id},${idUser})" class="btnTrash"><i class="bi bi-trash"></i></a>
