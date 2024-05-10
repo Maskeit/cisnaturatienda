@@ -1,70 +1,58 @@
-import {validateEmail, validateName, validatePass }from "./Validator.js";
+import { validateEmail, validateName, validatePass } from "./Validator.js";
 $(document).ready(() => {
-  //Loader de carga
-const showLoader = () => {
-  const loaderContainer = document.createElement("div");
-  loaderContainer.classList.add("loader-container"); //loader-container
-  const loader = document.createElement("div");
-  loader.classList.add("loader"); //loader
-  loaderContainer.appendChild(loader);
-  loaderContainer.style.display = "block"; // Muestra el cargador
-  return loaderContainer;
-};
-const hideLoader = (loaderContainer) => {
-  loaderContainer.style.display = "none";
-};
+  const url = V_Global + "app/services/routes/register.route.php"; 
+  const register = {
+    rf: $("#register-form"),
 
-$("#register-button").on("click", function() {
-  register.sendRegisterForm();
-});
+    sendRegisterForm: async function () {
+      const loaderContainer = system.showLoader();
 
- const register = {
-  rf: $("#register-form"),
+      const name = $("#name").val();
+      const email = $("#email").val();
+      const pwdField = $("#passwd").val();
+      const pwdField2 = $("#passwd2").val();
+      let nombreValidado = validateName(name); //Este es u nombre formateado para ingresarlo sin errores a la bd
+      let emailValidado = validateEmail(email);
+      let passwordValidado = validatePass(pwdField, pwdField2);
 
-  routes: {
-    approute: V_Global + "app/app.php",
-  },
-
-  sendRegisterForm: async function () {
-    const loaderContainer = showLoader();
-    try {
-        const data = new FormData();
-        const name = $("#name").val();
-        const email = $("#email").val();
-        const pwdField = $("#passwd").val();
-        const pwdField2 = $("#passwd2").val();        
-        let nombreValidado = validateName(name); //Este es u nombre formateado para ingresarlo sin errores a la bd
-        let emailValidado = validateEmail(email);
-        let passwordValidado = validatePass(pwdField, pwdField2);
-
-      if (
-          nombreValidado != "error" &&
-          emailValidado != false &&
-          passwordValidado != false
-        ) {
-          data.append("name", nombreValidado);
-          data.append("email", email);
-          data.append("passwd", pwdField);          
-        }
-
-        data.append("_register", "");
-        const response = await fetch(this.routes.approute, {
+      if (nombreValidado === "error" || !emailValidado || !passwordValidado) {
+        console.error("Validation failed");
+        system.hideLoader(loaderContainer);
+        return; // Detiene la ejecución si la validación falla
+      }
+      const data = new FormData(this.rf[0]); // Usamos el formulario directamente para crear FormData
+      data.append("name", nombreValidado);
+      data.append("email", email);
+      data.append("passwd", pwdField);
+      data.append("_register", "");
+      try {
+        const response = await fetch(url, {
           method: "POST",
           body: data,
         });
 
         if (response.ok) {
           const resp = await response.json();
-          if (resp.r === true) {
-            hideLoader(loaderContainer);
-            location.href = "/cisnatura/resources/views/auth/login.php";
-          } 
-        } else {          
+          if (resp.r === false) {
+              $("#account-exists").removeClass("d-none").addClass("d-block"); // Mostrar mensaje de error
+              system.hideLoader(loaderContainer);
+          } else if (resp.r === true) {
+              $("#account-exists").addClass("d-none").removeClass("d-block"); // Ocultar mensaje de error
+              location.href = "/cisnaturatienda/src/views/auth/login.php"; // Redireccionar
+          }
+      } else {
           throw new Error("Network response was not ok");
-        }
-    } catch (error) {
-      console.error(error);
-    }
-  },
-}
+      }
+      
+      } catch (error) {
+        console.error(error);
+      } finally{
+        system.hideLoader(loaderContainer);
+      }
+    },
+  };
+  // Evento para manejar el clic del botón de registro
+  $("#register-button").on("click", function () {
+    register.sendRegisterForm();
+  });
 });
