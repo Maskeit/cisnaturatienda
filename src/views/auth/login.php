@@ -12,7 +12,7 @@ css('register');
     <h1>Hola de nuevo!</h1>
   </section>
   <section class="card-container">
-    <img class="form-image" src="/cisnatura/resources/img/icons/iconoSession.png" alt="login icon">
+    <img class="form-image" src="/cisnaturatienda/public/icons/iconoSession.png" alt="login icon">
     <div class="card mt-3 shadow">
       <div class="card-body">
         <h1>Inicia Sesión</h1>

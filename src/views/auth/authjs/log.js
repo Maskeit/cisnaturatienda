@@ -22,7 +22,10 @@ $(document).ready(() => {
                     return alert('Complete todos los campos por favor');
                 }
 
-                const data = new FormData(this.lf[0]); // Utiliza directamente el formulario
+                //const data = new FormData(this.lf[0]); // Utiliza directamente el formulario
+
+                const data = new FormData();
+                data.append("email", email);
                 data.append("passwd", btoa(pwdField));
                 data.append("_login", "");
 
