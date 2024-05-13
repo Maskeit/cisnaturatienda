@@ -8,11 +8,15 @@
 }
 .banner{
   background-color: #505f2b;
-  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   color: white;
+  height: 100%;
+}
+.banner_login{
+  object-fit: cover;
+  width: 50vw;
 }
 .card-container {
   position: relative; /* Establecer el contenedor como posición relativa para que los elementos absolutos estén relativos a él */
@@ -63,24 +67,27 @@
 }
 
 /* Media query para dispositivos móviles con un ancho máximo de 768px */
-@media (max-width: 767px) {
+/* @media (min-width: 767px) {
     .card {
-        width: 100%; /* Ancho del 100% en dispositivos móviles */
+        width: 100%;
     }
     .form-image{
-      max-width: 90%; /* Limitar el tamaño máximo de la imagen */
-      max-height: 100px; /* Ajustar la altura máxima de la imagen */
+      max-width: 90%;
+      max-height: 100px;
     }
-}
+} */
 
-.card .btn-success{
+.btn-form{
   background-color: #505f2b;
-  border: 1px;
-  border-color: #505f2b;
+  border: none;
   cursor: pointer;
+  border-radius: 8px;
+  padding: 5px 0;
+  color: #fff;
+  transition: 0.4s ease;
 }
 
-.card .btn-success:hover{
+.btn-form:hover{
   background-color: #7c8a6f;
 }
 /* register.css */
