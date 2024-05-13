@@ -6,10 +6,9 @@ include "../../components/layout/login.php";
 head();
 css('register');
 ?>
-
 <main class="pageCar">
   <section class="banner">
-    <h1>Hola de nuevo!</h1>
+    <img class="banner_login" src="/cisnaturatienda/public/img/fondo_log.png" alt="banner">
   </section>
   <section class="card-container">
     <img class="form-image" src="/cisnaturatienda/public/icons/iconoSession.png" alt="login icon">
@@ -30,7 +29,7 @@ css('register');
               Sus datos de inicio de sesión son incorrecctos
               <a href="#">Olvidé mi Contraseña</a>
             </small>
-            <button class="btn btn-success" type="button" id="login-button">
+            <button class="btn-form" type="button" id="login-button">
               Iniciar sesión <i class="bi bi-box-arrow-in-right"></i>
             </button>
             <a href="./register.php" class="btn btn-link floant-end">

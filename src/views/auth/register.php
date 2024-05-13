@@ -8,7 +8,7 @@ css('register');
 ?>
 <main class="pageCar">
     <section class="banner">
-        <h1>Bienvenido a CISnatura!</h1>
+        <img class="banner_login" src="/cisnaturatienda/public/img/fondo_log.webp" alt="banner">
     </section>
     <section class="card-container">
         <img class="form-image" src="/cisnaturatienda/public/icons/iconoSession.png" alt="register icon">
@@ -44,7 +44,7 @@ css('register');
                         <span id="account-exists" class="d-none text-danger">
                             Este correo ya está siendo utilizado o hubo un error.
                         </span>
-                        <button class="btn btn-success" type="button" id="register-button">
+                        <button class="btn-form" type="button" id="register-button">
                             Registrar <i class="bi bi-box-arrow-in-right"></i>
                         </button>
                         <a href="./login.php" class="btn btn-link floant-end">
