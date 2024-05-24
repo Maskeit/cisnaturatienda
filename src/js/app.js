@@ -1,5 +1,5 @@
-$(document).ready(() =>{
-var url = V_Global + "app/services/routes/catalogo.route.php";
+$(document).ready(() => {
+  var url = V_Global + "app/services/routes/catalogo.route.php";
 
   const toaster = document.getElementById("toaster");
 
@@ -26,7 +26,6 @@ var url = V_Global + "app/services/routes/catalogo.route.php";
     routes: {
       carrito: V_Global + "src/views/carrito.php",
       catalogo: V_Global + "src/views/catalogo.php",
-
       address: url, // a donde enviamos los datos del domicilio para guardarlos
       traerProductos: url + "?_tp=", //traer los productos
       singleproduct: url, //pedir el producto seleccionado
@@ -34,7 +33,6 @@ var url = V_Global + "app/services/routes/catalogo.route.php";
       //botones de compra y add
       addproduct: url,
       vercant: url,
-
     },
     view: function (route) {
       location.replace(this.routes[route]);
@@ -46,9 +44,9 @@ var url = V_Global + "app/services/routes/catalogo.route.php";
     fp: $("#filter-products"),
     fpAlt: $("#filter-products-alt"),
     pc: $("#product-card"),
-    pagC: $("#pagination-container"),    
+    pagC: $("#pagination-container"),
     padd: $("#toastContainer"),
-    btnCart: $("#toggleBtnCart"),
+    btnCart: $("#viewCart"),
     noResultsMessage: $("#no-results-message"),
 
     loader: $("#products-loader"),
@@ -66,12 +64,24 @@ var url = V_Global + "app/services/routes/catalogo.route.php";
 
       html = `
           <ul class="ul-filter">
-              <li class="lgi ${all ? "active" : ""}" onclick="app.productView('todo')">Todos los productos </li>
-              <li class="lgi ${tta ? "active" : ""}" onclick="app.productView('tintura')">Tinturas </li>
-              <li class="lgi ${tcds ? "active" : ""}" onclick="app.productView('cds')">Dioxido de cloro</li>
-              <li class="lgi ${tcrs ? "active" : ""}" onclick="app.productView('curso')">Cursos</li>
-              <li class="lgi ${pack ? "active" : ""}" onclick="app.productView('paquetes')">Paquetes</li>
-              <li class="lgi ${totr ? "active" : ""}" onclick="app.productView('otro')">Productos Naturales</li>
+              <li class="lgi ${
+                all ? "active" : ""
+              }" onclick="app.productView('todo')">Todos los productos </li>
+              <li class="lgi ${
+                tta ? "active" : ""
+              }" onclick="app.productView('tintura')">Tinturas </li>
+              <li class="lgi ${
+                tcds ? "active" : ""
+              }" onclick="app.productView('cds')">Dioxido de cloro</li>
+              <li class="lgi ${
+                tcrs ? "active" : ""
+              }" onclick="app.productView('curso')">Cursos</li>
+              <li class="lgi ${
+                pack ? "active" : ""
+              }" onclick="app.productView('paquetes')">Paquetes</li>
+              <li class="lgi ${
+                totr ? "active" : ""
+              }" onclick="app.productView('otro')">Productos Naturales</li>
           </ul>
 
           `;
@@ -131,7 +141,7 @@ var url = V_Global + "app/services/routes/catalogo.route.php";
       // if (this.user.sv == false) {
       //   this.ad.html(advice);
       // }
-      let html =  "<p class='p-message'>Cargando Productos...</p>";
+      let html = "<p class='p-message'>Cargando Productos...</p>";
       this.pc.html(html);
       try {
         $.ajax({
@@ -141,20 +151,26 @@ var url = V_Global + "app/services/routes/catalogo.route.php";
           headers: {
             Authorization: system.http.send.authorization(),
           },
-          success: function (products){
+          success: function (products) {
             //console.log(products);
             if (products.length > 0) {
               app.productos = products;
               loaderContainer.style.display = "none";
               let html = ""; // Cambiado a let para que se pueda modificar dentro del bucle
               let hasResults = false; // Variable para controlar si se han encontrado productos
-          
+
               for (let product of products) {
-                  if (self.palabraClave === "" || // Filtrado por palabra clave
-                      product.product_name.toLowerCase().includes(self.palabraClave.toLowerCase()) ||
-                      product.description.toLowerCase().includes(self.palabraClave.toLowerCase())) {
-                      // Si el producto está activo se mostrará
-                      html += ` 
+                if (
+                  self.palabraClave === "" || // Filtrado por palabra clave
+                  product.product_name
+                    .toLowerCase()
+                    .includes(self.palabraClave.toLowerCase()) ||
+                  product.description
+                    .toLowerCase()
+                    .includes(self.palabraClave.toLowerCase())
+                ) {
+                  // Si el producto está activo se mostrará
+                  html += ` 
                           <div class="product-card" data-product-id="${product.id}" >
                               <div class="product-image">
                                   <img src="/cisnaturatienda/app/pimg/${product.thumb}" alt="Product Image">
@@ -175,65 +191,109 @@ var url = V_Global + "app/services/routes/catalogo.route.php";
                               </div>
                           </div>
                       `;
-                      hasResults = true; // Se ha encontrado al menos un producto
-                  }
+                  hasResults = true; // Se ha encontrado al menos un producto
+                }
               }
-          
+
               if (hasResults) {
-                  // Se encontraron productos que coinciden con la búsqueda
-                  self.pc.html(html);
-                  self.noResultsMessage.hide();
+                // Se encontraron productos que coinciden con la búsqueda
+                self.pc.html(html);
+                self.noResultsMessage.hide();
 
-                  $('.product-card').on('click', function() {
-                    const productId = $(this).data('product-id');
-                    app.singleProduct(productId);
-                  });
+                $(".product-card").on("click", function () {
+                  const productId = $(this).data("product-id");
+                  app.singleProduct(productId);
+                });
 
-                  $('.boton-agregar').on('click', function(e) {
-                    e.stopPropagation();
-                    const productId = $(this).closest('.product-card').data('product-id');
-                    app.agregarProducto(productId, 1);
-                  });
+                $(".boton-agregar").on("click", function (e) {
+                  e.stopPropagation();
+                  const productId = $(this)
+                    .closest(".product-card")
+                    .data("product-id");
+                  app.agregarProducto(productId, 1);
+                });
               } else {
-                  // No se encontraron productos que coincidan con la búsqueda
-                  self.pc.html(`<div><p class='p-message'>No hay resultados para <strong>${self.palabraClave}</strong></p><div>`);
-                  self.noResultsMessage.show();
+                // No se encontraron productos que coincidan con la búsqueda
+                self.pc.html(
+                  `<div><p class='p-message'>No hay resultados para <strong>${self.palabraClave}</strong></p><div>`
+                );
+                self.noResultsMessage.show();
               }
-          
+
               app.listProducts((self.currentType = tipo)); // el tipo de producto que se muestra al dar click
               app.listProductsAlt((self.currentType = tipo));
             } else if (products.length == 0) {
-              let html = "<p class='p-message' >No hay productos para mostrar hoy</p>";
+              let html =
+                "<p class='p-message' >No hay productos para mostrar hoy</p>";
               self.pc.html(html);
             }
-          }
+          },
         });
-
       } catch (error) {
-          console.log(error);
+        console.log(error);
       } finally {
-          system.hideLoader(loaderContainer);
+        system.hideLoader(loaderContainer);
       }
     },
+    //Metodo para mostrar la cantidad de productos en el carrito
+    verCant: function () {
+      this.btnCart.html("");
+      try {
+        $.ajax({
+          type: "GET",
+          url: this.routes.vercant + "?_np",
+          dataType: "json",
+          headers: {
+            Authorization: system.http.send.authorization(),
+          },
+          success: function (response) {
+            console.log(response);
+            if (response) {
+              const resp = response.json();
+              const num = resp.response;
+              if (num > 0) {
+                // Comprobar si el número es mayor que 0
+                let btnHtml = `
+                  <button class="btnCarrito" onclick="app.view('carrito')">
+                    Carrito <i class="bi bi-cart-fill"></i> <span class="badge bg-danger animate">${num}</span>
+                  </button>
+                  <button class="btnCarritoAlt" onclick="app.view('carrito')">
+                    <i class="bi bi-cart-fill"></i> <span class="badge bg-danger animate">${num}</span>
+                  </button>
+                `;
+                this.btnCart.html(btnHtml);
+              }
+            } else {
+              throw new Error("No se pudo obtener la cantidad del carrito");
+            }
+          },
+        });
+      } catch (error) {
+        console.error("Error al obtener la cantidad del carrito:", error);
+      }
+    },
+    //quiero modificar el siguiente meotod para que al darle click al boton de añadir producto se pueda agregar un producto al carrito y si se le vuelve a dar click, entonces solo inncremete.
     agregarProducto: async function (pid, cantidad) {
       try {
         // Construye el cuerpo de la petición POST
         const body = new URLSearchParams();
-        body.append('pid', pid);
-        body.append('cantidad', cantidad);
-        body.append('_ap', '1'); // Este podría ser tu indicador en el servidor para añadir al carrito
-    
+        body.append("pid", pid);
+        body.append("cantidad", cantidad);
+        body.append("_ap", "1");
+
         const resp = await fetch(this.routes.addproduct, {
-          method: 'POST',
+          method: "POST",
           headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
+            "Content-Type": "application/x-www-form-urlencoded",
             Authorization: system.http.send.authorization(),
           },
-          body: body
+          body: body,
         });
-    
+
         const response = await resp.json();
         if (response.r === "success") {
+          this.verCant();
+          console.log("Datos enviados:", pid, cantidad);
           console.log("Producto agregado al carrito:", response);
         } else {
           console.error("Error agregando producto:", response);
@@ -242,14 +302,12 @@ var url = V_Global + "app/services/routes/catalogo.route.php";
         console.error("Error en la petición para agregar producto:", error);
       }
     },
-    
 
-    
     //Modal donde se muestra la descripcion del producto
     singleProduct: function (productId) {
       console.log(productId);
       // Encuentra el producto específico por ID
-      const product = this.productos.find(p => p.id == productId);
+      const product = this.productos.find((p) => p.id == productId);
       if (product) {
         let html = `
           <h5>${product.product_name}  MX $${product.price}</h5>
@@ -265,10 +323,9 @@ var url = V_Global + "app/services/routes/catalogo.route.php";
         document.getElementById("productModalBody").innerHTML = html;
         $("#productModal").modal("show"); // Muestra el modal
       } else {
-        console.error('Producto no encontrado');
+        console.error("Producto no encontrado");
       }
     },
-
 
     //metodo para agregar un producto al carrito
     // agregarProducto: async function (pid, uid, tt) {
@@ -324,34 +381,8 @@ var url = V_Global + "app/services/routes/catalogo.route.php";
     //     console.error(error);
     //   }
     // },
-    // //Metodo para mostrar la cantidad de productos en el carrito
-    // verCant: async function (uid) {
-    //   this.btnCart.html("");
-
-    //   try {
-    //     const response = await fetch(this.routes.vercant + "?_np=" + uid);
-    //     const data = await response.text();
-
-    //     const cantidad = JSON.parse(data);
-    //     const num = cantidad[0].tt === "0" ? "" : cantidad[0].tt;
-    //     if (num) {
-    //       let btnHtml = "";
-    //       btnHtml = `
-    //                   <button class="btnCarrito" onclick="app.view('carrito')">
-    //                           Carrito <i class="bi bi-cart-fill"></i>  <span class="badge bg-danger animate">${num}</span>
-    //                   </button>
-    //                   <button class="btnCarritoAlt" onclick="app.view('carrito')">
-    //                       <i class="bi bi-cart-fill"></i>  <span class="badge bg-danger animate">${num}</span>
-    //                   </button>
-    //                 `;
-    //       this.btnCart.html(btnHtml);
-    //       // Agrega la clase "animate" al span para la animación
-    //     }
-    //   } catch (error) {
-    //     console.error(error);
-    //   }
-    // },
   };
   window.app = app;
   app.productView();
+  app.verCant();
 });

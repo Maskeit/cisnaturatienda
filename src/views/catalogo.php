@@ -26,7 +26,7 @@ css('catalogo');
                             <!-- clasificacion de productos -->
                         </div>
 
-                        <div id="toggleBtnCart">
+                        <div id="viewCart">
                             <!-- Aqui se espera que aparezca el boton cuando ya haya una cantidad -->
                         </div>
                     </section>

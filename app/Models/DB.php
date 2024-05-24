@@ -52,6 +52,17 @@ class DB {
         $this->c = ",count(" . $c .") as tt ";
         return $this;
     }
+    public function countRows($field = "*") {
+        $sql = "SELECT COUNT(" . $field . ") AS count FROM " . str_replace("Models\\", "", get_class($this)) . " WHERE " . $this->w;
+        $result = $this->table->query($sql);
+        if ($result) {
+            $row = $result->fetch_assoc();
+            return $row['count'];
+        } else {
+            return 0; // O maneja el error como prefieras
+        }
+    }
+    
     public function join($join = "", $on = ""){
         if($join != "" && $on != ""){
             $this->j = ' join ' . $join . ' on ' . $on;
@@ -168,28 +179,17 @@ class DB {
     //metodo para actualizar sobre todo numeros
     public function updateNumbers($sets) {
         $set = [];
-        foreach ($sets as $key => $value) {
-            if (is_numeric($value) && !preg_match('/[^\d.]/', $value)) {
-                // Asumiendo que es un número y no contiene caracteres no numéricos (solo dígitos y punto)
-                $set[] = "$key = $value";
-            } else {
-                // Escapar y añadir comillas para valores no numéricos o numéricos que incluyen operaciones
-                $set[] = "$key = '" . $this->conex->real_escape_string($value) . "'";
-            }
+        foreach ($sets as $s) {
+            $value = is_numeric($s[1]) ? $s[1] : "'" . $s[1] . "'";
+            $set[] = $s[0] . "=" . $value;
         }
-        $sql = 'update ' . str_replace("Models\\", "", get_class($this)) .
-               ' SET ' . implode(", ", $set) .
-               ' WHERE ' . $this->w;
-        $result = $this->conex->query($sql);
-        if (!$result) {
-            throw new \Exception("Error SQL: " . $this->conex->error . "\nSQL: $sql");
-        }
-        return $result;
+        $sql = 'UPDATE ' . str_replace("Models\\", "", get_class($this)) . 
+                ' SET ' . implode(",", $set) . 
+                ' WHERE ' . $this->w;
+        return $this->table->query($sql);
     }
     
-    
-    
-    
+     
     public function delete($id){
         $sql = 'delete from ' . str_replace("Models\\","",get_class($this)) . ' where id = ?;';
         $stmt = $this->table->prepare($sql);
