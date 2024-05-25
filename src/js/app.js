@@ -237,7 +237,8 @@ $(document).ready(() => {
     },
     //Metodo para mostrar la cantidad de productos en el carrito
     verCant: function () {
-      this.btnCart.html("");
+      var self = this;
+      self.btnCart.html("");
       try {
         $.ajax({
           type: "GET",
@@ -247,31 +248,29 @@ $(document).ready(() => {
             Authorization: system.http.send.authorization(),
           },
           success: function (response) {
-            console.log(response);
-            if (response) {
-              const resp = response.json();
-              const num = resp.response;
-              if (num > 0) {
-                // Comprobar si el número es mayor que 0
-                let btnHtml = `
-                  <button class="btnCarrito" onclick="app.view('carrito')">
-                    Carrito <i class="bi bi-cart-fill"></i> <span class="badge bg-danger animate">${num}</span>
-                  </button>
-                  <button class="btnCarritoAlt" onclick="app.view('carrito')">
-                    <i class="bi bi-cart-fill"></i> <span class="badge bg-danger animate">${num}</span>
-                  </button>
-                `;
-                this.btnCart.html(btnHtml);
-              }
-            } else {
-              throw new Error("No se pudo obtener la cantidad del carrito");
+            console.log(response);  // Ya es un objeto JSON
+            const num = response.response;  // Accede directamente a la propiedad 'response'
+            if (num > 0) {
+              let btnHtml = `
+                <button class="btnCarrito" onclick="app.view('carrito')">
+                  Carrito <i class="bi bi-cart-fill"></i> <span class="badge bg-danger animate">${num}</span>
+                </button>
+                <button class="btnCarritoAlt" onclick="app.view('carrito')">
+                  <i class="bi bi-cart-fill"></i> <span class="badge bg-danger animate">${num}</span>
+                </button>
+              `;
+              self.btnCart.html(btnHtml);
             }
           },
+          error: function (xhr, status, error) {
+            console.error("Error al obtener la cantidad del carrito:", error);
+          }
         });
       } catch (error) {
-        console.error("Error al obtener la cantidad del carrito:", error);
+        console.error("Error en la configuración de AJAX:", error);
       }
     },
+    
     //quiero modificar el siguiente meotod para que al darle click al boton de añadir producto se pueda agregar un producto al carrito y si se le vuelve a dar click, entonces solo inncremete.
     agregarProducto: async function (pid, cantidad) {
       try {

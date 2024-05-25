@@ -1,12 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,700;1,400;1,600&family=Poppins&family=Roboto&display=swap");
-.container {
-  flex: 1;
-}
 .pageCar {
-  /* background: url(/cisnatura/resources/img/bg/catalogosvg.svg) no-repeat fixed; */
-  /* background-size: cover; */
-  /* background-repeat: ; */
-  /* background-position: center; */
+  max-width: 1600px !important;
   padding-top: 5rem;
   min-height: 80vh;
   display: flex;
@@ -95,7 +89,8 @@
   border: none;
   padding: 10px 20px;
   position: fixed;
-  z-index: 99; /* Asegura que el botón esté por encima de otros elementos */
+  z-index: 99;
+  transition: 0.3s ease;
 }
 .btnCarrito:hover {
   transform: scale(1.1);
@@ -119,7 +114,7 @@
     border-radius: 10px;
     border: none;
     padding: 10px;
-    top: 200px;
+    top: 2rem;
     right: 50px;
     z-index: 99; /* Asegura que el botón esté por encima de otros elementos */
   }
@@ -153,7 +148,12 @@
   bottom: -8px; /* Ajusta este valor para controlar la distancia desde abajo */
   right: -6px; /* Ajusta este valor para controlar la distancia desde la derecha */
 }
-
+@media (width < 768px) {
+  .content {
+    display: flex;
+    flex-direction: column;
+  }
+}
 .content {
   display: grid;
   grid-template-columns: 1fr 4fr;
@@ -163,52 +163,42 @@
 
 .productos {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 2fr));
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   justify-content: center;
   align-items: center;
-  padding:0 1rem;
+  padding: 0 1rem;
   gap: 20px 28px;
-  /* background: #555; */
   border-radius: 10px;
 }
 
-.productos .p-message{
+.productos .p-message {
   margin: 0;
   padding: 0;
   font-size: 25px;
   color: #555;
 }
 
-@media (width < 767px) {
-  .content {
-    display: flex;
-    flex-direction: column;
-  }
+.product-card {
+  width: 220px; /* Ajusta el tamaño de cada tarjeta */
+  overflow: hidden;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.5s, box-shadow 0.5s;
+  position: relative;
 }
-@media (max-width: 545px) {
-  .productos {
-    gap: 20px 0;
-  }
-  .product-card {
-    max-width: 300px;
-    font-size: 1em;
-  }
-  .product-card:hover {
-    transform: translateY(-3px);
-  }
-}
-
-@media (max-width: 511px) {
-  .product-card {
-    width: 420px;
-    font-size: 1em;
-  }
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
 }
 .product-card img {
+  display: block;
   width: 100%;
-  height: auto;
-  object-fit: cover;
-  border-radius: 8px 8px 0 0;
+  transition: transform 0.5s;
+}
+.product-card:hover img {
+  transform: scale(1.09);
 }
 .card-overlay {
   position: absolute;
@@ -230,18 +220,17 @@
   text-align: center;
   font-size: 16px;
 }
-
+.product-image {
+  position: relative;
+}
+.product-image img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 8px 8px 0 0;
+}
 .product-image:hover .card-overlay {
   opacity: 1; /* Mostrar el overlay al pasar el mouse sobre la imagen */
-}
-
-/*Icono de ver Mas**/
-.card .eyeIcon {
-  display: none;
-  text-decoration: none;
-  color: inherit;
-  background-color: rgba(255, 255, 255, 0.7);
-  padding: 5px;
 }
 .eyeColor {
   color: #62a524;
@@ -257,26 +246,13 @@
 }
 
 .product-name {
-  display: block;
   font-size: 1.1em;
   margin-bottom: 5px;
 }
 
 .product-price {
-  display: block;
   font-size: 1.1em;
   font-weight: 470;
-}
-
-.product-image {
-  position: relative;
-}
-
-.product-image img {
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-  border-radius: 8px 8px 0 0;
 }
 
 .btnAddBuy {
@@ -295,6 +271,7 @@
   margin-bottom: 10px;
   font-size: 1em;
   border: none;
+  transition: 0.3s ease;
 }
 .boton-agregar:hover {
   color: #fff;
@@ -312,75 +289,6 @@
   font-size: 1em;
 }
 /*END*/
-@media (min-width: 1900px) {
-  .product-card {
-    width: 100%; /* Ajusta el tamaño de cada tarjeta */
-    overflow: hidden;
-    background: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    transition: width 0.5s, transform 0.5s, box-shadow 0.5s;
-    position: relative;
-  }
-  .product-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
-  }
-}
-@media (min-width: 1601px) {
-  .product-card {
-    width: 220px; /* Ajusta el tamaño de cada tarjeta */
-    overflow: hidden;
-    background: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    transition: width 0.5s, transform 0.5s, box-shadow 0.5s;
-    position: relative;
-  }
-  .product-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
-  }
-}
-@media (max-width: 1600px) {
-  .product-card {
-    width: 220px; /* Ajusta el tamaño de cada tarjeta */
-    overflow: hidden;
-    background: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    transition: width 0.5s, transform 0.5s, box-shadow 0.5s;
-    position: relative;
-  }
-  .product-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
-  }
-}
-@media (max-width: 910px) {
-  .product-card {
-    width: 200px;
-    overflow: hidden;
-    background: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    transition: width 0.5s, transform 0.5s, box-shadow 0.5s;
-    position: relative;
-  }
-  .product-card:hover {
-    transform: translateY(-3px);
-  }
-  .product-name {
-    font-size: 1em;
-  }
-  .btnAddBuy {
-    font-size: 0.9em;
-  }
-}
 
 /**termina el estilo de todo el catalogo**/
 
@@ -508,42 +416,3 @@ section .toaster {
 .toaster.activo {
   display: block;
 }
-
-/*Loader*/
-.loader-container {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
-  z-index: 9999;
-}
-
-.loader {
-  border: 4px solid #f3f3f3;
-  border-top: 4px solid #7c8a6f;
-  border-radius: 50%;
-  width: 70px;
-  height: 70px;
-  /*  animation: spin 2s linear infinite;*/
-  animation: spin 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-  /*border-color: #fff transparent transparent transparent;*/
-  position: absolute;
-  top: calc(50%);
-  left: calc(50%);
-
-  transform: translate(-50%, -50%);
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-/*Loader from loading.io*/

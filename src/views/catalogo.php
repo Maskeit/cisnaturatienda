@@ -6,9 +6,6 @@ css('catalogo');
 ?>
 <main class="pageCar">
     <div class="section-principal">
-        <!-- <h2 class="wp-block-heading mt-2" style="text-decoration: none;">
-            Cátalogo Cisnatura
-        </h2> -->
             <div id="aviso" class="aviso"></div>
             <section class="content">
                 <div class="search-filter">
@@ -27,7 +24,7 @@ css('catalogo');
                         </div>
 
                         <div id="viewCart">
-                            <!-- Aqui se espera que aparezca el boton cuando ya haya una cantidad -->
+                            <!-- Aqui se espera que aparezca el boton para ir al carrito cuando ya haya una cantidad -->
                         </div>
                     </section>
                 </div>
@@ -36,10 +33,6 @@ css('catalogo');
                         <!-- Aquí van los productos -->                                             
                         <!-- No resultados -->
                         <h2 id="noResultsMessage" class="text-center" style="display: none;">No se encontraron resultados.</h2>
-    
-                        <!-- <button class="btnCarrito" onclick="app.view('carrito')">
-                            Carrito<span id="addproduct" class="addproduct"></span>
-                        </button> -->
                     </div>
                 </section>
                 <div class="toaster" id="toaster">

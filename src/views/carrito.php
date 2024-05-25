@@ -11,7 +11,7 @@ css('carrito');
         </div>
         <nav class="container breadcrum-con" aria-label="breadcrumb">
           <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/cisnatura/resources/views/catalogo.php">Volver</a></li>
+            <li class="breadcrumb-item"><a href="/cisnaturatienda/src/views/catalogo.php">Volver</a></li>
             <li class="breadcrumb-item active" aria-current="page">comprar</li>
           </ol>
         </nav>

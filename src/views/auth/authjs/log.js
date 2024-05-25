@@ -41,9 +41,9 @@ $(document).ready(() => {
                 const resp = await response.json();
 
                 if (resp.SSK && resp.SSID && resp.APISS__NME) {
-                    $.cookie('SSID', resp.SSID, {expires: 7, path: '/', domain: V_Domain});
-                    $.cookie('SSK', resp.SSK, {expires: 7, path: '/', domain: V_Domain});
-                    $.cookie('APISS__NME', resp.APISS__NME, {expires: 7, path: '/', domain: V_Domain});
+                    $.cookie('SSID', resp.SSID, {expires: 1, path: '/', domain: V_Domain});
+                    $.cookie('SSK', resp.SSK, {expires: 1, path: '/', domain: V_Domain});
+                    $.cookie('APISS__NME', resp.APISS__NME, {expires: 1, path: '/', domain: V_Domain});
                     window.location.href = V_Global + 'src/views/home.php';
                 } else if (resp.error && resp.error === "Failed auth") {
                     $("#error").text("Sus datos de inicio de sesión son incorrectos").removeClass("d-none").effect("shake");
