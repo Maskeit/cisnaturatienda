@@ -3,6 +3,7 @@ namespace app;
 
 require_once "../../autoloader.php";
 
+use Controllers\CarritoController;
 use Controllers\Middleware;
 use Controllers\PostController as PostController;
 
@@ -21,6 +22,27 @@ try {
         return;
     }
 
+    //metodo para agregar un producto al carrito del cliente
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['_ap'])) {
+        $productId = $_POST['pid'];
+        $cantidad = $_POST['cantidad'];
+        $verificar = $api->autorization($_HEADERS, $pwdHasher);
+        if ($verificar['success']) {
+            $userId = $verificar['userId'];
+            $carrito = new CarritoController();
+            $productoExistente = $carrito->agregarProducto($productId, $userId, $cantidad);
+            $cantidadPr = $carrito->cantProductos($userId);
+            //print_r("Llego aqui la peticion de anadir");
+            $json["response"] = 1;
+            echo json_encode($json, JSON_PRETTY_PRINT);
+            return;
+        }
+        $json["response"] = "failed";
+        echo json_encode($json, JSON_PRETTY_PRINT);
+        return;
+    }
+
+    //metodo para traer los productos al catalogo de muestra en home
     $lp = in_array('_lp', array_keys(filter_input_array(INPUT_GET)));
     $productos = new PostController();
     $result = $productos->getProductsToHome(4);

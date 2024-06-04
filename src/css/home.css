@@ -1,5 +1,15 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,700;1,400;1,600&family=Poppins&family=Roboto&display=swap");
-
+:root {
+  --cisgreen-50: #f5f8f5;
+  --cisgreen-100: #e0e7e2;
+  --cisgreen-200: #c0cfc3;
+  --cisgreen-300: #99af9f;
+  --cisgreen-400: #62a524;
+  --cisgreen-500: #487a1a;
+  --cisgreen-600: #3a6413;
+  --cisgreen-700: #325512;
+  --cisgreen-800: #313e35;
+}
 html {
   scroll-behavior: smooth;
 }
@@ -298,7 +308,7 @@ https://travishorn.com/responsive-grid-in-2-minutes-with-css-grid-layout-4842a41
   opacity: 1; /* Mostrar el overlay al pasar el mouse sobre la imagen */
 }
 .eyeColor {
-  color: #62a524;
+  color: var(--cisgreen-400);
 }
 .product-info {
   padding: 20px;
@@ -323,10 +333,10 @@ https://travishorn.com/responsive-grid-in-2-minutes-with-css-grid-layout-4842a41
 }
 /*Boton del card para agregar producto a la bolsa*/
 .boton-agregar {
-  color: #62a524;
+  color: var(--cisgreen-400);
   background-color: #ececec;
   border-radius: 8px;
-  /* border-color: #62a524; */
+  /* border-color: var(--cisgreen-400); */
   padding: 5px 10px;
   font-weight: 500;
   margin-bottom: 10px;
@@ -336,11 +346,11 @@ https://travishorn.com/responsive-grid-in-2-minutes-with-css-grid-layout-4842a41
 .boton-agregar:hover {
   color: #fff;
   border: none;
-  background-color: #62a524;
+  background-color: var(--cisgreen-400);
 }
 .boton-activo {
   color: #fff;
-  background-color: #62a524;
+  background-color: var(--cisgreen-400);
   border: none;
   border-radius: 8px;
   padding: 5px 10px;
@@ -468,26 +478,23 @@ https://travishorn.com/responsive-grid-in-2-minutes-with-css-grid-layout-4842a41
   color: #34383b;
   border-bottom: 3px solid #34383b;
 }
-
+/*Notificar al usuario  de que agrego un producto nuevo*/
 .toaster {
-  display: none;
+  position: fixed;
+  z-index: 10;
   background: #ffffff;
   padding: 20px;
   width: calc(100% - 40px);
   max-width: 300px;
   line-height: 150%;
   border-radius: 10px;
-  position: fixed;
   bottom: 20px;
-  right: 20px;
-  z-index: 99;
+  left: 1.5rem;
   box-shadow: 0px 2px 20px 10px rgba(222, 222, 222, 0.565);
-  text-align: center;
 }
-
-.toaster .toastBtn {
+.toastBtn {
   width: 100%;
-  background: #62a524;
+  background: var(--cisgreen-400);
   border: none;
   color: #fff;
   text-align: center;
@@ -499,59 +506,15 @@ https://travishorn.com/responsive-grid-in-2-minutes-with-css-grid-layout-4842a41
   margin-bottom: 15px;
   font-size: 1em;
 }
-.toaster .toastBtn:hover {
-  background: #325512;
+.toastBtn:hover {
+  background: var(--cisgreen-700);
   border: none;
   color: #fff;
 }
-.toaster .toast-head {
+.toast-head {
   display: flex;
-}
-.toast-head p {
-  margin-right: 20px;
-}
-.toaster .toast-head .btn-close {
-  margin-left: 30px;
+  justify-content: space-between;
 }
 .toaster.activo {
   display: block;
 }
-
-/* home.css */
-.loader-container {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
-  z-index: 9999;
-}
-
-.loader {
-  border: 4px solid #f3f3f3;
-  border-top: 4px solid #7c8a6f;
-  border-radius: 50%;
-  width: 70px;
-  height: 70px;
-  /*  animation: spin 2s linear infinite;*/
-  animation: spin 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-  /*border-color: #fff transparent transparent transparent;*/
-  position: absolute;
-  top: calc(50%);
-  left: calc(50%);
-
-  transform: translate(-50%, -50%);
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-/*Loader from loading.io*/
