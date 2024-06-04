@@ -38,10 +38,13 @@ try {
             $productoExistente = $carrito->agregarProducto($productId, $userId, $cantidad);
             $cantidadPr = $carrito->cantProductos($userId);
             //print_r("Llego aqui la peticion de anadir");
-            $json["response"] = "agregaste un producto";
+            $json["response"] = 1;
             echo json_encode($json, JSON_PRETTY_PRINT);
             return;
         }
+        $json["response"] = "failed";
+        echo json_encode($json, JSON_PRETTY_PRINT);
+        return;
     }
 
     //metodo para traer los productos al catalogo 

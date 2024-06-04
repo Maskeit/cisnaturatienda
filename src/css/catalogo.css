@@ -1,4 +1,16 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,700;1,400;1,600&family=Poppins&family=Roboto&display=swap");
+:root {
+  --cisgreen-50: #f5f8f5;
+  --cisgreen-100: #e0e7e2;
+  --cisgreen-200: #c0cfc3;
+  --cisgreen-300: #99af9f;
+  --cisgreen-400: #62a524;
+  --cisgreen-500: #487a1a;
+  --cisgreen-600: #3a6413;
+  --cisgreen-700: #325512;
+  --cisgreen-800: #313e35;
+}
+
 .pageCar {
   max-width: 1600px !important;
   padding-top: 5rem;
@@ -8,82 +20,74 @@
   font-family: "Poppins", sans-serif;
 }
 
-@media (max-width: 768px) {
-  .pageCar {
-    min-height: 83vh;
-    display: flex;
-    flex-direction: column;
-  }
-}
-
 .section-principal {
+  position: relative;
   font-family: "Poppins", sans-serif;
   justify-content: center;
   align-items: center;
 }
+.content {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  gap: 1rem;
+  padding: 2.5rem;
+}
 
-/* search-filter*/
+.filter-list-alt {
+  display: none;
+}
 
-.search-filter {
+/****/
+
+@media (width < 768px) {
+  .content{
+    display: flex;
+    flex-direction: column;
+  }
+  .filter-list{
+    display: none;
+  }
+  .filter-list-alt {
+    display: block;
+  }
+}
+
+/* navegacion*/
+
+.navegacion {
+  gap: 16px;
   display: flex;
   flex-direction: column;
-  justify-content: start;
+  justify-content: stretch;
+  /* border: 1px solid blue; */
 }
 .barra-busqueda {
   display: flex;
-  justify-content: left;
-  align-items: center;
-  width: 90%;
-  margin-bottom: 20px;
+  gap: 10px;
+  justify-content: space-between;
 }
-.barra-busqueda .form-control {
-  max-width: 90%;
-  height: 40px;
-  /* width: min(100% -15px,200px); */
-}
-.barra-busqueda button {
-  margin-left: 10px;
-}
-.barra-busqueda .btn-search {
+
+.btn-search {
   display: flex;
   border: none;
   border-radius: 8px;
   color: white;
-  background-color: #62a524;
+  background-color: var(--cisgreen-400);
   padding: 5px 10px;
   height: 40px;
   width: 45px;
   justify-content: center;
   padding-top: 8px;
 }
-.barra-busqueda .btn-search:hover {
-  background-color: #84df30;
-  color: white;
-}
+
 .barra-busqueda .btn-search:active {
-  background-color: #355a13;
+  background-color: var(--cisgreen-700);
   color: white;
 }
-/* filtro de productos */
-.filter-list {
-  display: grid;
-  width: 100%;
-}
-.filter-list-alt {
-  display: none;
-}
-@media (min-width: 767px) {
-  .filter-list {
-    max-width: 100%;
-  }
-}
-.filter-list-edit {
-  max-width: 80%;
-}
-/****/
+
 
 .btnCarrito {
-  background-color: #62a524;
+  background-color: var(--cisgreen-400);
   color: white;
   border-radius: 10px;
   border: none;
@@ -102,63 +106,32 @@
   display: none;
 }
 
-@media (max-width: 767px) {
+/* @media (max-width: 767px) {
   .btnCarrito {
     display: none;
   }
   .btnCarritoAlt {
     display: block;
     position: fixed;
-    background-color: #62a524;
+    background-color: var(--cisgreen-400);
     color: white;
     border-radius: 10px;
     border: none;
     padding: 10px;
     top: 2rem;
     right: 50px;
-    z-index: 99; /* Asegura que el botón esté por encima de otros elementos */
+    z-index: 99;
   }
   .btnCarritoAlt:hover {
     background-color: #48781b;
   }
-  .barra-busqueda .form-control {
-    width: auto;
-  }
-  .filter-list {
-    display: none;
-  }
-  .filter-list-alt {
-    display: block;
-    margin: bottom 40px;
-  }
-}
 
-@media (max-width: 412px) {
-  .btnCarritoAlt {
-    top: 120px;
-    right: 18px;
-  }
-  .barra-busqueda .form-control {
-    max-width: 230px;
-  }
-}
+} */
 .addproduct {
   position: absolute;
   font-size: 19px;
   bottom: -8px; /* Ajusta este valor para controlar la distancia desde abajo */
   right: -6px; /* Ajusta este valor para controlar la distancia desde la derecha */
-}
-@media (width < 768px) {
-  .content {
-    display: flex;
-    flex-direction: column;
-  }
-}
-.content {
-  display: grid;
-  grid-template-columns: 1fr 4fr;
-  gap: 1rem;
-  padding: 2.5rem;
 }
 
 .productos {
@@ -168,12 +141,9 @@
   align-items: center;
   padding: 0 1rem;
   gap: 20px 28px;
-  border-radius: 10px;
 }
 
-.productos .p-message {
-  margin: 0;
-  padding: 0;
+.p-message {
   font-size: 25px;
   color: #555;
 }
@@ -233,7 +203,7 @@
   opacity: 1; /* Mostrar el overlay al pasar el mouse sobre la imagen */
 }
 .eyeColor {
-  color: #62a524;
+  color: var(--cisgreen-400);
 }
 .product-info {
   padding: 20px;
@@ -262,10 +232,10 @@
 
 /*Boton del card para agregar producto a la bolsa*/
 .boton-agregar {
-  color: #62a524;
+  color: var(--cisgreen-400);
   background-color: #ececec;
   border-radius: 8px;
-  /* border-color: #62a524; */
+  /* border-color: var(--cisgreen-400); */
   padding: 5px 10px;
   font-weight: 500;
   margin-bottom: 10px;
@@ -276,11 +246,11 @@
 .boton-agregar:hover {
   color: #fff;
   border: none;
-  background-color: #62a524;
+  background-color: var(--cisgreen-400);
 }
 .boton-activo {
   color: #fff;
-  background-color: #62a524;
+  background-color: var(--cisgreen-400);
   border: none;
   border-radius: 8px;
   padding: 5px 10px;
@@ -291,48 +261,6 @@
 /*END*/
 
 /**termina el estilo de todo el catalogo**/
-
-.alert-session {
-  margin: 0;
-  padding: 10px 15px;
-  align-items: center;
-  justify-content: center;
-  width: 600px;
-}
-@media (max-width: 672px) {
-  .alert-session {
-    width: auto;
-  }
-}
-.sessionAlertButton {
-  display: inline-block;
-  align-items: center;
-  padding: 2px 9px;
-  cursor: pointer;
-  box-sizing: border-box; /* Agregar esta propiedad */
-  text-decoration: none;
-  color: rgb(255, 255, 255); /* Color del texto */
-  font-size: 110%;
-  border-radius: 10px; /* Bordes redondeados */
-  background-color: #62a524;
-  margin-top: 0;
-  height: 40px;
-}
-.sessionAlertButton:hover {
-  border-color: #54582f;
-  background-color: #ececec;
-  color: #54582f;
-}
-
-.alert-info {
-  /*content: filtra por categorias*/
-  width: 40%;
-  margin: 5px; /* Centrar el card horizontalmente */
-  text-align: left; /* Centrar el contenido del card */
-  font-size: 24px;
-  color: gray;
-  background: #bec092;
-}
 
 .ul-filter {
   padding: 0;
@@ -348,13 +276,13 @@
 }
 
 .lgi.active {
-  background-color: #62a524;
+  background-color: var(--cisgreen-400);
   color: white;
 }
 
 .lgi:hover {
   cursor: pointer;
-  background-color: #62a524;
+  background-color: var(--cisgreen-400);
   color: white;
 }
 
@@ -370,24 +298,21 @@
   color: #26a200;
 }
 /*Notificar al usuario  de que agrego un producto nuevo*/
-section .toaster {
-  display: none;
+.toaster {
+  position: fixed;
   background: #ffffff;
   padding: 20px;
   width: calc(100% - 40px);
   max-width: 300px;
   line-height: 150%;
   border-radius: 10px;
-  position: fixed;
   bottom: 20px;
-  right: 20px;
-  z-index: 99;
+  left: 1.5rem;
   box-shadow: 0px 2px 20px 10px rgba(222, 222, 222, 0.565);
-  text-align: center;
 }
-.toaster .toastBtn {
+.toastBtn {
   width: 100%;
-  background: #62a524;
+  background: var(--cisgreen-400);
   border: none;
   color: #fff;
   text-align: center;
@@ -399,19 +324,14 @@ section .toaster {
   margin-bottom: 15px;
   font-size: 1em;
 }
-.toaster .toastBtn:hover {
-  background: #325512;
+.toastBtn:hover {
+  background: var(--cisgreen-700);
   border: none;
   color: #fff;
 }
-.toaster .toast-head {
+.toast-head {
   display: flex;
-}
-.toast-head p {
-  margin-right: 20px;
-}
-.toaster .toast-head .btn-close {
-  margin-left: 30px;
+  justify-content: space-between;
 }
 .toaster.activo {
   display: block;

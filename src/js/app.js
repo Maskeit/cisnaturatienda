@@ -40,7 +40,6 @@ $(document).ready(() => {
     currentType: "",
     palabraClave: "",
 
-    ad: $("#aviso"),
     fp: $("#filter-products"),
     fpAlt: $("#filter-products-alt"),
     pc: $("#product-card"),
@@ -122,7 +121,6 @@ $(document).ready(() => {
       this.palabraClave = buscarPalabra.val();
       this.productView();
     },
-
     hideLoader: function (loaderContainer) {
       loaderContainer.style.display = "none";
     },
@@ -130,17 +128,9 @@ $(document).ready(() => {
     //Se muestran todos los productos al catalogo
     productView: async function (tipo = "todo") {
       const self = this;
-      this.ad.html("");
       const loaderContainer = system.showLoader();
       let foundProducts = false;
-      let advice = `
-          <div class="alert-session" role="alert">
-              <button type="button" onclick="app.view('inisession')" class="sessionAlertButton nav-link  btn btn-link">Inicia Sesión</button> para que puedas comprar y agregar productos
-          </div>
-          `;
-      // if (this.user.sv == false) {
-      //   this.ad.html(advice);
-      // }
+
       let html = "<p class='p-message'>Cargando Productos...</p>";
       this.pc.html(html);
       try {
@@ -170,7 +160,7 @@ $(document).ready(() => {
                     .includes(self.palabraClave.toLowerCase())
                 ) {
                   // Si el producto está activo se mostrará
-                  html += ` 
+                  html += `
                           <div class="product-card" data-product-id="${product.id}" >
                               <div class="product-image">
                                   <img src="/cisnaturatienda/app/pimg/${product.thumb}" alt="Product Image">
@@ -248,8 +238,8 @@ $(document).ready(() => {
             Authorization: system.http.send.authorization(),
           },
           success: function (response) {
-            console.log(response);  // Ya es un objeto JSON
-            const num = response.response;  // Accede directamente a la propiedad 'response'
+            console.log(response); // Ya es un objeto JSON
+            const num = response.response; // Accede directamente a la propiedad 'response'
             if (num > 0) {
               let btnHtml = `
                 <button class="btnCarrito" onclick="app.view('carrito')">
@@ -264,14 +254,13 @@ $(document).ready(() => {
           },
           error: function (xhr, status, error) {
             console.error("Error al obtener la cantidad del carrito:", error);
-          }
+          },
         });
       } catch (error) {
         console.error("Error en la configuración de AJAX:", error);
       }
     },
-    
-    //quiero modificar el siguiente meotod para que al darle click al boton de añadir producto se pueda agregar un producto al carrito y si se le vuelve a dar click, entonces solo inncremete.
+    //metodo para agregar productos al carrito del usuario
     agregarProducto: async function (pid, cantidad) {
       try {
         // Construye el cuerpo de la petición POST
@@ -280,7 +269,7 @@ $(document).ready(() => {
         body.append("cantidad", cantidad);
         body.append("_ap", "1");
 
-        const resp = await fetch(this.routes.addproduct, {
+        const response = await fetch(this.routes.addproduct, {
           method: "POST",
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
@@ -289,19 +278,21 @@ $(document).ready(() => {
           body: body,
         });
 
-        const response = await resp.json();
-        if (response.r === "success") {
-          this.verCant();
-          console.log("Datos enviados:", pid, cantidad);
-          console.log("Producto agregado al carrito:", response);
+        const resp = await response.json();
+        if (resp.response == 1) {
+          app.verCant();
+          $("#toaster").removeClass("d-none").addClass("d-block"); // Muestra el toast
+          // Usa setTimeout para ocultar el toast después de 4 segundos
+          setTimeout(() => {
+            $("#toaster").addClass("d-none").removeClass("d-block"); // Oculta el toast
+          }, 4000);
         } else {
-          console.error("Error agregando producto:", response);
+          alert("no se puedo agregar el producto al carrito");
         }
       } catch (error) {
-        console.error("Error en la petición para agregar producto:", error);
+        alert(error);
       }
     },
-
     //Modal donde se muestra la descripcion del producto
     singleProduct: function (productId) {
       console.log(productId);
@@ -311,9 +302,9 @@ $(document).ready(() => {
         let html = `
           <h5>${product.product_name}  MX $${product.price}</h5>
           <img src="/cisnaturatienda/app/pimg/${product.thumb}" class="card-img-top" alt="...">
-          <p>${product.description}</p>                    
+          <p>${product.description}</p>
           <div class="gap-2 btnAddBuy">
-            <button id="product-${product.id}-button" type="button" class="boton-agregar w-100 my-2" 
+            <button id="product-${product.id}-button" type="button" class="boton-agregar w-100 my-2"
               onclick="app.agregarProducto(${product.id}, 1, 1); $('#productModal').modal('hide');">
               <i class="bi bi-plus-circle-fill"></i>  Añadir al carrito
             </button>
@@ -325,61 +316,6 @@ $(document).ready(() => {
         console.error("Producto no encontrado");
       }
     },
-
-    //metodo para agregar un producto al carrito
-    // agregarProducto: async function (pid, uid, tt) {
-    //   const resp = await fetch(
-    //     this.routes.addproduct + "&pid=" + pid + "&uid=" + uid + "&tt=" + tt
-    //   );
-    //   const data = await resp.json();
-    //   try {
-    //     if (data.r === "success") {
-    //       this.verCant(uid);
-    //       // Obtener el botón y cambiar el color a success y quitar el outline
-    //       const botonCerrarNotifiacion =
-    //         document.getElementById("cerrarNotificacion");
-    //       botonCerrarNotifiacion.addEventListener("click", () => {
-    //         toaster.classList.add("d-none");
-    //       });
-    //       toaster.classList.remove("d-none");
-    //       const addButton = document.getElementById(`product-${pid}-button`);
-    //       if (addButton) {
-    //         //mostrar el toaster
-    //         toaster.classList.add("activo");
-    //         // Guardar el ícono original y el texto original
-    //         const originalIcon = addButton.querySelector("i").className;
-    //         const originalText = addButton.textContent;
-    //         addButton.classList.remove("boton-agregar");
-    //         addButton.classList.add("boton-activo");
-    //         addButton.innerHTML = '<i class="bi bi-bag-plus-fill"></i> Añadido!';
-    //         setTimeout(() => {
-    //           //Ocultar el toast despues de 5 segundos
-    //           toaster.classList.remove("activo"); //toaster
-    //         }, 6000);
-    //         // Restaurar el botón después de 2 segundos
-    //         setTimeout(() => {
-    //           addButton.classList.remove("boton-activo");
-    //           addButton.classList.add("boton-agregar");
-    //           addButton.innerHTML = `<i class="${originalIcon}"></i> ${originalText}`;
-    //         }, 2000); // 2000 milisegundos = 2 segundos
-    //       }
-
-    //       // Agregar la clase de animación
-    //       const badge = document.querySelector(".badge");
-    //       if (badge) {
-    //         badge.classList.add("animate");
-    //         setTimeout(() => {
-    //           badge.classList.remove("animate");
-    //         }, 1000); // Remover la clase después de 500ms (0.5s)
-    //       }
-    //     } else {
-    //       alert("No se pudo agregar el producto");
-    //       toaster.innerHTML = "No se pudo agregar";
-    //     }
-    //   } catch (error) {
-    //     console.error(error);
-    //   }
-    // },
   };
   window.app = app;
   app.productView();
