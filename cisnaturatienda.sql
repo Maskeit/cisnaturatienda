@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-05-2024 a las 00:08:25
+-- Tiempo de generación: 04-06-2024 a las 01:23:04
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -74,6 +74,46 @@ CREATE TABLE `binnacle` (
   `date` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `binnacle`
+--
+
+INSERT INTO `binnacle` (`id`, `module`, `message`, `type`, `_from`, `date`) VALUES
+(225, 'autorization middleware', 'session file not found: c12b2d6b6a81682161255358311f16b7289a83e8', 'premature', 'system', '2024-05-13 16:50:05'),
+(226, 'autorization middleware', 'session file not found: 0d36c08efe7b4386a4b320c63fb34629adef3a56', 'premature', 'system', '2024-05-23 21:17:49'),
+(227, 'autorization middleware', 'the property User-Agent has been denied, json: d6f479c9bbadc05685c84f6aad166f614bcc8a9c, headers: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:126.0) Gecko/20100101 Firefox/126.0', 'user agent id:76', 'system', '2024-05-23 21:22:51'),
+(228, 'autorization middleware', 'the property User-Agent has been denied, json: d6f479c9bbadc05685c84f6aad166f614bcc8a9c, headers: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:126.0) Gecko/20100101 Firefox/126.0', 'user agent id:76', 'system', '2024-05-23 21:22:57'),
+(229, 'autorization middleware', 'the property User-Agent has been denied, json: d6f479c9bbadc05685c84f6aad166f614bcc8a9c, headers: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:126.0) Gecko/20100101 Firefox/126.0', 'user agent id:76', 'system', '2024-05-23 21:23:06'),
+(230, 'autorization middleware', 'the property User-Agent has been denied, json: 6ef91d87dcddfe07e9ccc270bc06c419ae5f7fb3, headers: Mozilla/5.0 (Linux; Android 11; SAMSUNG SM-G973U) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/14.2 Chrome/87.0.4280.141 Mobile Safari/537.36', 'user agent id:76', 'system', '2024-05-24 20:45:45'),
+(231, 'autorization middleware', 'the property User-Agent has been denied, json: 6ef91d87dcddfe07e9ccc270bc06c419ae5f7fb3, headers: Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Mobile/15E148 Safari/604.1', 'user agent id:76', 'system', '2024-05-24 20:47:52'),
+(232, 'autorization middleware', 'the property User-Agent has been denied, json: 6ef91d87dcddfe07e9ccc270bc06c419ae5f7fb3, headers: Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Mobile/15E148 Safari/604.1', 'user agent id:76', 'system', '2024-05-24 20:47:52'),
+(233, 'autorization middleware', 'the property User-Agent has been denied, json: 6ef91d87dcddfe07e9ccc270bc06c419ae5f7fb3, headers: Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Mobile/15E148 Safari/604.1', 'user agent id:76', 'system', '2024-05-24 20:47:54'),
+(234, 'autorization middleware', 'the property User-Agent has been denied, json: 6ef91d87dcddfe07e9ccc270bc06c419ae5f7fb3, headers: Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Mobile/15E148 Safari/604.1', 'user agent id:76', 'system', '2024-05-24 20:47:54'),
+(235, 'autorization middleware', 'the property User-Agent has been denied, json: 6ef91d87dcddfe07e9ccc270bc06c419ae5f7fb3, headers: Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Mobile/15E148 Safari/604.1', 'user agent id:76', 'system', '2024-05-24 20:48:03'),
+(236, 'autorization middleware', 'the property User-Agent has been denied, json: 6ef91d87dcddfe07e9ccc270bc06c419ae5f7fb3, headers: Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Mobile/15E148 Safari/604.1', 'user agent id:76', 'system', '2024-05-24 20:48:03'),
+(237, 'autorization middleware', 'session file not found: 6ef91d87dcddfe07e9ccc270bc06c419ae5f7fb3', 'premature', 'system', '2024-05-24 20:48:04'),
+(238, 'autorization middleware', 'the property User-Agent has been denied, json: 6ef91d87dcddfe07e9ccc270bc06c419ae5f7fb3, headers: Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Mobile/15E148 Safari/604.1', 'user agent id:76', 'system', '2024-05-24 20:48:14'),
+(239, 'autorization middleware', 'the property User-Agent has been denied, json: 6ef91d87dcddfe07e9ccc270bc06c419ae5f7fb3, headers: Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Mobile/15E148 Safari/604.1', 'user agent id:76', 'system', '2024-05-24 20:48:14'),
+(240, 'autorization middleware', 'the property User-Agent has been denied, json: 6ef91d87dcddfe07e9ccc270bc06c419ae5f7fb3, headers: Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Mobile/15E148 Safari/604.1', 'user agent id:76', 'system', '2024-05-24 20:50:13'),
+(241, 'autorization middleware', 'the property User-Agent has been denied, json: 6ef91d87dcddfe07e9ccc270bc06c419ae5f7fb3, headers: Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Mobile/15E148 Safari/604.1', 'user agent id:76', 'system', '2024-05-24 20:50:13'),
+(242, 'autorization middleware', 'the property User-Agent has been denied, json: 6ef91d87dcddfe07e9ccc270bc06c419ae5f7fb3, headers: Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Mobile/15E148 Safari/604.1', 'user agent id:76', 'system', '2024-05-24 20:50:15'),
+(243, 'autorization middleware', 'the property User-Agent has been denied, json: 6ef91d87dcddfe07e9ccc270bc06c419ae5f7fb3, headers: Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Mobile/15E148 Safari/604.1', 'user agent id:76', 'system', '2024-05-24 20:50:15'),
+(244, 'autorization middleware', 'the property User-Agent has been denied, json: 6ef91d87dcddfe07e9ccc270bc06c419ae5f7fb3, headers: Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Mobile/15E148 Safari/604.1', 'user agent id:76', 'system', '2024-05-24 20:50:15'),
+(245, 'autorization middleware', 'the property User-Agent has been denied, json: 6ef91d87dcddfe07e9ccc270bc06c419ae5f7fb3, headers: Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Mobile/15E148 Safari/604.1', 'user agent id:76', 'system', '2024-05-24 20:50:15'),
+(246, 'autorization middleware', 'the property User-Agent has been denied, json: 6ef91d87dcddfe07e9ccc270bc06c419ae5f7fb3, headers: Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Mobile/15E148 Safari/604.1', 'user agent id:76', 'system', '2024-05-24 20:50:15'),
+(247, 'autorization middleware', 'the property User-Agent has been denied, json: 6ef91d87dcddfe07e9ccc270bc06c419ae5f7fb3, headers: Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Mobile/15E148 Safari/604.1', 'user agent id:76', 'system', '2024-05-24 20:50:15'),
+(248, 'autorization middleware', 'the property User-Agent has been denied, json: 6ef91d87dcddfe07e9ccc270bc06c419ae5f7fb3, headers: Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Mobile/15E148 Safari/604.1', 'user agent id:76', 'system', '2024-05-24 20:50:15'),
+(249, 'autorization middleware', 'the property User-Agent has been denied, json: 6ef91d87dcddfe07e9ccc270bc06c419ae5f7fb3, headers: Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Mobile/15E148 Safari/604.1', 'user agent id:76', 'system', '2024-05-24 20:50:15'),
+(250, 'autorization middleware', 'the property User-Agent has been denied, json: 6ef91d87dcddfe07e9ccc270bc06c419ae5f7fb3, headers: Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Mobile/15E148 Safari/604.1', 'user agent id:76', 'system', '2024-05-24 20:50:16'),
+(251, 'autorization middleware', 'the property User-Agent has been denied, json: 6ef91d87dcddfe07e9ccc270bc06c419ae5f7fb3, headers: Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Mobile/15E148 Safari/604.1', 'user agent id:76', 'system', '2024-05-24 20:50:16'),
+(252, 'autorization middleware', 'the property User-Agent has been denied, json: 6ef91d87dcddfe07e9ccc270bc06c419ae5f7fb3, headers: Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Mobile/15E148 Safari/604.1', 'user agent id:76', 'system', '2024-05-24 20:50:16'),
+(253, 'autorization middleware', 'the property User-Agent has been denied, json: 6ef91d87dcddfe07e9ccc270bc06c419ae5f7fb3, headers: Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Mobile/15E148 Safari/604.1', 'user agent id:76', 'system', '2024-05-24 20:50:16'),
+(254, 'autorization middleware', 'the property User-Agent has been denied, json: 6ef91d87dcddfe07e9ccc270bc06c419ae5f7fb3, headers: Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Mobile/15E148 Safari/604.1', 'user agent id:76', 'system', '2024-05-24 20:50:30'),
+(255, 'autorization middleware', 'the property User-Agent has been denied, json: 6ef91d87dcddfe07e9ccc270bc06c419ae5f7fb3, headers: Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Mobile/15E148 Safari/604.1', 'user agent id:76', 'system', '2024-05-24 20:50:30'),
+(256, 'autorization middleware', 'session file not found: 8891639c2a8e9e4b77e5f6e9971249c92428749d', 'premature', 'system', '2024-06-03 16:16:44'),
+(257, 'autorization middleware', 'session file not found: 8891639c2a8e9e4b77e5f6e9971249c92428749d', 'premature', 'system', '2024-06-03 16:16:44'),
+(258, 'autorization middleware', 'session file not found: 8891639c2a8e9e4b77e5f6e9971249c92428749d', 'premature', 'system', '2024-06-03 16:16:45');
+
 -- --------------------------------------------------------
 
 --
@@ -94,9 +134,11 @@ CREATE TABLE `carrito` (
 --
 
 INSERT INTO `carrito` (`id`, `userId`, `productId`, `cantidad`, `created_at`, `updated_at`) VALUES
-(391, 76, 33, 0, '2024-05-01 21:50:26', '2024-05-01 21:50:26'),
-(392, 76, 34, 0, '2024-05-01 22:06:20', '2024-05-01 22:06:20'),
-(393, 76, 35, 0, '2024-05-01 22:06:21', '2024-05-01 22:06:21');
+(405, 76, 33, 3, '2024-05-25 02:17:24', '2024-05-25 02:17:24'),
+(406, 76, 34, 4, '2024-05-25 02:17:29', '2024-05-25 02:17:29'),
+(407, 76, 35, 2, '2024-05-25 03:28:29', '2024-05-25 03:28:29'),
+(408, 76, 37, 1, '2024-06-03 22:13:41', '2024-06-03 22:13:41'),
+(409, 76, 36, 1, '2024-06-03 22:13:42', '2024-06-03 22:13:42');
 
 -- --------------------------------------------------------
 
@@ -140,7 +182,8 @@ INSERT INTO `privileges` (`id`, `route`, `access`, `user_type`) VALUES
 (1, '/cisnaturatienda/app/services/routes/home.route.php?_lp', 1, 2),
 (2, '/cisnaturatienda/resources/views/catalogo.php', 1, 2),
 (4, '/cisnaturatienda/app/services/routes/catalogo.route.php?_tp=todo', 1, 2),
-(6, '/cisnaturatienda/app/services/routes/catalogo.route.php?_ap&', 1, 2);
+(6, '/cisnaturatienda/app/services/routes/catalogo.route.php?_ap&', 1, 2),
+(8, '/cisnaturatienda/app/services/routes/catalogo.route.php?_np', 1, 2);
 
 -- --------------------------------------------------------
 
@@ -322,13 +365,13 @@ ALTER TABLE `address`
 -- AUTO_INCREMENT de la tabla `binnacle`
 --
 ALTER TABLE `binnacle`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=214;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=259;
 
 --
 -- AUTO_INCREMENT de la tabla `carrito`
 --
 ALTER TABLE `carrito`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=394;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=410;
 
 --
 -- AUTO_INCREMENT de la tabla `payment`
@@ -340,7 +383,7 @@ ALTER TABLE `payment`
 -- AUTO_INCREMENT de la tabla `privileges`
 --
 ALTER TABLE `privileges`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `products`
@@ -358,13 +401,13 @@ ALTER TABLE `product_order`
 -- AUTO_INCREMENT de la tabla `sessions`
 --
 ALTER TABLE `sessions`
-  MODIFY `_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
+  MODIFY `_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
 
 --
 -- AUTO_INCREMENT de la tabla `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
 
 --
 -- Restricciones para tablas volcadas
