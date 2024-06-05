@@ -40,11 +40,11 @@
 /****/
 
 @media (width < 768px) {
-  .content{
+  .content {
     display: flex;
     flex-direction: column;
   }
-  .filter-list{
+  .filter-list {
     display: none;
   }
   .filter-list-alt {
@@ -85,8 +85,7 @@
   color: white;
 }
 
-
-.btnCarrito {
+.cart-btn {
   background-color: var(--cisgreen-400);
   color: white;
   border-radius: 10px;
@@ -96,37 +95,42 @@
   z-index: 99;
   transition: 0.3s ease;
 }
-.btnCarrito:hover {
+.cart-btn:hover {
   transform: scale(1.1);
-  background-color: #48781b;
+  background-color: var(--cisgreen-600);
   color: white;
   cursor: pointer !important;
 }
-.btnCarritoAlt {
+.cart-btn-alt {
   display: none;
 }
 
-/* @media (max-width: 767px) {
-  .btnCarrito {
+.cart-btn-alt {
+  position: fixed;
+  background-color: var(--cisgreen-400);
+  color: white;
+  border: none !important;
+  border-radius: 18px;
+  padding: 5px;
+  right: 1rem;
+  z-index: 10;
+  transition: 0.4s ease;
+}
+
+.cart-btn-alt:active{
+  transform: scale(1.1);
+  background-color: var(--cisgreen-600);
+  color: white;
+}
+
+@media (width < 768px) {
+  .cart-btn {
     display: none;
   }
-  .btnCarritoAlt {
+  .cart-btn-alt {
     display: block;
-    position: fixed;
-    background-color: var(--cisgreen-400);
-    color: white;
-    border-radius: 10px;
-    border: none;
-    padding: 10px;
-    top: 2rem;
-    right: 50px;
-    z-index: 99;
   }
-  .btnCarritoAlt:hover {
-    background-color: #48781b;
-  }
-
-} */
+}
 .addproduct {
   position: absolute;
   font-size: 19px;

@@ -221,7 +221,6 @@ $(document).ready(() => {
           },
         });
       } catch (error) {
-        //console.log(error);
         system.clearCookiesAndRedirect();
       } finally {
         system.hideLoader(loaderContainer);
@@ -240,14 +239,13 @@ $(document).ready(() => {
             Authorization: system.http.send.authorization(),
           },
           success: function (response) {
-            console.log(response); // Ya es un objeto JSON
             const num = response.response; // Accede directamente a la propiedad 'response'
             if (num > 0) {
               let btnHtml = `
-                <button class="btnCarrito" onclick="app.view('carrito')">
+                <button class="cart-btn" onclick="app.view('carrito')">
                   Carrito <i class="bi bi-cart-fill"></i> <span class="badge bg-danger animate">${num}</span>
                 </button>
-                <button class="btnCarritoAlt" onclick="app.view('carrito')">
+                <button class="cart-btn-alt" onclick="app.view('carrito')">
                   <i class="bi bi-cart-fill"></i> <span class="badge bg-danger animate">${num}</span>
                 </button>
               `;
@@ -297,7 +295,7 @@ $(document).ready(() => {
     },
     //Modal donde se muestra la descripcion del producto
     singleProduct: function (productId) {
-      console.log(productId);
+
       // Encuentra el producto específico por ID
       const product = this.productos.find((p) => p.id == productId);
       if (product) {

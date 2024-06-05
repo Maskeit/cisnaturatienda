@@ -44,13 +44,10 @@ css('home');
                 <h1 class="pTitle">Nuestra Misión</h1>
                 <p class="parrafo">
                     En nuestra fábrica, nos enorgullecemos de crear productos de alta calidad con ingredientes naturales cuidadosamente
-                    seleccionados. Nos especializamos en tinturas y productos naturistas para la salud,
-                    <span id="parrafoCompleto" class="hidden">
-                        utilizando exclusivamente plantas naturales y elementos puros como la sal y el agua de mar para garantizar
-                        la máxima eficacia. Nuestro compromiso con la naturaleza guía todo nuestro proceso de fabricación,
-                        y estamos dedicados a ofrecer soluciones naturales respetuosas con el medio ambiente.
-                    </span>
-                    <span id="verMas" class="ver-mas">Leer más...</span>
+                    seleccionados. Nos especializamos en tinturas y productos naturistas para la salud, utilizando exclusivamente plantas naturales y elementos puros como la sal y el agua de mar para garantizar
+                    la máxima eficacia.
+                    Nuestro compromiso con la naturaleza guía todo nuestro proceso de fabricación,
+                    y estamos dedicados a ofrecer soluciones naturales respetuosas con el medio ambiente.
                 </p>
             </div>
 

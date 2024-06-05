@@ -60,11 +60,11 @@ function head()
                         <div class="container-fluid">
 
                             <div class="d-flex justify-content-center">
-                                <a class="navbar-brand ml-3 mt-2 d-lg-none" href="/cisnatura/index.php">
-                                    <img src="/cisnatura/resources/img/logoCisnatura.png" alt="Logo" height="50">
+                                <a class="navbar-brand ml-3 mt-2 d-lg-none" href="/cisnaturatienda/index.php">
+                                    <img src="/cisnaturatienda/public/icons/logoCisnatura.png" alt="Logo" height="50">
                                 </a>
-                                <a class="navbar-brand d-none d-lg-block navbar-logo" href="/cisnatura/index.php">
-                                    <img src="/cisnatura/resources/img/logoCisnatura.png" height="60" alt="Logo">
+                                <a class="navbar-brand d-none d-lg-block navbar-logo" href="/cisnaturatienda/index.php">
+                                    <img src="/cisnaturatienda/public/icons/logoCisnatura.png" height="60" alt="Logo">
                                 </a>
                             </div>
                             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
