@@ -41,12 +41,9 @@ var system = {
                     var SSID = $.cookie('SSID');
                     var SSK = $.cookie('SSK');
                     var APISS__NME = $.cookie('APISS__NME');
-                    if(
-                        (!SSID) || 
-                        (!SSK) || 
-                        (!APISS__NME)
-                    ){
-                        return system.platform.session.force();
+                    if (!SSID || !SSK || !APISS__NME) {
+                        this.clearCookiesAndRedirect();
+                        return null;
                     } 
                     
                     //return the session authorization
@@ -56,12 +53,18 @@ var system = {
                         APISS__NME: APISS__NME
                     }));
                 }catch(error){
-                    return system.platform.session.force();
+                   this.clearCookiesAndRedirect();
                 }
             }
 		}
 	},
-    //system.platform.session.force()
+    // Método para limpiar cookies y redirigir
+    clearCookiesAndRedirect: () => {
+        $.removeCookie('SSID', { path: '/' });
+        $.removeCookie('SSK', { path: '/' });
+        $.removeCookie('APISS__NME', { path: '/' });
+        return system.platform.session.force();
+    },
 
     verMasBtn: function(buttonId, contentId) {
         const button = document.getElementById(buttonId);
