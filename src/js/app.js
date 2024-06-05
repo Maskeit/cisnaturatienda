@@ -216,11 +216,13 @@ $(document).ready(() => {
               let html =
                 "<p class='p-message' >No hay productos para mostrar hoy</p>";
               self.pc.html(html);
+              system.clearCookiesAndRedirect();
             }
           },
         });
       } catch (error) {
-        console.log(error);
+        //console.log(error);
+        system.clearCookiesAndRedirect();
       } finally {
         system.hideLoader(loaderContainer);
       }

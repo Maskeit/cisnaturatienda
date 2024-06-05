@@ -82,12 +82,14 @@ $(document).ready(() => {
               console.log(
                 "joder si hay cookies, pero no contenido porque no existe el archivo"
               );
+              system.clearCookiesAndRedirect();
               $("#product-tintura").append("<h4>Aún no hay productos</h4>");
             }
           },
         });
       } catch (err) {
-        console.error(err);
+        //console.error(err);
+        system.clearCookiesAndRedirect();
       } finally {
         system.hideLoader(loaderContainer); // Ocultar el loader después de que se completa la solicitud
       }
