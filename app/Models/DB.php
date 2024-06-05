@@ -6,6 +6,7 @@ class DB {
     public $db_name;
     private $db_user;
     private $db_passwd;
+    private $db_port;
 
     public $conex;
 
@@ -22,17 +23,21 @@ class DB {
 
     public function __construct($dbh = "localhost",
                                 $dbn = "cisnaturatienda",
-                                $dbu = "root",$dbp = ""){
+                                $dbu = "root",
+                                $dbp = "root", 
+                                $dbport = 8889){
         $this->db_host = $dbh;
         $this->db_name = $dbn;
         $this->db_user = $dbu;
         $this->db_passwd = $dbp;
+        $this->db_port = $dbport;
     }
     public function db_connect(){
         $this->conex = new \mysqli($this->db_host,
                                     $this->db_user,
                                     $this->db_passwd,
-                                    $this->db_name);
+                                    $this->db_name,
+                                    $this->db_port);
         $this->conex->set_charset("utf8");
         if($this->conex->connect_error){
             echo "Falló la conexión a la base de datos";
