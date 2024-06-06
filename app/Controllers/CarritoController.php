@@ -140,7 +140,7 @@ class CarritoController
             mysqli_free_result($resultado);
             mysqli_close($conexion);
 
-            return json_encode($filas);
+            return $filas;
         }
     }
 

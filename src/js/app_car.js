@@ -1,8 +1,13 @@
+var app_car;
 $(document).ready(() => {
-  const app_car = {
-    url: "/cisnatura/app/app.php",
+  var url = V_Global + "app/services/routes/carrito.route.php";
+  app_car = {
     routes: {
       pagar: "/cisnatura/resources/views/payments/direccion.php",
+      traerCarrito: url + "?_tc", //traer productos seleccionados al carrito del usuario
+
+      //botones del card para eliminar o actualzar la orden
+      deleteCarProduct: url,
     },
     view: function (route) {
       location.replace(this.routes[route]);
@@ -15,122 +20,104 @@ $(document).ready(() => {
     pe: $("#pedido"), //el contenedor donde esta la lista de productos que seleccionamos
     lp: $("#pago"), //listo para pagar
 
-    loader: $("#cart-loader"),
-    //Loader de carga
-    showLoader: function () {
-      const loaderContainer = document.createElement("div");
-      loaderContainer.classList.add("loader-container"); //loader-container
-      const loader = document.createElement("div");
-      loader.classList.add("loader"); //loader
-      loaderContainer.appendChild(loader);
-      this.loader.append(loaderContainer);
-      loaderContainer.style.display = "block";
-      return loaderContainer;
-    },
-    hideLoader: function (loaderContainer) {
-      loaderContainer.style.display = "none";
-    },
     //Muestra el contenido del carrito
-    contentCar: async function (uid) {
-      const idUser = uid;
-      //console.log(idUser);
-      let html =
-        "<h4 class='lead text-muted d-flex justify-content-center'>Todo está tranquilo por aquí<a href='./catalogo.php' class='mx-3' style='text-decoration: none;'><i class='bi bi-plus-square'></i></a></h4>";
-      this.pe.html("");
+    contentCar: function () {
+      const self = this;
+      const loaderContainer = system.showLoader();
+      let foundCarProducts = false;
 
-      loaderContainer = this.showLoader();
+      let html = "<h4 class='lead text-muted d-flex justify-content-center'>Todo está tranquilo por aquí<a href='./catalogo.php' class='mx-3' style='text-decoration: none;'><i class='bi bi-plus-square'></i></a></h4>";      
+      self.pe.html(html);
       try {
-        const resp = await fetch(this.url + "?_vcar=" + idUser);
-        const caresp = await resp.json();
-        if (resp.ok) {
-          loaderContainer.style.display = "none";
-        }
-        const productos = caresp.filter(
-          (producto) => producto.active === "1" && producto.cantidad !== "0"
-        );
-        const longitud = productos.length;
-        const activeProducts = productos.map((producto) => producto.active);
-        const positiveProducts = productos.map((producto) => producto.cantidad);
-        console.log(positiveProducts);
-        //console.log(activeProducts);
-        if (longitud > 0) {
-          html = "";
-          const subtotales = [];
-          const envio = 200;
-
-          for (let product of productos) {
-            //console.log(product.productId);
-            //condicion para verificar si la cantidad agregada es mayor a 1
-            const decLimit = product.cantidad > 1 ? "" : "d-none";
-            const subtotal =
-              parseInt(product.cantidad) * parseFloat(product.price);
-            subtotales.push(subtotal);
-            html += `      
-                        <div class="card" data-product-id="${product.id}"> 
-                        <div class="product-header">
-                            <p class="product-name">${product.product_name}</p>
-                        </div>                                
-                            <div class="card-body-product"> 
-                                <img src="/cisnaturatienda/app/pimg/${
-                                  product.thumb
-                                }">
-                                <div>
-                                    <img src="/cisnaturatienda/app/pimg/${
-                                      product.thumb
-                                    }" class="img-r">
-                                    <p class="product-name">${
-                                      product.product_name
-                                    }</p>
-                                </div>
-                                    <a href="javascript:void(0);" onclick="app_car.delProduct(${
-                                      product.id
-                                    },${idUser})" class="btnTrash"><i class="bi bi-trash"></i></a>
-                                    <div class="d-flex justify-content">
-                                        <a href="javascript:void(0);" class="${decLimit}" onclick="app_car.decrementar(${
-              product.productId
-            },${idUser},1)"><i class="bi bi-dash-square"></i></a>
-                                            <p class="quantity">${parseInt(
-                                              product.cantidad
-                                            )}</p>
-                                        <a href="javascript:void(0);" onclick="app_car.incrementar(${
-                                          product.productId
-                                        },${idUser},1)"><i class="bi bi-plus-square"></i></a>
-                                    </div>
-                                    <p>
-                                        <span class="subtotal" id="subtotal-${
-                                          product.id
-                                        }" data-price="${
-              product.price
-            }">$${subtotal}</span>
-                                    </p>
-                            </div>
-                        </div>                        
-                        `;
-          }
-          const subtotal = subtotales.reduce((acc, curr) => acc + curr, 0);
-          this.procederPago(idUser, longitud, subtotal, envio, productos);
-        }
-        this.pe.html(html);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        this.hideLoader(loaderContainer);
-      }
+        $.ajax({
+            type: "GET",
+            url: this.routes.traerCarrito,
+            headers: {
+                Authorization: system.http.send.authorization(),
+            },
+            dataType: "json", //importante no olvidar
+            success: function (productos) {
+                //console.log(productos.response);
+                if (productos.response.length > 0) {
+                    loaderContainer.style.display = "none";
+                    let html = "";
+                    foundCarProducts = true;
+                    const productosFiltrados = productos.response.filter(
+                        (producto) => producto.active === "1" && producto.cantidad !== "0"
+                    );
+                    html = "";
+                    const subtotales = [];
+                    const envio = 200;
+                    const longitud = productosFiltrados.length;
+                    if(longitud > 0){            
+                      for (let product of productosFiltrados) {
+                          const decLimit = product.cantidad > 1 ? "" : "d-none";
+                          const subtotal = parseInt(product.cantidad) * parseFloat(product.price);
+                          subtotales.push(subtotal);
+                          html += `
+                          <div class="card" data-product-id="${product.id}">
+                              <div class="product-header">
+                                  <p class="product-name">${product.product_name}</p>
+                              </div>
+                              <div class="card-body-product">
+                                  <img src="/cisnaturatienda/app/pimg/${product.thumb}">
+                                  <div>
+                                      <img src="/cisnaturatienda/app/pimg/${product.thumb}" class="img-r">
+                                      <p class="product-name">${product.product_name}</p>
+                                  </div>
+                                  <button onclick="app_car.delProduct(${product.id})" class="btnTrash"><i class="bi bi-trash"></i></button>
+                                  <div class="d-flex justify-content">
+                                      <a href="javascript:void(0);" class="${decLimit}" onclick="app_car.decrementar(${product.productId},1)"><i class="bi bi-dash-square"></i></a>
+                                      <p class="quantity">${parseInt(product.cantidad)}</p>
+                                      <a href="javascript:void(0);" onclick="app_car.incrementar(${product.productId},1)"><i class="bi bi-plus-square"></i></a>
+                                  </div>
+                                  <p>
+                                      <span class="subtotal" id="subtotal-${product.id}" data-price="${product.price}">$${subtotal}</span>
+                                  </p>
+                              </div>
+                          </div>
+                          `;
+                      }
+                    }
+                    const subtotal = subtotales.reduce((acc, curr) => acc + curr, 0);
+                    self.pe.html(html);
+                    self.procederPago(longitud, subtotal, envio, productos);
+                } else {
+                    console.error("No hay productos en el carrito.");
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error("Error en la petición AJAX:", xhr.responseText);
+            }
+        });
+    } catch (error) {
+        console.error("Error al cargar los productos del carrito:", error);
+    } finally{
+      system.hideLoader(loaderContainer);
+    }
     },
     //Elimina producto del carrito
-    delProduct: function (pci, uid) {
-      //alert("Llego el producto " + pci);
-      fetch(this.url + "?_pci=" + pci)
-        .then((resp) => resp.json())
-        .then((data) => {
-          if (data.r === "success") {
-            this.contentCar(uid); // Actualizar la lista de citas después de eliminar
-            this.procederPago();
-          } else {
-            alert("No se pudo borrar");
-          }
-        })
-        .catch((err) => console.error(err));
+    delProduct: async function (pid) {
+      console.log(pid);
+      try{
+        const body = new URLSearchParams();
+        body.append("pid",pid);
+        body.append("_dpc","1");
+
+        const response = await fetch(this.routes.deleteCarProduct,{
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            Authorization: system.http.send.authorization(),
+          },
+          body: body,
+        });
+        const resp = await response.json();
+        console.log(resp);
+      } catch(error){
+        console.error(error);
+        //alert(error);
+      }
     },
     //Aumenta la cantidad del producto
     incrementar: function (pid, uid, num) {
@@ -159,7 +146,7 @@ $(document).ready(() => {
         .catch((err) => console.error(err));
     },
     //Resumen de lo que se va pagar
-    procederPago: function (uid, longitud, subtotal, envio, productos) {
+    procederPago: function (longitud, subtotal, envio, productos) {
       //cuantos productos hay en el carrito, si hay mas de cero se muestra el boton
       this.lp.html("");
       //console.log(longitud);
@@ -177,7 +164,6 @@ $(document).ready(() => {
                         <li class="list-group-item payItemtotal">Total: MX $${total}.00</li>                        
                     </ul>
                     <form id="payForm" action="">
-                    <input type="hidden" id="userId" name="userId" value="${uid}" required>                    
                     <input type="hidden" id="subtotal" name="subtotal" value="${subtotal}" required>
                     <input type="hidden" id="total" name="total" value="${total}" required>
                     <input type="hidden" id="envio" name="envio" value="${envio}" required>
@@ -214,7 +200,6 @@ $(document).ready(() => {
             // console.log(productsJson);
 
             const data = new FormData();
-            data.append("userId", $("#userId").val());
             data.append("subtotal", $("#subtotal").val());
             data.append("productsData", productsJson);
             data.append("envio", $("#envio").val());

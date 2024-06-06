@@ -7,7 +7,6 @@ require_once "../../autoloader.php";
 use Controllers\CarritoController;
 use Controllers\Middleware;
 use Controllers\PostController as PostController;
-use GrahamCampbell\ResultType\Success;
 
 //use app\PasswordHash;
 require('../../libraries/phpass-master/PasswordHash.php');

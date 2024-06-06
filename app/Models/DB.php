@@ -22,19 +22,19 @@ class DB {
     public $r; //Resultado de la consulta
 
     public function systemOS(){
-        return strtoupper(substr(PHP_OS,0,3)) === 'WIN' ? 3306 : 8889;
+        return strtoupper(substr(PHP_OS,0,3)) === 'WIN' ? "" : "root";
     }
 
     public function __construct($dbh = "localhost",
                                 $dbn = "cisnaturatienda",
                                 $dbu = "root",
-                                $dbp = "", 
+                                $dbp = null, 
                                 $dbport = null){
         $this->db_host = $dbh;
         $this->db_name = $dbn;
         $this->db_user = $dbu;
-        $this->db_passwd = $dbp;
-        $this->db_port = $dbport ?? $this->systemOS();
+        $this->db_passwd = $dbp ?? $this->systemOS();
+        $this->db_port = $dbport;
     }
     public function db_connect(){
         $this->conex = new \mysqli($this->db_host,
