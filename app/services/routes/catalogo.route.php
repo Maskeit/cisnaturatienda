@@ -15,12 +15,12 @@ try {
     $_HEADERS = apache_request_headers();
     $contentCatalogo = $api->autorization($_HEADERS, $pwdHasher);
 
-    if (!$contentCatalogo) {
-        $json["response"] = "No hay contenido que mostrarte";
-        echo json_encode($json, JSON_PRETTY_PRINT);
+    if (!$contentCatalogo['success']) {
+        // Ahora 'message' contiene el mensaje específico del error
+        echo json_encode(['response' => $contentCatalogo['message']], JSON_PRETTY_PRINT);
         return;
     }
-    $userId = $contentCatalogo['userId'];
+    $userId = $contentCatalogo['data']['userId'];
 
     //metodo para agregar un producto al carrito del cliente
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['_ap'])) {
@@ -54,7 +54,11 @@ try {
     if ($np) {
         $carrito = new CarritoController();
         $result = $carrito->cantProductos($userId);
-        if (!$result) {
+        if ($result == 0) {
+            $json["response"] = "0";
+            echo json_encode($json, JSON_PRETTY_PRINT);
+            return;
+        }elseif (!$result) {
             $json["response"] = "internal server error or auth denied";
             echo json_encode($json, JSON_PRETTY_PRINT);
             return;

@@ -139,17 +139,31 @@ class Middleware
 	}
 	public function autorization($_HEADERS, $pwdHasher)
 	{
+		// Inicializar la respuesta estándar
+		$response = [
+			'success' => false,
+			'message' => 'Error inicial',
+			'data' => null
+		];
 		//making the main validations
-		if (!$_HEADERS) return false;
+		if (!$_HEADERS) {
+			$response['message'] = 'No se enviaron cabeceras';
+			return $response;
+		}
 		try {
 			$checkApi = $this->apiEnabled($_HEADERS,$pwdHasher);
-			if(!$checkApi) return false;
+			if (!$checkApi) {
+				$response['message'] = 'API no habilitada';
+				return $response;
+			}
 			// Hasta aqui la api deberia aceptar peticiones
 			if (
 				(!isset($_HEADERS['Authorization'])) ||
 				(!isset($_HEADERS['User-Agent']))
-			) return false;
-
+			){
+				$response['message'] = 'Faltan cabeceras';
+                return $response;
+			}
 			//Autorization validations
 			$autorization = json_decode(
 				base64_decode($_HEADERS['Authorization']),
@@ -159,7 +173,10 @@ class Middleware
 				(!isset($autorization['APISS__NME'])) || //session file name
 				(!isset($autorization['SSK'])) || //session key
 				(!isset($autorization['SSID'])) //session id
-			) return false;
+			){
+				$response['message'] = 'Faltan cabeceras';
+                return $response;
+			}
 			$APISS__NME = $autorization['APISS__NME'];
 			//looking for the session json file -> APISS
 			// $sessionFile = __DIR__ . '/../secure/sessions/' . $APISS__NME . '.json';
@@ -172,13 +189,14 @@ class Middleware
 				$binnacle = new binnacle();				
 				$binnacle->valores = [
 					'autorization middleware',
-					'session file not found: ' . $autorization['APISS__NME'],
+					'session file APISS_NME not found: ' . $autorization['APISS__NME'],
 					'premature',
 					'system',
 					$time
 				];
 				$binnacle->create();				
-				return false;
+				$response['message'] = "No existe el archivo .json";
+				return $response;
 			}
 			//print_r($sessionFile);
 			//we have to extract the information to make a validation if the user has the privileges
@@ -190,13 +208,6 @@ class Middleware
 			$id = $line['session']['id'];
 			fclose($file);
 
-			$SSKBrowser = $autorization['SSK'];
-			$SSIDBrowser = $autorization['SSID'];
-			// print_r('<h5>SSKbrowser:</h5>' . $SSKBrowser . '<br>');
-			// print_r('<h5>SSKfile: '.$SSK . '</h5><br>');
-
-			// print_r('<h5>SSIDfile: '.$SSID . '</h5><br>');
-			// print_r('<h5>SSIDBrowser: '.$SSIDBrowser. '</h5><br>');
 			//validation of the property SSID -> session ID
 			if($SSID != $autorization['SSID']){
 				$binnacle = new binnacle();	
@@ -209,11 +220,11 @@ class Middleware
 					$time
 				];
 				$binnacle->create();
-				return false;
+				$response['message'] = "propiedad SSID not found";
+				return $response;
 			}
 			
-			//print_r($userAgent . '<br>');
-			//print_r($_HEADERS['User-Agent'] . '<br>');
+
 			//validation of the proeprty APISS__NME -> data of the user's browser
 			if($userAgent != $_HEADERS['User-Agent']){
 				print_r("El navegador no cumple los requisitos" . "<br>");
@@ -226,7 +237,8 @@ class Middleware
 					$time
 				];
 				$binnacle->create();
-				return false;
+				$response['message'] = "propiedad user-agent not found";
+				return $response;
 				//user agent validation
 			}
 		
@@ -243,14 +255,16 @@ class Middleware
 					$time
 				];
 				$binnacle->create();
-				return false;//token assigned
+				$response['message'] = "propiedad SSK not found PELIGRO";
+				return $response;
 			}
 
 			//user acces validation from the database active
 			$user = new user();
 			$result = $user->select(['active','tipo'])->where([['id',$id]])->get();
 			if(!$result){
-				return false;			
+				$response['message'] = "usuario no encontrado";
+				return $response;		
 			}else{
 				$resArr = json_decode($result,true);
 				if(!empty($resArr)){
@@ -259,7 +273,6 @@ class Middleware
 				}
 			}
 			if($active != 1){
-				print_r("Estado de cuenta 0");
 				$binnacle = new binnacle();				
 				$binnacle->valores = [
 					'autorization middleware',
@@ -269,21 +282,23 @@ class Middleware
 					$time
 				];
 				$binnacle->create();			
-				return false;
+				$response['message'] = "usuario baneado";
+				return $response;	
 			}
 
-			/*
+			
 			//now we are going to validate if the user has the privileges to execute the actually route...
-			$request_uri = $_SERVER["REQUEST_URI"];
 			$privileges = new privileges();
-			$result_uri = $privileges->where([['route', $request_uri]])->get();
-			if(!$result_uri) return false;
+			$request_uri = $_SERVER["REQUEST_URI"];
+			$result_uri = $privileges->where([['route', $request_uri]])->get();			
 			$resPrivileges = json_decode($result_uri, true);
+			if(empty($resPrivileges)){
+				$response['message'] = "no exite la ruta a la que el usuario quiere acceder";
+				return $response;
+			}
 			$access = $resPrivileges[0]['access'];
 			$user_type = $resPrivileges[0]['user_type'];
-
 			if($user_type !== $tipo || $access !== '1'){
-				print_r("No tienes permisos para ejecutar ruta");
 				$binnacle = new binnacle();
 				$binnacle->valores = [
 					'autorization middleware',
@@ -293,51 +308,16 @@ class Middleware
 					$time
 				];
 				$binnacle->create();				
-				return false;
+				$response['message'] = "usuario sin permisos para ejecutar ruta";
+				return $response;	
 			}
 
-			*/
+			// return true Si todas las validaciones son correctas
+			$response['success'] = true;
+			$response['message'] = 'Autorización exitosa';
+			$response['data'] = ['userId' => $id, 'tipo' => $resArr[0]['tipo']];
 
-
-			/*Nuevo metodo para verificar rutas
-			$request_uri = explode('?', $_SERVER['REQUEST_URI'])[0];  // Elimina la parte de query string
-			$privileges = new privileges();
-			$result_uri = $privileges->where([['route', $request_uri]])->get();
-			if(!$result_uri) {
-				echo "Ruta no definida para control de acceso.";
-				return false;
-			}
-			$resPrivileges = json_decode($result_uri, true);
-			if (empty($resPrivileges)) {
-				echo "No hay datos de privilegios para esta ruta.";
-				return false;
-			}
-			
-			$access = $resPrivileges[0]['access'];
-			$user_type = $resPrivileges[0]['user_type'];
-			
-			if($user_type !== $tipo || $access !== '1'){
-				echo "No tienes permisos para ejecutar esta ruta.";
-				// Registro en bitácora
-				$binnacle = new binnacle();
-				$binnacle->valores = [
-					'autorization middleware',
-					'Urgent request denied, this user doesn´t have permissions to execute the next request: ' . $request_uri,
-					'URGENT id: '. $id,
-					'system',
-					$time
-				];
-				$binnacle->create();                
-				return false;
-			}
-			*/
-			$userId = $this->getId($id);
-
-			//return true;
-			return [
-				'success' => true,
-				'userId' => $userId
-			];
+			return $response;
 		} catch (\Throwable $th) {
 			//throw $th;
 			echo 'error: ' . $th;

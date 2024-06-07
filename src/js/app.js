@@ -216,7 +216,6 @@ $(document).ready(() => {
               let html =
                 "<p class='p-message' >No hay productos para mostrar hoy</p>";
               self.pc.html(html);
-              system.clearCookiesAndRedirect();
             }
           },
         });

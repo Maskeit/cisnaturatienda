@@ -16,12 +16,12 @@ try {
     $_HEADERS = apache_request_headers();
     $contentHome = $api->autorization($_HEADERS, $pwdHasher);
 
-    if(!$contentHome){
-        $json["response"] = "No hay contenido que mostrarte";
-        echo json_encode($json, JSON_PRETTY_PRINT);
+    if (!$contentHome['success']) {
+        // Ahora 'message' contiene el mensaje específico del error
+        echo json_encode(['response' => $contentHome['message']], JSON_PRETTY_PRINT);
         return;
     }
-    $userId = $contentHome['userId'];
+    $userId = $contentHome['data']['userId'];
     //metodo para agregar un producto al carrito del cliente
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['_ap'])) {
         $productId = $_POST['pid'];

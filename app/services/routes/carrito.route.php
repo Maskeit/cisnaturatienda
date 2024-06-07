@@ -16,13 +16,13 @@ try {
     $_HEADERS = apache_request_headers();
     $contentCarrito = $api->autorization($_HEADERS, $pwdHasher);
 
-    if(!$contentCarrito){
-        $json["response"] = "No hay contenido que mostrarte";
-        echo json_encode($json, JSON_PRETTY_PRINT);
+    if (!$contentCarrito['success']) {
+        // Ahora 'message' contiene el mensaje específico del error
+        echo json_encode(['response' => $contentCarrito['message']], JSON_PRETTY_PRINT);
         return;
     }
     header('Content-Type: application/json');
-    $userId = $contentCarrito['userId'];
+    $userId = $contentCarrito['data']['userId'];
     
     //metodo para ver productos en carrito
     if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['_tc'])) {
@@ -33,9 +33,9 @@ try {
         $productId = $_POST['pid'];
         $carrito = new CarritoController();
         $carrito->deleteProductCar($productId);
-        echo json_encode(["response" => "Producto eliminado"]);
+        echo json_encode(["response" => "Ok"]); //producto eliminado
     } else {
-        echo json_encode(["response" => "Acción no reconocida"]);
+        echo json_encode(["response" => "no"]); //accion no reconocida
     }
 } catch (\Throwable $th) {
     //throw $th;
