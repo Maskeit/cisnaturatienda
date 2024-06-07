@@ -33,7 +33,7 @@ class Middleware
 		//METODO PARA AUTORIZAR UN USUARIO A ACCEDER A RUTAS Y MANTENER SU SESION
 	// este es para autorizar al usuario a toda la pagina, incluso ver si mantiene iniciada la sesion en el navegador
 	public function apiEnabled($_HEADERS, $pwdHasher){
-		if(!$_HEADERS) return false;
+		if(!$_HEADERS && $pwdHasher) return false;
 		try {
 			// Checking if the API is enabled to receive petitions
 			$api = new api();

@@ -7,7 +7,7 @@ $(document).ready(() => {
       //rutas de funciones del home
       lastpostT: url + "?_lp",
       //botones de compra y add
-      addproduct: url + "?_ap",
+      addproduct: url,
     },
 
     view: function (route) {
