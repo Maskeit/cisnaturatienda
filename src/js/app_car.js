@@ -12,11 +12,6 @@ $(document).ready(() => {
     view: function (route) {
       location.replace(this.routes[route]);
     },
-    user: {
-      sv: false,
-      id: "",
-      tipo: "",
-    },
     pe: $("#pedido"), //el contenedor donde esta la lista de productos que seleccionamos
     lp: $("#pago"), //listo para pagar
 
@@ -38,7 +33,7 @@ $(document).ready(() => {
             dataType: "json", //importante no olvidar
             success: function (productos) {
                 //console.log(productos.response);
-                if (productos.response.length > 0) {
+              if (productos.response.length > 0) {
                     loaderContainer.style.display = "none";
                     let html = "";
                     foundCarProducts = true;
@@ -82,8 +77,6 @@ $(document).ready(() => {
                     const subtotal = subtotales.reduce((acc, curr) => acc + curr, 0);
                     self.pe.html(html);
                     self.procederPago(longitud, subtotal, envio, productos);
-                } else {
-                    console.error("No hay productos en el carrito.");
                 }
             },
             error: function (xhr, status, error) {
@@ -98,7 +91,6 @@ $(document).ready(() => {
     },
     //Elimina producto del carrito
     delProduct: async function (pid) {
-      console.log(pid);
       try{
         const body = new URLSearchParams();
         body.append("pid",pid);
@@ -113,10 +105,14 @@ $(document).ready(() => {
           body: body,
         });
         const resp = await response.json();
-        console.log(resp);
+        const metodo = resp.response;
+        if(metodo == 'Ok') {
+          this.contentCar();
+        }
+
+        console.log(metodo);
       } catch(error){
         console.error(error);
-        //alert(error);
       }
     },
     //Aumenta la cantidad del producto
