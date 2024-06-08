@@ -118,18 +118,12 @@ class PostController {
     }
 
     //trae los productos al catalogo del cliente
-    public function getProductsToClient($tipo) {
+    public function getProductsToClient() {
         $product = new products();
-        if($tipo == 'todo'){
-            $result = $product->where([['active','1']])
-                              ->orderBy([['created_at','ASC']])
-                              ->get();
-        }
-        else {
-            $result = $product->where([['type', $tipo],['active','1']])
-                              ->orderBy([['created_at','ASC']])
-                              ->get();
-        }
+        $result = $product->where([['active','1']])
+                          ->orderBy([['created_at','ASC']])
+                          ->get();
+
         return $result;
     }
     
