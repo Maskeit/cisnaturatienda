@@ -147,11 +147,6 @@
   gap: 20px 28px;
 }
 
-.p-message {
-  font-size: 25px;
-  color: #555;
-}
-
 .product-card {
   width: 220px; /* Ajusta el tamaño de cada tarjeta */
   overflow: hidden;
@@ -188,7 +183,6 @@
   transition: opacity 0.3s ease; /* Transición suave */
   pointer-events: none;
 }
-
 .card-overlay .ovtext {
   color: white;
   text-align: center;
@@ -218,19 +212,16 @@
   font-family: "Poppins", sans-serif;
   font-size: 1em;
 }
-
 .product-name {
   font-size: 1.1em;
   margin-bottom: 5px;
 }
-
 .product-price {
   font-size: 1.1em;
   font-weight: 470;
 }
-
 .btnAddBuy {
-  margin-top: 15px; /* Empuja el botón hacia abajo */
+  margin-top: 15px;
   justify-content: center;
 }
 

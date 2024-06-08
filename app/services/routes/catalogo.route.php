@@ -38,8 +38,7 @@ try {
     $tp = in_array('_tp', array_keys(filter_input_array(INPUT_GET)));
     if ($tp) {
         $productos = new PostController();
-        $type = filter_input(INPUT_GET, '_tp');
-        $result = $productos->getProductsToClient($type);
+        $result = $productos->getProductsToClient();
         if (!$result) {
             $json["response"] = "internal server error or auth denied";
             echo json_encode($json, JSON_PRETTY_PRINT);

@@ -11,7 +11,7 @@ css('catalogo');
         <section class="content">
             <aside class="navegacion">
                 <form class="barra-busqueda" id="form-buscador">
-                    <input class="form-control" id="buscar-palabra" type="search" placeholder="Buscar producto" aria-label="Buscar producto">
+                    <input class="form-control" id="search-input" type="search" placeholder="Buscar producto" aria-label="Buscar producto">
                     <button id="btn-buscar" class="btn-search" type="submit"> <i class="bi bi-search searchIcon"></i></button>
                 </form>
 
@@ -28,7 +28,8 @@ css('catalogo');
             </aside>
             <section id="product-card" class="productos">
                 <!-- Productos listados aquí -->
-                <h2 id="noResultsMessage" class="text-center" style="display: none;">No se encontraron resultados.</h2>
+                <p id="noResultsMessage" class="d-none">No se encontraron resultados.</p>
+                <p id="no-products" class="d-none">Estamos trabajando para mostrarte el catalogo...</p>
             </section>
         </section>
         <div id="toaster" class="toaster d-none">
