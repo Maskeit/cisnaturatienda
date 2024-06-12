@@ -5,7 +5,7 @@ $(document).ready(() => {
     routes: {
       pagar: "/cisnatura/resources/views/payments/direccion.php",
       traerCarrito: url + "?_tc", //traer productos seleccionados al carrito del usuario
-
+      actualizarCarrito:url,
       //botones del card para eliminar o actualzar la orden
       deleteCarProduct: url,
     },
@@ -15,88 +15,77 @@ $(document).ready(() => {
     pe: $("#pedido"), //el contenedor donde esta la lista de productos que seleccionamos
     lp: $("#pago"), //listo para pagar
 
-    //Muestra el contenido del carrito
-    contentCar: function () {
+    allProducts : [],
+    // carga de productos
+    // Asegurándose de pasar los productos correctos a displayCar después de cargarlos
+    loadProducts: function () {
       const self = this;
-      const loaderContainer = system.showLoader();
-      let foundCarProducts = false;
-
-      let html = "<h4 class='lead text-muted d-flex justify-content-center'>Todo está tranquilo por aquí<a href='./catalogo.php' class='mx-3' style='text-decoration: none;'><i class='bi bi-plus-square'></i></a></h4>";      
-      self.pe.html(html);
-      try {
-        $.ajax({
-            type: "GET",
-            url: this.routes.traerCarrito,
-            headers: {
-                Authorization: system.http.send.authorization(),
-            },
-            dataType: "json", //importante no olvidar
-            success: function (productos) {
-                //console.log(productos.response);
-              if (productos.response.length > 0) {
-                    loaderContainer.style.display = "none";
-                    let html = "";
-                    foundCarProducts = true;
-                    const productosFiltrados = productos.response.filter(
-                        (producto) => producto.active === "1" && producto.cantidad !== "0"
-                    );
-                    html = "";
-                    const subtotales = [];
-                    const envio = 200;
-                    const longitud = productosFiltrados.length;
-                    if(longitud > 0){            
-                      for (let product of productosFiltrados) {
-                          const decLimit = product.cantidad > 1 ? "" : "d-none";
-                          const subtotal = parseInt(product.cantidad) * parseFloat(product.price);
-                          subtotales.push(subtotal);
-                          html += `
-                          <div class="card" data-product-id="${product.id}">
-                              <div class="product-header">
-                                  <p class="product-name">${product.product_name}</p>
-                              </div>
-                              <div class="card-body-product">
-                                  <img src="/cisnaturatienda/app/pimg/${product.thumb}">
-                                  <div>
-                                      <img src="/cisnaturatienda/app/pimg/${product.thumb}" class="img-r">
-                                      <p class="product-name">${product.product_name}</p>
-                                  </div>
-                                  <button onclick="app_car.delProduct(${product.id})" class="btnTrash"><i class="bi bi-trash"></i></button>
-                                  <div class="d-flex justify-content">
-                                      <a href="javascript:void(0);" class="${decLimit}" onclick="app_car.decrementar(${product.productId},1)"><i class="bi bi-dash-square"></i></a>
-                                      <p class="quantity">${parseInt(product.cantidad)}</p>
-                                      <a href="javascript:void(0);" onclick="app_car.incrementar(${product.productId},1)"><i class="bi bi-plus-square"></i></a>
-                                  </div>
-                                  <p>
-                                      <span class="subtotal" id="subtotal-${product.id}" data-price="${product.price}">$${subtotal}</span>
-                                  </p>
-                              </div>
-                          </div>
-                          `;
-                      }
-                    }
-                    const subtotal = subtotales.reduce((acc, curr) => acc + curr, 0);
-                    self.pe.html(html);
-                    self.procederPago(longitud, subtotal, envio, productos);
-                }
-            },
-            error: function (xhr, status, error) {
-                console.error("Error en la petición AJAX:", xhr.responseText);
-            }
-        });
-    } catch (error) {
-        console.error("Error al cargar los productos del carrito:", error);
-    } finally{
-      system.hideLoader(loaderContainer);
-    }
+      $.ajax({
+        type: "GET",
+        url: this.routes.traerCarrito,
+        dataType: "json",
+        headers: {
+          Authorization: system.http.send.authorization(),
+        },
+        success: function (response) {
+          self.allProducts = response.response;
+          localStorage.setItem('carrito', JSON.stringify(self.allProducts));
+          self.displayCar(response.response);
+        },
+        error: function(error){
+          console.error("Error: " + error);
+        }
+      });
     },
+    
+    displayCar: function (products) {
+      let html = "";
+      let subtotales = [];
+      let envio = 200;
+    
+      html = products.map(product => {
+        const decLimit = product.cantidad > 1 ? "" : "d-none";
+        const subtotal = parseInt(product.cantidad) * parseFloat(product.price);
+        subtotales.push(subtotal);
+        return `
+          <div class="card" data-product-id="${product.id}">
+            <div class="product-header">
+              <p class="product-name">${product.product_name}</p>
+            </div>
+            <div class="card-body-product">
+              <img src="/cisnaturatienda/app/pimg/${product.thumb}">
+              <div>
+                <img src="/cisnaturatienda/app/pimg/${product.thumb}" class="img-r">
+                <p class="product-name">${product.product_name}</p>
+              </div>
+              <button  class="btnUpdt" onclick="app_car.delProduct(${product.id})"><i class="bi bi-trash"></i></button>
+              <div class="d-flex justify-content">
+                <button class="btnUpdt ${decLimit}" onclick="app_car.decrementar(${product.id})"><i class="bi bi-dash-square"></i></button>
+                <p class="quantity">${parseInt(product.cantidad)}</p>
+                <button class="btnUpdt" onclick="app_car.incrementar(${product.id})"><i class="bi bi-plus-square"></i></button>
+              </div>
+              <p>
+                <span class="subtotal" id="subtotal-${product.id}" data-price="${product.price}">$${subtotal}</span>
+              </p>
+            </div>
+          </div>
+        `;
+      }).join('');
+    
+      let totalSubtotal = subtotales.reduce((acc, curr) => acc + curr, 0);
+      this.pe.html(html);
+      this.procederPago(products.length, totalSubtotal, envio);
+    },
+    
+
     //Elimina producto del carrito
     delProduct: async function (pid) {
-      try{
+      try {
         const body = new URLSearchParams();
-        body.append("pid",pid);
-        body.append("_dpc","1");
-
-        const response = await fetch(this.routes.deleteCarProduct,{
+        body.append("pid", pid);
+        body.append("_dpc", "1");
+    
+        const response = await fetch(this.routes.deleteCarProduct, {
           method: "POST",
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
@@ -105,50 +94,67 @@ $(document).ready(() => {
           body: body,
         });
         const resp = await response.json();
-        const metodo = resp.response;
-        if(metodo == 'Ok') {
-          this.contentCar();
+        if (resp.response === "Ok") {
+          this.loadProducts();
         }
-
-        console.log(metodo);
-      } catch(error){
-        console.error(error);
+      } catch (error) {
+        console.error("Error al eliminar producto:", error);
       }
     },
-    //Aumenta la cantidad del producto
-    incrementar: function (pid, uid, num) {
-      fetch(this.url + "?_incP=" + pid + "&uid=" + uid + "&num=" + num) // Cambia pid por _incP
-        .then((resp) => resp.json())
-        .then((data) => {
-          if (data.r === "success") {
-            this.contentCar(uid); //actualiza la cant de prod añadidos
-          } else {
-            alert("No se pudo actualizar el INC");
-          }
-        })
-        .catch((err) => console.error(err));
+    incrementar: function (productId) {
+      productId = parseInt(productId, 10);  // Asegurarse que productId es un número    
+      let carrito = JSON.parse(localStorage.getItem("carrito") || "[]");    
+      const productIndex = carrito.findIndex(product => parseInt(product.id, 10) === productId);    
+      if (productIndex !== -1) {
+        // Convertir cantidad a número antes de incrementar
+        carrito[productIndex].cantidad = parseInt(carrito[productIndex].cantidad, 10) + 1;
+        localStorage.setItem("carrito", JSON.stringify(carrito));
+        this.displayCar(carrito); // Actualiza la vista del carrito
+        this.actualizarCarritoServer(productId, carrito[productIndex].cantidad);
+      } else {
+        console.error("Producto no encontrado en el carrito:", productId);
+      }
     },
-    //Decrementa la cantidad del producto
-    decrementar: function (pid, uid, num) {
-      fetch(this.url + "?_decP=" + pid + "&uid=" + uid + "&num=" + num)
-        .then((resp) => resp.json())
-        .then((data) => {
-          if (data.r === "success") {
-            this.contentCar(uid); //actualiza la cant de prod añadidos
-          } else {
-            alert("No se pudo actualizar el DEC");
-          }
-        })
-        .catch((err) => console.error(err));
+
+    decrementar: function (productId) {
+      productId = parseInt(productId, 10);  // Asegurarse que productId es un número
+      let carrito = JSON.parse(localStorage.getItem("carrito") || "[]");
+      const productIndex = carrito.findIndex(product => parseInt(product.id, 10) === productId);    
+      if (productIndex !== -1) {
+        // Convertir cantidad a número antes de incrementar
+        carrito[productIndex].cantidad = parseInt(carrito[productIndex].cantidad, 10) - 1;
+        localStorage.setItem("carrito", JSON.stringify(carrito));
+        this.displayCar(carrito); // Actualiza la vista del carrito
+        this.actualizarCarritoServer(productId, carrito[productIndex].cantidad);
+      } else {
+        console.error("Producto no encontrado en el carrito:", productId);
+      }
     },
+    
+    actualizarCarritoServer: function (productId, nuevaCantidad) {
+      const body = new URLSearchParams();
+      body.append("pid", productId);
+      body.append("cantidad", nuevaCantidad);
+      body.append("_update", "1");
+      fetch(this.routes.actualizarCarrito, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          Authorization: system.http.send.authorization(),
+        },
+        body: body,
+      })
+      .then(response => response.json())
+      .catch(error => {
+        console.error("Error al actualizar el carrito:", error);
+      });
+    },
+
     //Resumen de lo que se va pagar
-    procederPago: function (longitud, subtotal, envio, productos) {
+    procederPago: function (longitud, subtotal, envio) {
       //cuantos productos hay en el carrito, si hay mas de cero se muestra el boton
       this.lp.html("");
-      //console.log(longitud);
       const total = subtotal + envio;
-
-      const products = productos;
       if (longitud > 0) {
         let html = `
             <div class="card">
@@ -176,92 +182,21 @@ $(document).ready(() => {
         this.lp.html(html);
         //tomamos los datos del formulario escondido en el boton
         //de 'Continuar' para poder enviarlos al servidor a una tabla auxiliar
-        $(function () {
-          const pf = $("#payForm");
-          pf.on("submit", function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            const productsIds = products.map((producto) => producto.productId);
-            const productQuant = products.map((producto) => producto.cantidad);
-            // Crear un objeto con propiedades separadas para los IDs y cantidades
-            const productsData = {
-              productsIds: productsIds,
-              productQuantities: productQuant,
-            };
-            // Convertir el objeto a JSON
-            const productsJson = JSON.stringify(productsData);
-            console.log(productsJson);
-            // const productsJson = JSON.stringify({ productsIds: productsIds });
-            // console.log(productsJson);
-
-            const data = new FormData();
-            data.append("subtotal", $("#subtotal").val());
-            data.append("productsData", productsJson);
-            data.append("envio", $("#envio").val());
-            data.append("total", $("#total").val());
-            data.append("status", $("#status").val());
-            data.append("_order", "");
-            fetch("/cisnatura/app/app.php", {
-              method: "POST",
-              body: data,
-            })
-              .then((resp) => resp.json())
-              .then((respdos) => {
-                console.log(respdos);
-
-                const parsedResponse = JSON.parse(respdos.r);
-
-                if (
-                  Array.isArray(parsedResponse) &&
-                  parsedResponse.length > 0
-                ) {
-                  const tempId = parsedResponse[0].id;
-                  console.log(tempId);
-                  document.cookie = `cart=${tempId}`;
-                  const exists = document.cookie
-                    .split(";")
-                    .some(function (item) {
-                      return item.trim().indexOf("cart=") == 0;
-                    });
-
-                  let cartValue = null;
-                  if (exists) {
-                    const cartCookie = document.cookie
-                      .split("; ")
-                      .find((cookie) => cookie.startsWith("cart="));
-                    if (cartCookie) {
-                      cartValue = cartCookie.split("=")[1];
-                    }
-                  }
-                  // La variable cartValue se tiene que hashear para mandarla sin que se muestre al cliente
-                  const urltempid =
-                    "/cisnatura/resources/views/payments/direccion.php?_temp=" +
-                    cartValue;
-                  location.href = urltempid;
-                } else {
-                  console.error(
-                    "La respuesta no tiene la estructura esperada."
-                  );
-                }
-              })
-              .catch((err) => console.error(err));
-          });
-        });
       } else {
         let html = `
-            <div class="card shadow">
-                <div class="card-body">
-                    <div class="text-center">
-                        <p>Tu carrito está vacío. Agrega productos antes de proceder al pago.</p>
-                    </div>
-                </div>
-            </div>
-            `;
+          <div class="card shadow">
+              <div class="card-body">
+                  <div class="text-center">
+                      <p>Tu carrito está vacío. Agrega productos antes de proceder al pago.</p>
+                  </div>
+              </div>
+          </div>
+          `;
         this.lp.html(html);
+        location.href = V_Global + '/src/views/catalogo.php';
       }
     },
   };
   window.app = app_car;
-  app.contentCar();
+  app.loadProducts();
 });

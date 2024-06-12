@@ -57,8 +57,8 @@ $(document).ready(() => {
           $(".lgi").removeClass("active"); // Remueve la clase active de todos
           $(this).addClass("active"); // Añade la clase active solo al que fue clickeado
       });
-  },
-  listProductsAlt: function () {
+    },
+    listProductsAlt: function () {
     const categories = [
         { name: "Todos los productos", type: "todo" },
         { name: "Tinturas", type: "tintura" },
@@ -82,7 +82,7 @@ $(document).ready(() => {
         const selectedType = $(this).val();
         app.filterProductsByType(selectedType);
     });
-  },
+    },
     loadProducts : function (){
       const self = this;
       $.ajax({

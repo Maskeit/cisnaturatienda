@@ -7,7 +7,7 @@ $(document).ready(() => {
       //rutas de funciones del home
       lastpostT: url + "?_lp",
       //botones de compra y add
-      addproduct: url,
+      addproduct: url + "?_ap",
     },
 
     view: function (route) {
@@ -151,10 +151,6 @@ $(document).ready(() => {
     },
   };
 
-  document.addEventListener("DOMContentLoaded", function () {
-    console.log("DOM completamente cargado...");
-    system.verMasBtn("verMas", "parrafoCompleto");
-  });
   window.app_home = app_home;
   app_home.lastPost();
 });
