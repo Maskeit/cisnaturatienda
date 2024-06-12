@@ -21,9 +21,8 @@ try {
         return;
     }
     $userId = $contentCatalogo['data']['userId'];
-
     //metodo para agregar un producto al carrito del cliente
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['_ap'])) {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['_ap'])) {        
         $productId = $_POST['pid'];
         $cantidad = $_POST['cantidad'];
         $carrito = new CarritoController();
@@ -33,7 +32,6 @@ try {
         echo json_encode($json, JSON_PRETTY_PRINT);
         return;
     }
-
     // //metodo para traer los productos al catalogo 
     $tp = in_array('_tp', array_keys(filter_input_array(INPUT_GET)));
     if ($tp) {
@@ -47,7 +45,6 @@ try {
         print_r($result);
         return;
     }
-
     //metodo para mostrar la cantidad de productos en el carrito
     $np = in_array('_np', array_keys(filter_input_array(INPUT_GET)));
     if ($np) {

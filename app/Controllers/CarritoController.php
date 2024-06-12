@@ -5,13 +5,10 @@ namespace Controllers;
 use Models\carrito;
 use Models\product_order;
 use Models\products;
-//require_once("../app/Controllers/auth/LoginController.php");
-use Controllers\auth\LoginController as LoginController;
 
 class CarritoController
 {
 
-    private $userId;
     public $productId;
 
     public function __construct()
@@ -54,60 +51,13 @@ class CarritoController
         }
     }
 
-
-    //subtotal del carrito actualiza
-    public function incSubtotal($uid, $pid, $num)
-    {
+    // update field 'cantidad' in colum 'carrito
+    public function updateProductQuantity($pid, $userId, $cantidad){
         $carrito = new carrito();
-        $conexion = $carrito->db_connect();
-
-        if ($conexion == null) {
-            echo "Hubo un error al conectar a la base de datos <br>";
-            return false;
-        }
-
-        $sql = "UPDATE carrito SET cantidad = cantidad + $num WHERE userId = $uid AND productId = $pid";
-        $result = mysqli_query($conexion, $sql);
-
-        // Verificar si la consulta se ejecutó correctamente
-        if ($result) {
-            // Devuelve true si la actualización fue exitosa
-            mysqli_close($conexion);
-            return true;
-        } else {
-            // En caso de error, muestra el mensaje y devuelve false
-            echo "Hubo un error al actualizar el campo 'cantidad' en la tabla 'carrito' <br>";
-            mysqli_close($conexion);
-            return false;
-        }
-    }
-
-
-
-    public function decSubtotal($uid, $pid, $num)
-    {
-        $carrito = new carrito();
-        $conexion = $carrito->db_connect();
-
-        if ($conexion == null) {
-            echo "Hubo un error al conectar a la base de datos <br>";
-            return false;
-        }
-
-        $sql = "UPDATE carrito SET cantidad = cantidad - $num WHERE userId = $uid AND productId = $pid";
-        $result = mysqli_query($conexion, $sql);
-
-        // Verificar si la consulta se ejecutó correctamente
-        if ($result) {
-            // Devuelve true si la actualización fue exitosa
-            mysqli_close($conexion);
-            return true;
-        } else {
-            // En caso de error, muestra el mensaje y devuelve false
-            echo "Hubo un error al actualizar el campo 'cantidad' en la tabla 'carrito' <br>";
-            mysqli_close($conexion);
-            return false;
-        }
+        $updateData = [];
+        $updateData[] = ['cantidad' , $cantidad];
+        $result = $carrito->where([['id', $pid],['userId', $userId]])->update($updateData);
+        return $result;
     }
 
     //Metodo para contar cuantos productos tiene un usuario en su carrito
@@ -144,6 +94,7 @@ class CarritoController
         }
     }
 
+    //Metodo para eliminar el product de la lista
     public function deleteProductCar($pci)
     {
         $carrito = new carrito();
@@ -201,8 +152,7 @@ class CarritoController
             return $result;
         }
     }
-
-
+    //metodo para obtener la orden
     public function getOrder($orderId)
     {
         $order = new product_order();

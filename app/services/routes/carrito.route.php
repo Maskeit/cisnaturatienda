@@ -34,6 +34,12 @@ try {
         $carrito = new CarritoController();
         $carrito->deleteProductCar($productId);
         echo json_encode(["response" => "Ok"]); //producto eliminado
+    } elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['_update'])) {
+        $pid = $_POST['pid'];
+        $cantidad = $_POST['cantidad'];
+        $carrito = new CarritoController();
+        $result = $carrito->updateProductQuantity($pid, $userId, $cantidad);
+        echo json_encode(["response" => $result]);
     } else {
         echo json_encode(["response" => "no"]); //accion no reconocida
     }
