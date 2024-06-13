@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 12-06-2024 a las 23:09:59
+-- Tiempo de generación: 13-06-2024 a las 09:51:06
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -135,7 +135,9 @@ INSERT INTO `privileges` (`id`, `route`, `access`, `user_type`) VALUES
 (9, '/cisnaturatienda/app/services/routes/carrito.route.php?_tc', 1, 2),
 (10, '/cisnaturatienda/app/services/routes/carrito.route.php', 1, 2),
 (11, '/cisnaturatienda/app/services/routes/catalogo.route.php?_ap', 1, 2),
-(12, '/cisnaturatienda/app/services/routes/home.route.php?_ap', 1, 2);
+(12, '/cisnaturatienda/app/services/routes/home.route.php?_ap', 1, 2),
+(13, '/cisnaturatienda/app/services/routes/main.route.php?_aname', 1, 2),
+(16, '/cisnaturatienda/app/services/routes/main.route.php?_closeSession', 1, 2);
 
 -- --------------------------------------------------------
 
@@ -317,13 +319,13 @@ ALTER TABLE `address`
 -- AUTO_INCREMENT de la tabla `binnacle`
 --
 ALTER TABLE `binnacle`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=509;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=523;
 
 --
 -- AUTO_INCREMENT de la tabla `carrito`
 --
 ALTER TABLE `carrito`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=529;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=530;
 
 --
 -- AUTO_INCREMENT de la tabla `payment`
@@ -335,7 +337,7 @@ ALTER TABLE `payment`
 -- AUTO_INCREMENT de la tabla `privileges`
 --
 ALTER TABLE `privileges`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de la tabla `products`
@@ -353,7 +355,7 @@ ALTER TABLE `product_order`
 -- AUTO_INCREMENT de la tabla `sessions`
 --
 ALTER TABLE `sessions`
-  MODIFY `_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=131;
+  MODIFY `_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=147;
 
 --
 -- AUTO_INCREMENT de la tabla `user`
