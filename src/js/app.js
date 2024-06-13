@@ -108,7 +108,7 @@ $(document).ready(() => {
         return;
       }
       const filteredProducts = this.allProducts.filter(product => product.type === type);
-      this.displayProducts(filteredProducts);
+      filteredProducts.length > 0 ? this.displayProducts(filteredProducts) : this.displayProducts([]);
     },
     // metodo para buscar productos 
     searchProducts: function(keyword) {
@@ -171,11 +171,11 @@ $(document).ready(() => {
           e.stopPropagation(); // Detiene la propagación del evento para no disparar el click del card
           const productId = $(this).closest('.product-card').data("product-id");
           app.agregarProducto(productId, 1);
-        });
-      } else {
-        this.noProductsFound.removeClass("d-none").addClass("d-block");
+        });        
+      } else{
+        html = `<p>No se encontraron resultados.</p>`;
+        this.pc.html(html); // sobre escribir el contenedor de productos
       }
-
     },
     //Metodo para mostrar la cantidad de productos en el carrito
     verCant: function () {

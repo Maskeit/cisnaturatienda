@@ -28,7 +28,6 @@ css('catalogo');
             </aside>
             <section id="product-card" class="productos">
                 <!-- Productos listados aquí -->
-                <p id="noResultsMessage" class="d-none">No se encontraron resultados.</p>
                 <p id="no-products" class="d-none">Estamos trabajando para mostrarte el catalogo...</p>
             </section>
         </section>
