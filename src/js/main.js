@@ -27,7 +27,7 @@ $(document).ready(() => {
           }
         },
         error: function (error) {
-          console.log("No se cerro: ",error);
+          console.log("System Error: ",error);
         },
       });
     },

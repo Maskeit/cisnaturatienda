@@ -67,7 +67,7 @@ require('session-register.php');
 				$createdAt
 			);
 
-			if($register != 'done') return false;
+			if(!$register) return false;
 			
 			$array = array(
 				"SSID" => $token,
@@ -82,21 +82,20 @@ require('session-register.php');
 		}
 	}
 
-	public function deleteSession($userId){
-		$filename = deleteSessionDB($userId);
-		if (!$filename) {
-			return false; // Or handle the error appropriately
-		}
-	
+	public function deleteSession($json, $userId) {
+		$filename = deleteSessionDB($json, $userId);
+		if (!$filename) return false;
+		
 		$sessionPath = __DIR__ . '/../../secure/sessions/' . $filename . '.json';
-		if (file_exists($sessionPath)) {
-			unlink($sessionPath); // Delete the file
+		if (file_exists($sessionPath) && unlink($sessionPath)) {
 			return true;
 		} else {
-			error_log("deleteSession: Session file not found - " . $sessionPath);
+			error_log("Failed to delete session file: $sessionPath");
 			return false;
 		}
-	}		
+	}
+	
+	
 }
 
 ?>
