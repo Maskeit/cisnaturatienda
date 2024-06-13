@@ -13,6 +13,7 @@ require('session-register.php');
 		$email,
 		$userId,
 		$role,
+		$name,
 		$HTTP_USER_AGENT
 	){
 		try{
@@ -44,6 +45,8 @@ require('session-register.php');
 					"token" => $token,
 					"userAgent" => $HTTP_USER_AGENT,
 					"id" => $userId,
+					"name" => $name,
+					"email" => $email,
 					"json" => $jsonFile . '.json'
 				)
 			);
@@ -80,12 +83,20 @@ require('session-register.php');
 	}
 
 	public function deleteSession($userId){
-		try {
-			deleteSessionDB($userId);
-		} catch (\Throwable $th) {
+		$filename = deleteSessionDB($userId);
+		if (!$filename) {
+			return false; // Or handle the error appropriately
+		}
+	
+		$sessionPath = __DIR__ . '/../../secure/sessions/' . $filename . '.json';
+		if (file_exists($sessionPath)) {
+			unlink($sessionPath); // Delete the file
+			return true;
+		} else {
+			error_log("deleteSession: Session file not found - " . $sessionPath);
 			return false;
 		}
-	}
+	}		
 }
 
 ?>

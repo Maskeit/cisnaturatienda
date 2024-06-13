@@ -82,31 +82,8 @@ function head()
                                         <a class="nav-link mx-1 my-1 button-navbar" href="/cisnaturatienda/src/views/contacto.php">Contacto</a>
                                     </li>
                                 </ul>
-                                <ul class="navbar-nav ml-auto mb-2 d-flex align-items-center">
-                                    <!-- btn -->
-                                    <!-- btn -->
-                                    <?php ?>
-                                        <li class="nav-item mx-1">                                    
-                                            <a class="button-register nav-link  btn btn-link" href="/cisnaturatienda/src/views/auth/register.php">Registrarse</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="button-session nav-link btn btn-link" href="/cisnaturatienda/src/views/auth/login.php">Iniciar Sesión</a>
-                                        </li>
-                                    <?php ?>
-                                    <li class="nav-item dropdown">
-                                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <?= 'Nombre' ?>
-                                        </a>
-                                        <ul class="dropdown-menu w-50 mx-left">
-                                            <li>
-                                                <button type="button" class="dropdown-item btn btn-primary" onclick="main.view('profile')">Mi Cuenta</button>
-                                            </li>
-                                            <li>
-                                                <button type="button" class="dropdown-item btn btn-danger" onclick="main.view('endsession')">Cerrar sesión</button>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <?php ?>
+                                <ul id="close-profile" class="navbar-nav mx-5">
+                                    <!-- content -->
                                 </ul>
                             </div>
                         </div>

@@ -190,7 +190,7 @@ $(document).ready(() => {
             Authorization: system.http.send.authorization(),
           },
           success: function (response) {
-            const num = response; // Accede directamente a la propiedad 'response'
+            const num = response;
             if (num > 0) {
               let btnHtml = `
                 <button class="cart-btn" onclick="app.view('carrito')">
