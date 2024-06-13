@@ -37,7 +37,7 @@ class LoginController
                 $datos['name'],
                 $datos['email'],
                 $encpass
-            ];
+            ];            
             $result = $user->create();
             return json_encode(["r" => true]);
             die;
@@ -61,6 +61,7 @@ class LoginController
             $encpass = $data[0]['passwd'];
             $role = $data[0]['tipo'];
             $active = $data[0]['active'];
+            $name = $data[0]['name'];
 
             if (
                 (password_verify($pass, $encpass)) && 
@@ -68,7 +69,7 @@ class LoginController
             ) {
                 $_HEADERS = apache_request_headers();
                 $HTTP_USER_AGENT = $_HEADERS['User-Agent'];
-                $session = $Session->createSession($email,$userId,$role,$HTTP_USER_AGENT);                    
+                $session = $Session->createSession($email,$userId,$role,$name,$HTTP_USER_AGENT);                    
                 return $session;
             }
             if(
@@ -85,12 +86,10 @@ class LoginController
         }
     }
 
-    public function sessionDestroy(){
-        $user = new user();
+    public function sessionDestroy($userId){
         $Session = new Session();
-        $_HEADERS = apache_request_headers();
-        $HTTP_USER_AGENT = $_HEADERS['User-Agent'];
-        // $Session->deleteSession($userId);
+        $result = $Session->deleteSession($userId);
+        return $result;
     }
     public function userAdministrationAuth($datos)
     {

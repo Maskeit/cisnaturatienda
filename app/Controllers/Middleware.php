@@ -134,9 +134,6 @@ class Middleware
 			echo 'error: ' . $th;
 		}
 	}
-	public function getId($id){
-		return $id;
-	}
 	public function autorization($_HEADERS, $pwdHasher)
 	{
 		// Inicializar la respuesta estándar
@@ -206,6 +203,8 @@ class Middleware
 			$SSK = $line['sessionkey'];
 			$userAgent = $line['session']['userAgent'];//chorme v9.5 vu221
 			$id = $line['session']['id'];
+			$email = $line['session']['email'];
+			$name = $line['session']['name'];
 			fclose($file);
 
 			//validation of the property SSID -> session ID
@@ -315,8 +314,8 @@ class Middleware
 			// return true Si todas las validaciones son correctas
 			$response['success'] = true;
 			$response['message'] = 'Autorización exitosa';
-			$response['data'] = ['userId' => $id, 'tipo' => $resArr[0]['tipo']];
-
+			$response['data'] = ['userId' => $id, 'tipo' => $resArr[0]['tipo'], 'name' => $name];
+			
 			return $response;
 		} catch (\Throwable $th) {
 			//throw $th;
