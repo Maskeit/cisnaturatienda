@@ -20,6 +20,7 @@ try {
     }
     $userId = $contentUser['data']['userId'];
     $name = $contentUser['data']['name'];
+    $jsonName = $contentUser['data']['json'];
     //print_r($userId);
     if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['_aname'])) {        
         $json['response'] = $name;
@@ -27,11 +28,10 @@ try {
         return;
     }elseif($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['_closeSession'])) {
         $loginController = new LoginController();
-        $close = $loginController->sessionDestroy($userId);
-        if($close){
-            $json['response'] = "closed";
-            echo json_encode($json, JSON_PRETTY_PRINT);
-            return;
+        if ($loginController->sessionDestroy($jsonName, $userId)) {
+            echo json_encode(['response' => "Session closed successfully"]);
+        } else {
+            echo json_encode(['response' => "Failed to close session"]);
         }
     }
 } catch (Exception $e) {

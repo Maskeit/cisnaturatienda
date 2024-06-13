@@ -314,7 +314,7 @@ class Middleware
 			// return true Si todas las validaciones son correctas
 			$response['success'] = true;
 			$response['message'] = 'Autorización exitosa';
-			$response['data'] = ['userId' => $id, 'tipo' => $resArr[0]['tipo'], 'name' => $name];
+			$response['data'] = ['userId' => $id, 'json' => $APISS__NME, 'tipo' => $resArr[0]['tipo'], 'name' => $name];
 			
 			return $response;
 		} catch (\Throwable $th) {

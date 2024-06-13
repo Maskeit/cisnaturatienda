@@ -86,11 +86,11 @@ class LoginController
         }
     }
 
-    public function sessionDestroy($userId){
+    public function sessionDestroy($jsonName, $userId) {
         $Session = new Session();
-        $result = $Session->deleteSession($userId);
-        return $result;
+        return $Session->deleteSession($jsonName, $userId);
     }
+    
     public function userAdministrationAuth($datos)
     {
         $user = new user();
