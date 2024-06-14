@@ -16,6 +16,17 @@ $(document).ready(() => {
     lp: $("#pago"), //listo para pagar
 
     allProducts : [],
+    initData: function (){
+      var self = this;
+
+      var userCart = localStorage.getItem("carrito");
+      if(userCart) {
+        userCart = JSON.parse(userCart);
+          self.displayCar(userCart);
+      }else{
+        self.loadProducts();
+      }
+    },
     // carga de productos
     // Asegurándose de pasar los productos correctos a displayCar después de cargarlos
     loadProducts: function () {
@@ -198,5 +209,5 @@ $(document).ready(() => {
     },
   };
   window.app = app_car;
-  app.loadProducts();
+  app.initData();
 });
