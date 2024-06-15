@@ -27,22 +27,26 @@ use function PHPSTORM_META\type;
 	}
 
 	//Method to delete a session from the database
-	function deleteSessionDB($json, $userId) {
+	function sessionDeleteDB($json, $userId) {
 		$nsession = new sessions();
-		$result = $nsession->where([['user', $userId], ['json', $json]])->get();
-		if (!$result) return false;
-	
-		$data = json_decode($result, true);
-		if (empty($data)) return false;
-	
-		$jsonFilename = $data[0]['json'];
-		if ($nsession->delete(['_id' => $data[0]['_id']])) {
-			return $jsonFilename;
+		$result = $nsession->where([['user', $userId]])->get();
+		$id = "";
+		$data = json_decode($result, true);			
+		if (!empty($data)) {
+			foreach ($data as $session) {
+				if ($session['json'] == $json . '.json') {
+					$id = $session['id'];					
+					break;
+				}
+			}
+			if ($nsession->delete($id)) {
+                return true;
+            } else {
+                return false;
+            }
 		} else {
-			return false;
-		}
+			echo "No sessions found for user ID: " . $userId;
+		}	
 	}
-	
-	
 
 ?>

@@ -22,14 +22,20 @@ $(document).ready(() => {
           Authorization: system.http.send.authorization(),
         },
         success: function (response) {
-          if(response.response) {
-            system.clearCookiesAndRedirect();
+          if(!response.response) {
+            console.log(response.response)
+            return;
           }
+          system.clearCookiesAndRedirect();
         },
         error: function (error) {
           console.log("System Error: ",error);
         },
       });
+    },
+
+    closeSession2: function () {
+      system.clearCookiesAndRedirect();
     },
 
     initData: function () {
@@ -81,7 +87,7 @@ $(document).ready(() => {
                 <button type="button" class="dropdown-item btn btn-primary">Mi Cuenta</button>
             </li>
             <li>
-                <button type="button" class="dropdown-item btn btn-danger" onclick="main.closeSession()">Cerrar sesión</button>
+                <button type="button" class="dropdown-item btn btn-danger" onclick="main.closeSession2()">Cerrar sesión</button>
             </li>
         </ul>
       </li>

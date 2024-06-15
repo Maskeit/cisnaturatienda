@@ -87,71 +87,14 @@ class LoginController
     }
 
     public function sessionDestroy($jsonName, $userId) {
-        $Session = new Session();
-        return $Session->deleteSession($jsonName, $userId);
-    }
-    
-    public function userAdministrationAuth($datos)
-    {
-        $user = new user();
-        $pass = $datos['passwd'];
-        $result = $user->where([["email", $datos["email"]]])->get();
-        if (count(json_decode($result)) > 0) {
-            $data = json_decode($result, true);
-            $encpass = $data[0]['passwd'];
-            $role = $data[0]['tipo'];
-
-            if ((password_verify($pass, $encpass)) &&
-                ($role === '1')
-            ) {
-                //Se registra la sesión
-                return $this->sessionRegister($result);
-            }
-            if (
-                !(password_verify($pass, $encpass)) &&
-                (!(password_verify($pass, $encpass)) && !($role === '1'))
-            ) {
-                $this->sessionDestroy();
-                echo json_encode(["r" => false]);
-            }
-        } else {
-            $this->sessionDestroy();
-            echo json_encode(["r" => false]);
+        $Session = new Session();        
+        $result = $Session->deleteSession($jsonName, $userId);
+        if(!$result){
+            return false;
         }
+        return true;
     }
-
-
-    private function sessionRegister($r)
-    {
-        $datos = json_decode($r);
-        session_start();
-        $_SESSION['IP'] = $_SERVER['REMOTE_ADDR'];
-        $_SESSION['email'] = $datos[0]->email;
-        $_SESSION['passwd'] = $datos[0]->passwd;
-        $_SESSION['tipo'] = $datos[0]->tipo;
-        session_write_close();
-        return json_encode(["r" => true]);
-    }
-    
-
-    // private function sessionDestroy()
-    // {
-    //     session_start();
-    //     $_SESSION = [];
-    //     session_destroy();
-    //     session_write_close();
-    //     $this->sv = false;
-    //     $this->name = "";
-    //     $this->id = "";
-    //     $this->tipo = "";
-    //     return;
-    // }
-    public function logout()
-    {
-        $this->sessionDestroy();
-        return;
-    }
-
+        
     /*******DOMICILIO DEL CLIENTE GUARDADO  *********/
     //Crea una instancia para el domicilio del cliente
     public function saveAddress($datos)

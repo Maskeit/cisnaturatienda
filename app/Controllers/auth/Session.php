@@ -82,20 +82,20 @@ require('session-register.php');
 		}
 	}
 
+	//falta mejorar este metodo porque no elimina el registro en el codigo fuente
 	public function deleteSession($json, $userId) {
-		$filename = deleteSessionDB($json, $userId);
+		$filename = sessionDeleteDB($json, $userId);
 		if (!$filename) return false;
 		
 		$sessionPath = __DIR__ . '/../../secure/sessions/' . $filename . '.json';
 		if (file_exists($sessionPath) && unlink($sessionPath)) {
 			return true;
 		} else {
-			error_log("Failed to delete session file: $sessionPath");
+			echo ("Failed to delete session file: $sessionPath");
 			return false;
 		}
 	}
-	
-	
+		
 }
 
 ?>
