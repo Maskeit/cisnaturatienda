@@ -86,6 +86,44 @@ class LoginController
         }
     }
 
+    public function AdminAuth($datos){
+        $user = new user();
+        $MW = new Middleware();
+        $Session = new Session();
+        $passbtoa = $datos['passwd'];
+        
+        $pass = $MW->atob($passbtoa);//descifrate password by atob Method
+        $email = $datos['email'];
+        $result = $user->where([["email", $email]])->get();        
+        if (count(json_decode($result)) > 0) {
+            $data = json_decode($result, true);
+            $userId = $data[0]['id'];
+            $encpass = $data[0]['passwd'];
+            $role = $data[0]['tipo'];
+            $active = $data[0]['active'];
+            $name = $data[0]['name'];
+            if(
+                (password_verify($pass, $encpass)) && 
+                ($role === '1') && ($active === '1')
+            ){                    
+                $_HEADERS = apache_request_headers();
+                $HTTP_USER_AGENT = $_HEADERS['User-Agent'];
+                $session = $Session->createSession($email,$userId,$role,$name,$HTTP_USER_AGENT);
+                return $session;
+            }
+            if(
+                !(password_verify($pass, $encpass)) || 
+                (!(password_verify($pass, $encpass)) && 
+                !($role === '1')) || !$active !== '1') 
+            {                
+                echo json_encode(["error" => 'Failed auth']);
+                return;
+            }
+        } else {
+            echo json_encode(["r" => false]);
+            return;
+        }
+    }
     public function sessionDestroy($jsonName, $userId) {
         $Session = new Session();        
         $result = $Session->deleteSession($jsonName, $userId);
