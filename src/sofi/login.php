@@ -2,7 +2,7 @@
 
 namespace views;
 
-include "../../components/layout/login.php";
+include "../components/layout/login_admin.php";
 head();
 css('register');
 ?>

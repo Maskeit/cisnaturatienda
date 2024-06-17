@@ -107,13 +107,13 @@ class PostController {
     
 
     //trae todos los productos al catalogo de administracion
-    public function getProductsToAdmin($limit=""){
+    public function getProductsToAdmin(){
         $product = new products();
         //Si quiero que tenga un orden descendiente o ascendiente usar 'DESC' o 'ASC'
         //orderBy([['created_at','ASC']])
         //inRandomOrder()
         $result = $product->orderBy([['created_at','ASC']])
-                          ->get();
+                          ->get();  
         return $result;
     }
 

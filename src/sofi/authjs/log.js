@@ -43,7 +43,8 @@ $(document).ready(() => {
                     $.cookie('SSID', resp.SSID, {expires: 7, path: '/', domain: V_Domain});
                     $.cookie('SSK', resp.SSK, {expires: 7, path: '/', domain: V_Domain});
                     $.cookie('APISS__NME', resp.APISS__NME, {expires: 7, path: '/', domain: V_Domain});
-                    window.location.href = V_Global + 'src/views/home.php';
+                    localStorage.clear();
+                    window.location.href = V_Global + 'src/sofi/catalogo_admin.php';
                 } else if (resp.error && resp.error === "Failed auth") {
                     $("#error").text("Sus datos de inicio de sesión son incorrectos").removeClass("d-none").effect("shake");
                 } else {
