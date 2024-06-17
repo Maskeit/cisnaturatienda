@@ -51,9 +51,9 @@ var system = {
                         SSID: SSID,
                         SSK: SSK,
                         APISS__NME: APISS__NME
-                    }));
+                    }));                   
                 }catch(error){
-                   this.clearCookiesAndRedirect();
+                    console.log(error);
                 }
             }
 		}
@@ -63,6 +63,7 @@ var system = {
         $.removeCookie('SSID', { path: '/' });
         $.removeCookie('SSK', { path: '/' });
         $.removeCookie('APISS__NME', { path: '/' });
+        localStorage.clear();
         return system.platform.session.force();
     },
 
