@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 13-06-2024 a las 09:51:06
+-- Tiempo de generación: 22-06-2024 a las 03:07:03
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -137,7 +137,12 @@ INSERT INTO `privileges` (`id`, `route`, `access`, `user_type`) VALUES
 (11, '/cisnaturatienda/app/services/routes/catalogo.route.php?_ap', 1, 2),
 (12, '/cisnaturatienda/app/services/routes/home.route.php?_ap', 1, 2),
 (13, '/cisnaturatienda/app/services/routes/main.route.php?_aname', 1, 2),
-(16, '/cisnaturatienda/app/services/routes/main.route.php?_closeSession', 1, 2);
+(16, '/cisnaturatienda/app/services/routes/main.route.php?_closeSession', 1, 2),
+(17, '/cisnaturatienda/app/services/routes/ad.route.php?_posts', 1, 1),
+(19, '/cisnaturatienda/app/services/routes/mainAdmin.route.php?_closeSession', 1, 1),
+(20, '/cisnaturatienda/app/services/routes/mainAdmin.route.php?_aname', 1, 1),
+(21, '/cisnaturatienda/app/services/routes/ad.route.php?_editproduct', 1, 1),
+(22, '/cisnaturatienda/app/services/routes/ad.route.php?_dp', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -203,7 +208,7 @@ CREATE TABLE `product_order` (
 --
 
 CREATE TABLE `sessions` (
-  `_id` int(11) NOT NULL,
+  `id` int(11) NOT NULL,
   `user` int(11) DEFAULT NULL,
   `json` varchar(500) DEFAULT NULL,
   `date` datetime DEFAULT NULL
@@ -230,9 +235,9 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `name`, `email`, `passwd`, `tipo`, `active`, `created_at`) VALUES
-(66, 'Manuel', 'manuel@gmail.com', '$2y$10$zuB0i4rsmNCXrwrIfJ1gkuU7sS5MtEkZ63FJqO/Qnl4fkX/7Fx7ne', 2, 1, '2024-02-15 03:13:22'),
 (76, 'Miguel Agustin', 'malejandre@ucol.mx', '$2y$10$Rz7CIqQfcbCjQujfIEv/COBPz7L4eg44gX2jVY8SIs6ZkOyr660CW', 2, 1, '2024-02-24 21:37:24'),
-(77, 'Sofia', 'sofiageovana@gmail.com', '$2y$10$uXrym6IrTYhq3fNPiGIJhOkmYlsLUX6jwyGebUtxC/4CCqISQJpE6', 1, 1, '2024-03-09 22:16:16');
+(82, 'Sofia', 'sofiageovana@gmail.com', '$2y$10$XZXQ9xVIrWXDqogZjCAVJOtYTQrEZUghkjVAESoXPOlS8CgiPJsaS', 1, 1, '2024-06-15 22:38:53'),
+(83, 'Miguel', 'miguelagustin182@gmail.com', '$2y$10$xYW.1c1eUfWXPXeqQ3Au6ullQe9Y10ZJDBEzXDPF2U5/N/I4FwrVy', 1, 1, '2024-06-17 00:57:48');
 
 --
 -- Índices para tablas volcadas
@@ -295,7 +300,7 @@ ALTER TABLE `product_order`
 -- Indices de la tabla `sessions`
 --
 ALTER TABLE `sessions`
-  ADD PRIMARY KEY (`_id`),
+  ADD PRIMARY KEY (`id`),
   ADD KEY `user` (`user`);
 
 --
@@ -319,13 +324,13 @@ ALTER TABLE `address`
 -- AUTO_INCREMENT de la tabla `binnacle`
 --
 ALTER TABLE `binnacle`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=523;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=557;
 
 --
 -- AUTO_INCREMENT de la tabla `carrito`
 --
 ALTER TABLE `carrito`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=530;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=533;
 
 --
 -- AUTO_INCREMENT de la tabla `payment`
@@ -337,7 +342,7 @@ ALTER TABLE `payment`
 -- AUTO_INCREMENT de la tabla `privileges`
 --
 ALTER TABLE `privileges`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT de la tabla `products`
@@ -355,13 +360,13 @@ ALTER TABLE `product_order`
 -- AUTO_INCREMENT de la tabla `sessions`
 --
 ALTER TABLE `sessions`
-  MODIFY `_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=147;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=215;
 
 --
 -- AUTO_INCREMENT de la tabla `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
 
 --
 -- Restricciones para tablas volcadas
