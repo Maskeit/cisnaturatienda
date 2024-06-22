@@ -17,13 +17,4 @@
     margin: 2 auto; /* Centrar la imagen horizontalmente */
     margin-bottom: 1;
     max-width: 100%; /* Limitar el tamaño máximo de la imagen */
- /*   max-height: 100px; /* Ajustar la altura máxima de la imagen */
-}
-
-body{
-    background-color: 	#ffffff;
-}
-
-.price-form{
-    max-width: 30%;
 }

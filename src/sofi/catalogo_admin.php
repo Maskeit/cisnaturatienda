@@ -6,7 +6,7 @@ include "../components/layout/main_admin.php";
 head();
 css('catalogo');
 ?>
-
+<script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
 <main class="pageCar">
     <div class="section-principal">
         <section class="content">
@@ -15,6 +15,7 @@ css('catalogo');
                     <input class="form-control" id="search-input" type="search" placeholder="Buscar producto" aria-label="Buscar producto">
                     <button id="btn-buscar" class="btn-search" type="submit"> <i class="bi bi-search searchIcon"></i></button>
                 </form>
+                <a href="new_product.php" type="button" class="btn btn-primary"> + Añadir producto o servicio</a>
             </aside>
             <section id="posts" class="productos">
                 <!-- content -->

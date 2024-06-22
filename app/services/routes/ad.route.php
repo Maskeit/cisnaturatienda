@@ -33,12 +33,19 @@ try {
         print_r($result);
         return;
     } elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['_editproduct'])){
-        echo $_SERVER['REQUEST_URI'];
         $posts = new PostController();
-        // Aquí podrías necesitar acceder al cuerpo de la petición de otra manera debido a FormData
+        $datos = $_POST;
+        print_r($datos);
+        // // Aquí podrías necesitar acceder al cuerpo de la petición de otra manera debido a FormData
         $data = $_FILES; // Si enviaste algún archivo
-        echo json_encode($data); // Ver qué archivos se han recibido
-        echo json_encode($_POST); // Ver otros campos enviados
+        print_r($data);
+        // $result = $posts->updateProduct($datos);
+        // if (!$result) {
+        //     $json["response"] = "internal server error or auth denied";
+        //     echo json_encode($json, JSON_PRETTY_PRINT);
+        //     return;
+        // }
+        // print_r($result);
         return;
     } elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['_dp'])){
         $posts = new PostController();

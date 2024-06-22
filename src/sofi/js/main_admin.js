@@ -82,9 +82,6 @@ $(document).ready(() => {
           </a>
           <ul class="dropdown-menu w-50 mx-left">
               <li>
-                  <button type="button" class="dropdown-item btn btn-primary">Mi Cuenta</button>
-              </li>
-              <li>
                   <button type="button" class="dropdown-item btn btn-danger" onclick="main.closeSession2()">Cerrar sesión</button>
               </li>
           </ul>
