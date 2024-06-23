@@ -1,7 +1,11 @@
 var catalogo_admin;
 $(document).ready(() => {
   var url = V_Global + "app/services/routes/ad.route.php";
-catalogo_admin = {
+  $('#search-input').on('input', function() {
+    const keyword = $(this).val();
+    catalogo_admin.searchProducts(keyword);
+  });
+  catalogo_admin = {
     routes: {
       //rutas de funciones del home
       posts: url + "?_posts",
@@ -12,28 +16,36 @@ catalogo_admin = {
     view: function (route) {
       location.replace(this.routes[route]);
     },
-
+    
     postsContent: $("#posts"),
     allProducts: [],
+    
+    // metodo para buscar productos 
+    searchProducts: function(keyword) {
+      const searchResults = this.allProducts.filter(product =>
+          product.product_name.toLowerCase().includes(keyword.toLowerCase()) ||
+          product.description.toLowerCase().includes(keyword.toLowerCase())
+      );
+      this.displayPosts(searchResults);
+    }, 
+    // Inicializa los eventos del formulario de búsqueda
+    initSearch: function() {
+      const self = this; // Referencia a la instancia de app para uso en callbacks
 
-    initData: function () {
-      var self = this;
-      var catalogoContent = localStorage.getItem("catalogoContent");
-      var lastUpdate = localStorage.getItem("lastUpdate");
-      var currentTime = new Date().getTime();
-      var updateInterval = 3600000;
-      if (
-        catalogoContent &&
-        lastUpdate &&
-        currentTime - lastUpdate < updateInterval
-      ) {
-        system.http.send.authorization();
-        catalogoContent = JSON.parse(catalogoContent);
-        self.allProducts = catalogoContent;
-        self.displayPosts(catalogoContent);
-      } else {
-        this.loadPosts();
-      }
+      $('#form-buscador').on('submit', function(event) {
+          event.preventDefault(); // Detiene la recarga de la página
+          const keyword = $('#search-input').val().trim();
+          if (keyword) {
+              self.searchProducts(keyword);
+          }
+      });
+
+      $('#search-input').on('input', function() {
+          const keyword = $(this).val().trim();
+          if (keyword) {
+              self.searchProducts(keyword);
+          }
+      });
     },
     loadPosts: function () {
       var self = this;
@@ -45,13 +57,7 @@ catalogo_admin = {
           Authorization: system.http.send.authorization(),
         },
         success: function (response) {
-          console.log("se tiene que hacer la peticiion");
           self.allProducts = response;
-          localStorage.setItem(
-            "catalogoContent",
-            JSON.stringify(self.allProducts)
-          );
-          localStorage.setItem("lastUpdate", new Date().getTime());
           self.displayPosts(self.allProducts);
         },
         error: function (error) {
@@ -145,6 +151,14 @@ catalogo_admin = {
             </div>
         </form> `;
         document.getElementById("productModalBody").innerHTML = html;
+        ClassicEditor
+                    .create( document.querySelector( '#description' ) )
+                    .then( editor => {
+                            console.log( editor );
+                    } )
+                    .catch( error => {
+                            console.error( error );
+                    } );
         $("#productModal").modal("show"); // Muestra el modal
 
         //peticion para editar producto
@@ -181,10 +195,7 @@ catalogo_admin = {
                             alert(response);   
                             return;
                         }
-                        self.allProducts = response;
-                        //localStorage.setItem("catalogoContent", JSON.stringify(self.allProducts));
-                        //localStorage.setItem("lastUpdate", new Date().getTime());
-                        self.displayPosts(self.allProducts);
+                        self.loadPosts();
                     },
                     error: function (xhr, status, error) {
                         console.error("Error updating product: ", xhr.responseText);
@@ -196,7 +207,6 @@ catalogo_admin = {
         alert("Producto no encontrado");
       }
     },
-
 
     deleteProduct: function(pid){
         console.log(pid);
@@ -223,8 +233,9 @@ catalogo_admin = {
                 console.error("Error: " + error);
             },
         });
-    }
-  };
+    },
 
-  catalogo_admin.initData();
+  };
+  catalogo_admin.loadPosts();
+  catalogo_admin.initSearch();
 });

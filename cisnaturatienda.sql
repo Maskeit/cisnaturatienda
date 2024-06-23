@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 22-06-2024 a las 03:07:03
--- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.2.12
+-- Servidor: localhost:8889
+-- Tiempo de generación: 22-06-2024 a las 03:50:32
+-- Versión del servidor: 5.7.39
+-- Versión de PHP: 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -37,7 +37,7 @@ CREATE TABLE `address` (
   `estado` text NOT NULL,
   `ciudad` text NOT NULL,
   `postalcode` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -50,7 +50,7 @@ CREATE TABLE `api` (
   `name` varchar(50) DEFAULT NULL,
   `value` varchar(150) DEFAULT NULL,
   `date` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `api`
@@ -72,7 +72,14 @@ CREATE TABLE `binnacle` (
   `type` varchar(200) DEFAULT NULL,
   `_from` varchar(200) DEFAULT NULL,
   `date` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `binnacle`
+--
+
+INSERT INTO `binnacle` (`id`, `module`, `message`, `type`, `_from`, `date`) VALUES
+(557, 'autorization middleware', 'Urgent request denied, this user doesn´t have permissions to execute the next request: /cisnaturatienda/app/services/routes/home.route.php?_lp', 'URGENT id: 82', 'system', '2024-06-21 20:31:16');
 
 -- --------------------------------------------------------
 
@@ -85,9 +92,9 @@ CREATE TABLE `carrito` (
   `userId` int(11) NOT NULL,
   `productId` int(11) NOT NULL,
   `cantidad` int(11) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -106,9 +113,9 @@ CREATE TABLE `payment` (
   `paid_amount` float NOT NULL,
   `payment_status` varchar(25) NOT NULL,
   `address_id` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
-  `updated_at` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -119,9 +126,9 @@ CREATE TABLE `payment` (
 CREATE TABLE `privileges` (
   `id` int(11) NOT NULL,
   `route` varchar(100) NOT NULL,
-  `access` int(11) NOT NULL DEFAULT 1,
+  `access` int(11) NOT NULL DEFAULT '1',
   `user_type` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `privileges`
@@ -142,7 +149,9 @@ INSERT INTO `privileges` (`id`, `route`, `access`, `user_type`) VALUES
 (19, '/cisnaturatienda/app/services/routes/mainAdmin.route.php?_closeSession', 1, 1),
 (20, '/cisnaturatienda/app/services/routes/mainAdmin.route.php?_aname', 1, 1),
 (21, '/cisnaturatienda/app/services/routes/ad.route.php?_editproduct', 1, 1),
-(22, '/cisnaturatienda/app/services/routes/ad.route.php?_dp', 1, 1);
+(22, '/cisnaturatienda/app/services/routes/ad.route.php?_dp', 1, 1),
+(23, '/cisnaturatienda/app/services/routes/ad.route.php', 1, 1),
+(24, '/cisnaturatienda/app/services/routes/create.route.php?_create', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -157,11 +166,11 @@ CREATE TABLE `products` (
   `description` text NOT NULL,
   `thumb` text NOT NULL,
   `price` varchar(10) NOT NULL,
-  `active` tinyint(1) NOT NULL DEFAULT 1,
-  `created_at` timestamp NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NULL DEFAULT current_timestamp(),
-  `deleted` tinyint(4) DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `active` tinyint(1) NOT NULL DEFAULT '1',
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `deleted` tinyint(4) DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `products`
@@ -197,9 +206,9 @@ CREATE TABLE `product_order` (
   `total` float NOT NULL,
   `order_status` varchar(25) NOT NULL DEFAULT 'incomplete',
   `address_id` int(11) DEFAULT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
-  `updated_at` datetime DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -212,7 +221,19 @@ CREATE TABLE `sessions` (
   `user` int(11) DEFAULT NULL,
   `json` varchar(500) DEFAULT NULL,
   `date` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `sessions`
+--
+
+INSERT INTO `sessions` (`id`, `user`, `json`, `date`) VALUES
+(215, 82, '9e6784dda9eeae5d53b54f5b7baa40cccdb30173.json', '2024-06-21 19:21:34'),
+(216, 76, '44d6f190d264a7f2eb6bdd88d62ecd3042b3bae5.json', '2024-06-21 19:30:53'),
+(217, 82, '5a9c13c92f7b05a51dfde84b3edb6a151bae1769.json', '2024-06-21 19:32:11'),
+(218, 76, 'e7d234636958a40723a572c7dc23de8e37349599.json', '2024-06-21 19:43:19'),
+(219, 82, '6824c653335933c8860aab0e7595f9740864c18c.json', '2024-06-21 20:31:46'),
+(220, 82, 'dc92451c9a9840ce410db17df9b6c7d24d37b6e1.json', '2024-06-21 20:42:37');
 
 -- --------------------------------------------------------
 
@@ -222,12 +243,12 @@ CREATE TABLE `sessions` (
 
 CREATE TABLE `user` (
   `id` int(11) NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `passwd` varchar(100) NOT NULL,
-  `tipo` tinyint(4) NOT NULL DEFAULT 2,
-  `active` tinyint(4) DEFAULT 1,
-  `created_at` timestamp NULL DEFAULT current_timestamp()
+  `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `email` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `passwd` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `tipo` tinyint(4) NOT NULL DEFAULT '2',
+  `active` tinyint(4) DEFAULT '1',
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -324,7 +345,7 @@ ALTER TABLE `address`
 -- AUTO_INCREMENT de la tabla `binnacle`
 --
 ALTER TABLE `binnacle`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=557;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=558;
 
 --
 -- AUTO_INCREMENT de la tabla `carrito`
@@ -342,7 +363,7 @@ ALTER TABLE `payment`
 -- AUTO_INCREMENT de la tabla `privileges`
 --
 ALTER TABLE `privileges`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT de la tabla `products`
@@ -360,7 +381,7 @@ ALTER TABLE `product_order`
 -- AUTO_INCREMENT de la tabla `sessions`
 --
 ALTER TABLE `sessions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=215;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=221;
 
 --
 -- AUTO_INCREMENT de la tabla `user`

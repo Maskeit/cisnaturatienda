@@ -7,31 +7,25 @@
     use Models\product_order;
     use Controllers\auth\LoginController as LoginController;
 
-    // Incluye la configuracion fuera de la clase
-    $config = include('config.php');
-    $uploadDirectory = $config['uploadDirectory'];
+    $uploadDirectory = __DIR__ . '/cisnaturatienda/app/pimg/';
 
 class PostController {
 
-    private $userId;
     private $uploadDirectory;
 
     public function __construct(){
         $ua = new LoginController();
-        //$ua->sessionValidate();
-        //reemplazar por una session del json
-        $this->userId = $ua->id;
-        //$this->uploadDirectory = $uploadDirectory;
     }
 
 
 
     /********************** Métodos para el manejo de los productos ***************** */
+    
     public function createProduct($datos){
         $product = new products();
         $check = @getimagesize($_FILES['thumb']['tmp_name']);
         if ($check !== false) {
-            $carpeta_destino = $this->uploadDirectory;
+            $carpeta_destino = __DIR__ . '/../../app/pimg/';
             if (!is_dir($carpeta_destino)) {
                 mkdir($carpeta_destino, 0777, true);
             }
@@ -43,12 +37,12 @@ class PostController {
                                  $datos['description'], 
                                  $_FILES['thumb']['name'], 
                                  $datos['price']];
-            $result = $product->create();
-            header('Location: /cisnaturatienda/src/views/admin/newproduct.php');
+            $product->create();
         } else {
             echo "Error al subir el archivo";
         }
     }
+    
 
     public function updateProduct($datos){
         $product = new products();
@@ -85,7 +79,6 @@ class PostController {
         if (isset($datos['price'])) {
             $updateData[] = ['price', "'" . $datos['price'] . "'"];
         }
-    
         // Realiza la actualización en la base de datos solo para los campos proporcionados.
         $result = $product->where([['id', $pid]])->update($updateData);
         return $result;
