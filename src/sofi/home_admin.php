@@ -2,7 +2,7 @@
 
 namespace views;
 
-include "../components/layout/main_admin.php";
+include "./components/layout/main_admin.php";
 head();
 css('home');
 

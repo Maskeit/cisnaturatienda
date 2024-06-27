@@ -1,3 +1,15 @@
+:root {
+    --cisgreen-50: #f5f8f5;
+    --cisgreen-100: #e0e7e2;
+    --cisgreen-200: #c0cfc3;
+    --cisgreen-300: #99af9f;
+    --cisgreen-400: #62a524;
+    --cisgreen-500: #487a1a;
+    --cisgreen-600: #3a6413;
+    --cisgreen-700: #325512;
+    --cisgreen-800: #313e35;
+    --ciserror: lightcoral;
+  }
 .card {
     width: 50%; /* Ancho del 70% en pantallas normales */
     margin: 0 auto; /* Centrar el card horizontalmente */
@@ -17,4 +29,42 @@
     margin: 2 auto; /* Centrar la imagen horizontalmente */
     margin-bottom: 1;
     max-width: 100%; /* Limitar el tamaño máximo de la imagen */
+}
+
+/*Notificar al usuario  de que agrego un producto nuevo*/
+@keyframes show-toaster {
+    from {
+        transform: translateY(-100%); /* Empieza fuera de la pantalla por arriba */
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0); /* Termina alineado donde debería estar */
+        opacity: 1;
+    }
+}
+
+.toaster {
+    display: none; /* ocultar por defecto */
+    position: fixed;
+    z-index: 10;
+    background: var(--cisgreen-400);
+    padding: 20px;
+    width: calc(100% - 40px);
+    max-width: 300px;
+    line-height: 150%;
+    border-radius: 10px;
+    border: 1px solid black;
+    top: 100px; /* Espacio desde el top para visibilidad */
+    left: 0;
+    right: 0;
+    margin: auto;
+    box-shadow: 0px 2px 20px 10px rgba(222, 222, 222, 0.565);
+}
+.toast-head {
+    display: flex;
+    justify-content: space-between;
+}
+.toaster.activo {
+    display: block;
+    animation: show-toaster 0.4s ease-in-out;
 }

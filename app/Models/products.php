@@ -11,7 +11,7 @@ class products extends DB {
         $this->table = $this->db_connect();
     }
 
-    protected $campos = ['type','product_name','description','thumb','price','active'];
+    protected $campos = ['type','product_name','description','thumb','price'];
 
     public $valores = [];
 

@@ -27,27 +27,25 @@ try{
         // Validar que todos los campos necesarios están presentes
         if (isset($_POST['type'], $_POST['product_name'], 
             $_POST['description'], $_POST['price']) 
-            && isset($_FILES['thumb']) && $_FILES['thumb']['error'] == 0) 
-        {
+            && isset($_FILES['thumb']) && $_FILES['thumb']['error'] == 0
+            ) {
             $postController = new PostController();
-            $result = $postController->createProduct($_POST);
-    
-            if ($result) {
-                echo json_encode(['response' => 'Product created successfully']);
-                return;
-            } else {
-                echo json_encode(['response' => 'Failed to create product']);
+            $result = $postController->createProduct($_POST);                
+            if (!$result['success']) {
+                echo json_encode(['response'=> $result['success']], JSON_PRETTY_PRINT);
                 return;
             }
+            echo json_encode(['response'=> $result['success']], JSON_PRETTY_PRINT);
         } else {
-            echo json_encode(['response' => 'Missing data or file']);
+            $json["response"] = "Campos inccorrectos o faltantes";
+            echo json_encode($json, JSON_PRETTY_PRINT);
             return;
         }
     } else {
-        echo json_encode(['response' => false]);
+        $json["response"] = false;
+        echo json_encode($json, JSON_PRETTY_PRINT);
         return;
     }
-    
 
 } catch (\Throwable $th) {
     //throw $th;

@@ -155,24 +155,19 @@ class DB {
         $stmt->bind_param(str_pad("",count($this->campos),"s"),...$this->valores);
         return $stmt->execute();
     }
-
-    public function insert($campo, $value){
-        $sql = 'insert into '. str_replace("Models\\","",get_class($this)) . 
-        ' (' . $campo .') values (?)';
+    public function newProduct($values) {
+        $fields = array_keys($values);
+        $placeholders = implode(',', array_fill(0, count($fields), '?'));
+        $types = str_repeat('s', count($fields)); // Asumiendo todos los campos como strings
+        $vals = array_values($values);        
+        $sql = 'INSERT into '. str_replace("Models\\","",get_class($this)) .
+        ' (' . implode("," , $this->campos ) .') values (' . 
+        $placeholders . ');';
         $stmt = $this->table->prepare($sql);
-        $stmt->bind_param('s', $value);
-        return $stmt->execute();
+        print_r($stmt);
+        $stmt->bind_param($types, ...$vals);
+        //return $stmt->execute();
     }
-
-    // public function update($sets){
-    //     foreach($sets as $s){
-    //         $set[] = $s[0] . "=" . $s[1];
-    //     }
-    //     $sql = 'update ' . str_replace("Models\\", "", get_class($this)) . 
-    //             ' set ' . implode(",",$set) . ' where ' .$this->w;
-    //     $result = $this->table->query($sql);
-    //     return $result;
-    // }
 
     public function update($sets) {
         $set = [];
