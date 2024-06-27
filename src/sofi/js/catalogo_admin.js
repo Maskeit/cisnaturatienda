@@ -10,7 +10,7 @@ $(document).ready(() => {
       //rutas de funciones del home
       posts: url + "?_posts",
       dp: url + "?_dp",
-      editP : url,
+      editP : url + "?_editproduct",
     },
 
     view: function (route) {
@@ -47,28 +47,45 @@ $(document).ready(() => {
           }
       });
     },
+    //hace la peticion para traer los productos
+    // hace la peticion para traer los productos
     loadPosts: function () {
       var self = this;
-      $.ajax({
-        type: "GET",
-        url: this.routes.posts,
-        dataType: "json",
-        headers: {
-          Authorization: system.http.send.authorization(),
-        },
-        success: function (response) {
-          self.allProducts = response;
-          self.displayPosts(self.allProducts);
-        },
-        error: function (error) {
-          console.error("Error: " + error);
-        },
-      });
+      try {
+        $.ajax({
+          type: "GET",
+          url: this.routes.posts,
+          dataType: "json",
+          headers: {
+            Authorization: system.http.send.authorization(),
+          },
+          success: function (response) {
+            if (!response) {
+              console.error("No response from the server");
+              system.clearCookiesAndRedirect();
+              return;
+            }
+            if (!Array.isArray(response)) {
+              console.error("Data is not an array:", response);
+              system.clearCookiesAndRedirect();
+              return;
+            }
+            self.allProducts = response;
+            self.displayPosts(self.allProducts);
+          },
+          error: function (error) {
+            console.error("Error: " + error);
+          },
+        });
+      } catch (err) {
+        console.error("Error: " + err);
+        system.clearCookiesAndRedirect();
+      }
     },
+    //muestra los productos en el catalogo despues de cargarlos
     displayPosts: function (productos) {
-      //console.log("llegaron los productos ", productos);
       var html = "<p>Cargando productos</p>";
-      if (productos.length > 0) {
+      if (Array.isArray(productos) && productos.length > 0) {
         html = productos.map(product => `
                 <div class="product-card" data-product-id="${product.id}" >
                     <div class="product-image">
@@ -85,7 +102,7 @@ $(document).ready(() => {
                     </div>
                 </div>
             `
-          ).join("");
+        ).join("");
         this.postsContent.html(html);
         $(".product-card").on("click", function () {
           const productId = parseInt($(this).data("product-id"), 10);
@@ -97,20 +114,20 @@ $(document).ready(() => {
         this.postsContent.html(html);
       }
     },
-    //descriipcion del producto
-    singleProduct: function (productId) {
+
+    //descriipcion del producto y form para editar el producto
+    singleProduct: async function (productId) {
       self = this;
-      console.log("Llego el producto", productId);
       // Encuentra el producto específico por ID desde el array allProducts
       const product = this.allProducts.find((p) => p.id == productId);
       if (product) {
         let html = `
-        <form id="editProduct" action="" enctype="multipart/form-data">
+        <form action="" id="form-product" method="POST" enctype="multipart/form-data">
             <div class="card-body">
                 <input type="hidden" id="id" name="id" value="${product.id}">
                 <label>Tipo de producto</label>
                 <select id="typeProduct" class="form-select" name="type" aria-label="Default select example">
-                    <option selected>${product.type}</option>
+                    <option selected class="bg-primary">${product.type}</option>
                     <option value="tintura">Tintura</option>
                     <option value="cds">Dioxido De Cloro</option>
                     <option value="curso">Curso/taller</option>
@@ -149,93 +166,87 @@ $(document).ready(() => {
                     <i class="bi bi-toggle toggleBtn"></i>
                 </a>
             </div>
-        </form> `;
+        </form> 
+        `;
         document.getElementById("productModalBody").innerHTML = html;
-        ClassicEditor
-                    .create( document.querySelector( '#description' ) )
-                    .then( editor => {
-                            console.log( editor );
-                    } )
-                    .catch( error => {
-                            console.error( error );
-                    } );
+        ClassicEditor.create(document.querySelector('#description')).catch(error => {
+            console.error(error);
+        });
         $("#productModal").modal("show"); // Muestra el modal
 
-        //peticion para editar producto
-        $(function() {
-            const ep = $("#editProduct");
-            ep.on("submit", function (e) {
-                e.preventDefault();
-                e.stopPropagation();
-                const data = new FormData();
-                data.append("type", $("#typeProduct").val());
-                data.append("product_name", $("#product_name").val());
-                data.append("description", $("#description").val());
-                data.append("price", $("#price").val());
-                data.append("id", $("#id").val());
-                data.append("_editproduct", "");
-                // Obtén el archivo seleccionado en el campo de imagen (si se seleccionó uno)
-                const thumbInput = document.getElementById("thumb");
-                if (thumbInput.files.length > 0) {
-                data.append("thumb", thumbInput.files[0]);
-                }
-
-                $.ajax({
-                    type: "POST",
-                    url: self.routes.editP,
-                    processData: false,  // importante para el envío de FormData
-                    contentType: false,  // importante para el envío de FormData
-                    data: data,
+        var form = document.getElementById('form-product');
+        form.onsubmit = async function(e) {
+            e.preventDefault();
+            var formData = new FormData(form);
+            formData.append('_editproduct', '1');
+            try {
+                const response = await fetch(self.routes.editP, {
+                    method: "POST",
                     headers: {
-                        Authorization: system.http.send.authorization(),
+                      Authorization: system.http.send.authorization(),
                     },
-                    success: function (response) {
-                        console.log("Update state: ", response);
-                        if(response.response == false){
-                            alert(response);   
-                            return;
-                        }
-                        self.loadPosts();
-                    },
-                    error: function (xhr, status, error) {
-                        console.error("Error updating product: ", xhr.responseText);
-                    }
-                });            
-            });
-        })
+                    body: formData,
+                });
+                const data = await response.json();
+                if (!data.response) {
+                    $("#toaster-c p").text("Hubo un error, inténtelo de nuevo más tarde.");
+                    $("#toaster-c").removeClass("d-none").addClass("activo").css("background", "var(--ciserror)");
+                } else {
+                    $("#toaster-c p").text("Se ha actualizado el producto correctamente!");
+                    $("#toaster-c").removeClass("d-none").addClass("activo").css("background", "var(--cisgreen-400)");
+                    self.loadPosts();
+                }
+                setTimeout(() => {
+                    $("#toaster-c").addClass("d-none").removeClass("activo");
+                }, 4000);
+            } catch (error) {
+                console.error("Error en la petición: ", error);
+            }
+        };
+        $("#cerrarNotificacion").on("click", function() {
+            $("#toaster-c").addClass("d-none").removeClass("activo");
+        });
       } else {
-        alert("Producto no encontrado");
+          alert("Producto no encontrado");
+          console.error("Not found");
       }
     },
+    //eliminar producto de la base de datos
+    deleteProduct: async function(pid) {
 
-    deleteProduct: function(pid){
-        console.log(pid);
-        $.ajax({
-            type: "POST",
-            url: this.routes.dp,
-            dataType: "json",
-            headers: {
-                Authorization: system.http.send.authorization(),
-            },
-            data: {
-                id: pid
-            },
-            success: function (response) {
-                self.allProducts = response;
-                localStorage.setItem(
-                    "catalogoContent",
-                    JSON.stringify(self.allProducts)
-                );
-                localStorage.setItem("lastUpdate", new Date().getTime());
-                self.displayPosts(self.allProducts);
-            },
-            error: function (error) {
-                console.error("Error: " + error);
-            },
-        });
+      if (!confirm("¿Estás seguro de que deseas eliminar este producto?")) {
+        return;
+      }      
+      try {
+          var self = this;
+          const body = new URLSearchParams();
+          body.append("pid", pid);
+          body.append("_dp", "1");
+  
+          const response = await fetch(this.routes.dp, {
+              method: "POST",
+              headers: {
+                  "Content-Type": "application/x-www-form-urlencoded",
+                  Authorization: system.http.send.authorization(),
+              },
+              body: body,
+          });
+  
+          const data = await response.json(); // Asegúrate de que el servidor devuelve una respuesta JSON
+          if (data.response === true) {
+              console.log("Producto eliminado correctamente");
+              // Recargar o actualizar la lista de productos
+              self.loadPosts();
+          } else {
+              console.error("No se pudo eliminar el producto:", data.response);
+          }
+      } catch (error) {
+          console.error("Error: " + error);
+      }
     },
-
+  
   };
+
   catalogo_admin.loadPosts();
   catalogo_admin.initSearch();
 });

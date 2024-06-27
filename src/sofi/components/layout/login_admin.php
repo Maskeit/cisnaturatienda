@@ -65,7 +65,7 @@ function scripts($script = ""){
         <script src="/cisnaturatienda/src/libraries/bootstrap.js"></script>
         <script src="/cisnaturatienda/src/libraries/cookies/src/jquery.cookie.js"></script>
         <script src="/cisnaturatienda/src/libraries/push.min.js"></script>
-        <script src="/cisnaturatienda/src/components/system.component.js"></script>
+        <script src="/cisnaturatienda/src/sofi/components/system.component.js"></script>
         <script src="/cisnaturatienda/src/sofi/js/main_admin.js"></script>
     <?php
     if ($script != '') {

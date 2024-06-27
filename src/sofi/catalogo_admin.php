@@ -2,7 +2,7 @@
 
 namespace views;
 
-include "../components/layout/main_admin.php";
+include "./components/layout/main_admin.php";
 head();
 css('catalogo');
 ?>
@@ -34,6 +34,12 @@ css('catalogo');
                     <!-- Detalles del producto aquí -->
                 </div>
             </div>
+        </div>
+    </div>
+    <div id="toaster-c" class="toaster-c d-none">
+        <div class="toast-head-c">
+            <p>Se ha subido el producto correctamente! <i class="bi bi-bag-check-fill"></i></p>
+            <button type="button" class="btn-close" id="cerrarNotificacion"></button>
         </div>
     </div>
 </main>

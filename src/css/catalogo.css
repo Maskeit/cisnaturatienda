@@ -9,6 +9,7 @@
   --cisgreen-600: #3a6413;
   --cisgreen-700: #325512;
   --cisgreen-800: #313e35;
+  --ciserror: lightcoral;
 }
 
 .pageCar {
@@ -330,4 +331,30 @@
 }
 .toaster.activo {
   display: block;
+}
+
+.toaster-c {
+  display: none; /* ocultar por defecto */
+  position: fixed;
+  z-index: 10;
+  background: var(--cisgreen-400);
+  padding: 20px;
+  width: calc(100% - 40px);
+  max-width: 300px;
+  line-height: 150%;
+  border-radius: 10px;
+  border: 1px solid black;
+  top: 100px; /* Espacio desde el top para visibilidad */
+  left: 0;
+  right: 0;
+  margin: auto;
+  box-shadow: 0px 2px 20px 10px rgba(222, 222, 222, 0.565);
+}
+.toast-head-c {
+  display: flex;
+  justify-content: space-between;
+}
+.toaster-c.activo {
+  display: block;
+  animation: show-toaster 0.4s ease-in-out;
 }

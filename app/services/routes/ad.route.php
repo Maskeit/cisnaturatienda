@@ -20,41 +20,47 @@ try {
         echo json_encode(['response' => $contentDashboard['message']], JSON_PRETTY_PRINT);
         return;
     }
+
     $userId = $contentDashboard['data']['userId'];
 
     if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['_posts'])) {
         $posts = new PostController();
         $result = $posts->getProductsToAdmin();
-        if (!$result) {
+        if (!$result['success']) {
             $json["response"] = "internal server error or auth denied";
             echo json_encode($json, JSON_PRETTY_PRINT);
             return;
         }
-        print_r($result);
-        return;
+        print_r($result['data']);
     } elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['_editproduct'])){
         $posts = new PostController();
-        $datos = $_POST;
-        print_r($datos);
-        // // Aquí podrías necesitar acceder al cuerpo de la petición de otra manera debido a FormData
-        $data = $_FILES; // Si enviaste algún archivo
-        print_r($data);
-        // $result = $posts->updateProduct($datos);
-        // if (!$result) {
-        //     $json["response"] = "internal server error or auth denied";
-        //     echo json_encode($json, JSON_PRETTY_PRINT);
-        //     return;
-        // }
-        // print_r($result);
-        return;
-    } elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['_dp'])){
-        $posts = new PostController();
-        $pid = $posts['data']['pid'];
-        print_r($pid);
-        //$result = $posts->deleteProduct()
+        $result = $posts->updateProduct($_POST);
+        header('Content-Type: application/json'); // Asegúrate de que el contenido se devuelve como JSON
+        if (!$result['success']) {
+            http_response_code(500); // Cambia el código de respuesta a 500 si hay un error
+            echo json_encode(['response'=> $result['message']]);
+            return;
+        }
+        echo json_encode(['response'=> $result['message']]);
     }
-     else {
-        echo json_encode(["response" => false]);
+     elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['_dp'])){
+        $pid = $_POST['pid'];
+        $posts = new PostController();
+        $result = $posts->deleteProduct($pid);
+        if ($result == false) {
+            $json["response"] = false;
+            $json["message"] = "Failed to delete the product.";
+            echo json_encode($json, JSON_PRETTY_PRINT);
+            return;
+        }
+        $json["response"] = true;
+        $json["message"] = "Product deleted successfully.";
+        echo json_encode($json, JSON_PRETTY_PRINT);
+        return;
+    } else {
+        $json["response"] = false;
+        echo json_encode($json, JSON_PRETTY_PRINT);
+        return;
     }
 } catch (\Throwable $th) {
     //throw $th;
