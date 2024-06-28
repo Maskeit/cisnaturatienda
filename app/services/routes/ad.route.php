@@ -35,13 +35,12 @@ try {
     } elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['_editproduct'])){
         $posts = new PostController();
         $result = $posts->updateProduct($_POST);
-        header('Content-Type: application/json'); // Asegúrate de que el contenido se devuelve como JSON
         if (!$result['success']) {
             http_response_code(500); // Cambia el código de respuesta a 500 si hay un error
             echo json_encode(['response'=> $result['message']]);
             return;
         }
-        echo json_encode(['response'=> $result['message']]);
+        echo json_encode(['response'=> $result['success']], JSON_PRETTY_PRINT);
     }
      elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['_dp'])){
         $pid = $_POST['pid'];

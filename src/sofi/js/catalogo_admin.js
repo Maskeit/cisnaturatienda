@@ -188,9 +188,10 @@ $(document).ready(() => {
                     body: formData,
                 });
                 const data = await response.json();
+                $("#productModal").modal("hide"); // Cerrar el modal
                 if (!data.response) {
-                    $("#toaster-c p").text("Hubo un error, inténtelo de nuevo más tarde.");
-                    $("#toaster-c").removeClass("d-none").addClass("activo").css("background", "var(--ciserror)");
+                  $("#toaster-c p").text("Hubo un error, inténtelo de nuevo más tarde.");
+                  $("#toaster-c").removeClass("d-none").addClass("activo").css("background", "var(--ciserror)");
                 } else {
                     $("#toaster-c p").text("Se ha actualizado el producto correctamente!");
                     $("#toaster-c").removeClass("d-none").addClass("activo").css("background", "var(--cisgreen-400)");

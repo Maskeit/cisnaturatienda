@@ -82,20 +82,19 @@ class PostController {
 			'message' => 'Error inicial'
 		];
         $product = new products();
-        $pid = $datos['id'];
-        //print_r($pid);
+        $pid = $datos['id'];    
         $updateData = [];
 
         if (isset($datos['type'])) {
-            $updateData[] = ['type', "'" . $datos['type'] . "'"];
+            $updateData[] = ['type', $datos['type']];
         }
     
         if (isset($datos['product_name'])) {
-            $updateData[] = ['product_name', "'" . $datos['product_name'] . "'"];
+            $updateData[] = ['product_name', $datos['product_name']];
         }
     
         if (isset($datos['description'])) {
-            $updateData[] = ['description', "'" . $datos['description'] . "'"];
+            $updateData[] = ['description', $datos['description']];
         }
     
         if (isset($_FILES['thumb']['name']) && !empty($_FILES['thumb']['name'])) {
@@ -106,7 +105,7 @@ class PostController {
             // Mueve la imagen cargada al directorio de imágenes
             if (move_uploaded_file($_FILES['thumb']['tmp_name'], $targetFilePath)) {
                 // Actualiza el campo 'thumb' en la base de datos con el nuevo nombre de la imagen.
-                $updateData[] = ['thumb', "'" . $newImageName . "'"];
+                $updateData[] = ['thumb', $newImageName];
             } else {
                 // Error al mover la imagen.
                 echo "Error al cargar la imagen.";
@@ -114,18 +113,20 @@ class PostController {
         }
         
         if (isset($datos['price'])) {
-            $updateData[] = ['price', "'" . $datos['price'] . "'"];
+            $updateData[] = ['price', $datos['price']];
         }
+
         // Realiza la actualización en la base de datos solo para los campos proporcionados.
         $result = $product->where([['id', $pid]])->update($updateData);
-        
+
         if(!$result){
             $response['success'] = false;
-            $response['message'] = "Error en el servidor";            
+            $response['message'] = "Error en el servidor";
+            return $response;
         }
+        // si no hay errores retornamos un true
         $response['success'] = true;
-        $response['message'] = "actualizado";
-
+        $response['message'] = 'Producto actualizado correctamente';
         return $response;
     }
     
