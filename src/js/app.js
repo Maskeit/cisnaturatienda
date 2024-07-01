@@ -140,36 +140,36 @@ $(document).ready(() => {
     displayProducts: function(allProducts){
       if(allProducts.length > 0){
       const html = allProducts.map(product => `
-      <div class="product-card" data-product-id="${product.id}" >
-        <div class="product-image">
+      <div class="wsk-cp-product" data-product-id="${product.id}" >
+        <div class="wsk-cp-img">
             <img src="/cisnaturatienda/app/pimg/${product.thumb}" alt="Product Image">
-            <div class="card-overlay">
-                <span class="ovtext">
-                    Ver detalles <i class="bi bi-eye-fill eyeColor"></i>
-                </span>
-            </div>
         </div>
-        <div class="product-info placeholder-glow">
-            <span class="product-name ">${product.product_name}</span>
-            <span class="product-price">MX $${product.price}</span>
-            <div class="gap-2 btnAddBuy ">
-                <button id="product-${product.id}-button" type="button" class="boton-agregar w-100 my-2">
-                    <i class="bi bi-plus-circle-fill"></i>  Añadir al carrito
-                </button>
+        <div class="wsk-cp-text">
+            <div class="title-product">
+              <h3>${product.product_name}</h3>
+            </div>
+            <div class="description-prod">
+              <p>${product.description}</p>
+            </div>
+            <div class="card-footer">
+              <div class="wcf-left"><span class="price">$${product.price} MX</span></div>
+              <div class="wcf-right">
+                <button id="product-${product.id}-button" type="button" class="buy-btn"><i class="zmdi zmdi-shopping-basket"></i> Añadir</button>
+              </div>
             </div>
         </div>
       </div>
       `).join("");
         this.pc.html(html);
         // Evento para ver detalles del producto
-        $(".product-card").on("click", function () {
+        $(".wsk-cp-product").on("click", function () {
           const productId = parseInt($(this).data("product-id"), 10);
           app.singleProduct(productId);
         });
         // Evento para agregar al carrito, deteniendo la propagación para no activar el evento del product card
         $(".boton-agregar").on("click", function(e) {
           e.stopPropagation(); // Detiene la propagación del evento para no disparar el click del card
-          const productId = $(this).closest('.product-card').data("product-id");
+          const productId = $(this).closest('.wsk-cp-product').data("product-id");
           app.agregarProducto(productId, 1);
         });        
       } else{
