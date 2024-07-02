@@ -281,15 +281,6 @@
 
 /****/
 
-/***************CATALOGO EDICION *******************/
-
-.card-footer .toggleBtn {
-  font-size: 3rem;
-}
-
-.eyeColorEdit {
-  color: #26a200;
-}
 /*Notificar al usuario  de que agrego un producto nuevo*/
 .toaster {
   position: fixed;

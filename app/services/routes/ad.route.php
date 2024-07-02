@@ -56,6 +56,20 @@ try {
         $json["message"] = "Product deleted successfully.";
         echo json_encode($json, JSON_PRETTY_PRINT);
         return;
+    } elseif($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['_active'])){
+        $pid = $_POST['pid'];
+        $state = $_POST['state'];
+        $posts = new PostController();
+        $result = $posts->toggleProdActive($pid,$state);
+        if ($result == false) {
+            $json["response"] = false;
+            $json["message"] = "Failed to toggle the product.";
+            echo json_encode($json, JSON_PRETTY_PRINT);
+            return;
+        }
+        $json["response"] = true;
+        $json["message"] = "Product toggled successfully.";
+        echo json_encode($json, JSON_PRETTY_PRINT);
     } else {
         $json["response"] = false;
         echo json_encode($json, JSON_PRETTY_PRINT);

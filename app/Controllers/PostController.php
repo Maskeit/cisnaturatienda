@@ -27,7 +27,7 @@ class PostController {
 			'message' => 'Error inicial'
 		];
         if(!isset($datos['type'], $datos['product_name'], 
-        $datos['description'], $datos['price']) ){
+        $datos['description'], $datos['price'], $datos['stock']) ){
 			$response['message'] = 'campos faltantes';
 			return $response;
         }
@@ -44,13 +44,15 @@ class PostController {
         $description = $datos['description']; 
         $thumb = $_FILES['thumb']['name']; 
         $price = $datos['price'];
+        $stock = $datos['stock'];
 
         $product->valores = [
             $type,
             $product_name, 
             $description, 
             $thumb, 
-            $price ];
+            $price,
+            $stock ];
 
         $result = $product->create();
 
@@ -116,6 +118,9 @@ class PostController {
             $updateData[] = ['price', $datos['price']];
         }
 
+        if (isset($datos['stock'])) {
+            $updateData[] = ['stock', $datos['stock']];
+        }
         // Realiza la actualización en la base de datos solo para los campos proporcionados.
         $result = $product->where([['id', $pid]])->update($updateData);
 
@@ -137,10 +142,12 @@ class PostController {
     }
 
     //cambiar status de la publicacion
-    public function toggleProdActive($pid){
+    public function toggleProdActive($pid, $state){
         $product = new products();
+        $updateData = [];
+        $updateData[] = ['active', $state];
         $result = $product->where([['id',$pid]])
-                          ->update([['active','not active']]);
+                          ->update($updateData);
         return $result;
     }
     

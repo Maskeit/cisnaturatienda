@@ -39,6 +39,10 @@ create_product = {
                         <input class="form-control" name="thumb" type="file" id="thumb" required>
                     </div>
                     <div class="mb-3">
+                        <label for="price" class="form-label">Cantidad en tu inventario</label>
+                        <input id="price" min="1" max="50" type="number" name="stock" class="form-control" aria-label="stock">
+                    </div>
+                    <div class="mb-3">
                         <label for="price" class="form-label">Precio del producto</label>
                         <input type="text" name="price" class="form-control price-form" placeholder="$" aria-label="price" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
                     </div>
