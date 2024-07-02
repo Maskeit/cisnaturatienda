@@ -26,7 +26,7 @@ try{
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['_create'])) {
         // Validar que todos los campos necesarios están presentes
         if (isset($_POST['type'], $_POST['product_name'], 
-            $_POST['description'], $_POST['price']) 
+            $_POST['description'], $_POST['price'], $_POST['stock']) 
             && isset($_FILES['thumb']) && $_FILES['thumb']['error'] == 0
             ) {
             $postController = new PostController();

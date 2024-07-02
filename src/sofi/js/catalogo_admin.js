@@ -11,6 +11,7 @@ $(document).ready(() => {
       posts: url + "?_posts",
       dp: url + "?_dp",
       editP : url + "?_editproduct",
+      active : url + "?_active",
     },
 
     view: function (route) {
@@ -87,7 +88,7 @@ $(document).ready(() => {
       var html = "<p>Cargando productos</p>";
       if (Array.isArray(productos) && productos.length > 0) {
         html = productos.map(product => `
-            <div class="wsk-cp-product" data-product-id="${product.id}">
+            <div id="product-${product.id}" class="wsk-cp-product" data-product-id="${product.id}">
               <div class="wsk-cp-img">
                   <img src="/cisnaturatienda/app/pimg/${product.thumb}" alt="Product Image">
               </div>
@@ -101,7 +102,7 @@ $(document).ready(() => {
                   <div class="card-footer">
                     <div class="wcf-left"><span class="price">${product.active == 1 ? "Habilitado" : "Deshabilitado"}</span></div>
                     <div class="wcf-right">
-                      <span class="">stock: 12</span>
+                      <span class="">stock: ${product.stock}</span>
                     </div>
                   </div>
               </div>
@@ -156,20 +157,24 @@ $(document).ready(() => {
                     <label for="thumb" class="form-label">Actualizar imagen del producto</label>
                     <input id="thumb" class="form-control" name="thumb" type="file">
                 </div>
-        
+
+                <!-- Campo editable: cantidad disponible -->
+                <div class="mb-3">
+                    <label for="price" class="form-label">Cantidad en tu inventario</label>
+                    <input id="price" min="1" max="50" type="number" name="stock" class="form-control" value="${product.stock}" aria-label="stock">
+                </div>
+
                 <!-- Campo editable: Precio del Producto -->
                 <div class="mb-3">
                     <label for="price" class="form-label">Precio del producto</label>
                     <input id="price" type="text" name="price" class="form-control" value="${product.price}" aria-label="price">
                 </div>
             </div>
-        
-            <div class="card-footer">
-                <button class="btn btn-secondary" type="button" onclick="catalogo_admin.deleteProduct(${product.id})">Eliminar producto <i class="bi bi-trash"></i></button>
-                <button class="btn btn-primary" type="submit">Guardar Cambios <i class="bi bi-download"></i></button>
-                <a href="#" class="btn btn-link active" onclick="catalogo_admin.toggleProductActive(${product.id})">
-                    <i class="bi bi-toggle toggleBtn"></i>
-                </a>
+      
+            <div class="btn-group-lm d-flex gap-2" role="group" aria-label="Basic mixed styles example">
+              <button type="button" class="btn btn-danger" onclick="catalogo_admin.deleteProduct(${product.id})">Eliminar</button>
+              <button type="button" class="btn btn-warning" onclick="catalogo_admin.activeProduct(${product.id}, ${product.active == 1 ? "0" : "1"})">${product.active == 0 ? "Activar" : "Desactivar" }</button>
+              <button type="submit" class="btn btn-success">Guardar Cambios <i class="bi bi-download"></i></button>
             </div>
         </form> 
         `;
@@ -242,7 +247,8 @@ $(document).ready(() => {
           if (data.response === true) {
               console.log("Producto eliminado correctamente");
               // Recargar o actualizar la lista de productos
-              self.loadPosts();
+              $(`#product-${pid}`).remove();
+              $("#productModal").modal("hide"); // Cerrar el modal
           } else {
               console.error("No se pudo eliminar el producto:", data.response);
           }
@@ -250,9 +256,40 @@ $(document).ready(() => {
           console.error("Error: " + error);
       }
     },
-  
-  };
+    // habilitar/deshabilitar producto en la base de datos
+    activeProduct: async function(pid, state) {
+      if (!confirm("¿Deseas cambiar el estado de este producto?")) {
+        return;
+      }      
+      try {
+          var self = this;
+          const body = new URLSearchParams();
+          body.append("pid", pid);
+          body.append("state", state);
+          body.append("_active","true");
+          const response = await fetch(this.routes.active, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                Authorization: system.http.send.authorization(),
+            },
+            body: body,
+        });
 
+        const data = await response.json(); // Asegúrate de que el servidor devuelve una respuesta JSON
+        if (data.response === true) {
+            console.log("Producto actualizado correctamente");
+            // Recargar o actualizar la lista de productos
+            $("#productModal").modal("hide"); // Cerrar el modal
+            self.loadPosts();
+        } else {
+            console.error("No se pudo alternar el producto:", data.response);
+        }
+      } catch (error) {
+        console.error("Error: " + error);
+      }
+    }
+  }
   catalogo_admin.loadPosts();
   catalogo_admin.initSearch();
 });
