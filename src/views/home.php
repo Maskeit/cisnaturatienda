@@ -54,10 +54,8 @@ css('home');
         </div>
         <section class="link-catalogo">
             <h2><a href="catalogo.php" data-type="#" data-id="#" target="_blank" rel="#">Ir a comprar <i class="bi bi-bag-heart-fill"></i></a></h2>
-            <div class="container-fluid">
-                <div class="productos" id="product-tintura">
-                    <!-- aquí van los productos -->
-                </div>
+            <div class="productos" id="product-tintura">
+                <!-- aquí van los productos -->
             </div>
         </section>
         <div id="toaster" class="toaster d-none">

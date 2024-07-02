@@ -39,25 +39,27 @@ $(document).ready(() => {
                 .map((product) => {
                   if (product.active === "1") {
                     return `
-                    <div class="product-card" data-product-id="${product.id}" >
-                    <div class="product-image">
-                        <img src="/cisnaturatienda/app/pimg/${product.thumb}" alt="Product Image">
-                        <div class="card-overlay">
-                            <span class="ovtext">
-                                Ver detalles <i class="bi bi-eye-fill eyeColor"></i>
-                            </span>
-                        </div>
+                    <div class="wsk-cp-product" data-product-id="${product.id}">
+                      <div class="wsk-cp-img">
+                          <img src="/cisnaturatienda/app/pimg/${product.thumb}" alt="Product Image">
+                      </div>
+                      <div class="wsk-cp-text">
+                          <div class="title-product">
+                            <h3>${product.product_name}</h3>
+                          </div>
+                          <div class="description-prod">
+                            <p>${product.description}</p>
+                          </div>
+                          <div class="card-footer">
+                            <div class="wcf-left"><span class="price">$${product.price} MX</span></div>
+                            <div class="wcf-right">
+                              <button id="product-${product.id}-button" type="button" class="buy-btn">
+                                <i class="bi bi-bag-plus"></i>
+                              </button>
+                            </div>
+                          </div>
+                      </div>
                     </div>
-                    <div class="product-info placeholder-glow">
-                        <span class="product-name ">${product.product_name}</span>
-                        <span class="product-price">MX $${product.price}</span>
-                        <div class="gap-2 btnAddBuy ">
-                            <button id="product-${product.id}-button" type="button" class="boton-agregar w-100 my-2">
-                                <i class="bi bi-plus-circle-fill"></i>  Añadir al carrito
-                            </button>
-                        </div>
-                    </div>
-                </div>
                     `;
                   }
                 })
@@ -65,15 +67,15 @@ $(document).ready(() => {
               $("#product-tintura").append(html);
 
               // Después de agregar los productos al DOM
-              $(".product-card").on("click", function () {
+              $(".wsk-cp-product").on("click", function () {
                 const productId = $(this).data("product-id");
                 app_home.singleProduct(productId);
               });
 
-              $(".boton-agregar").on("click", function (e) {
+              $(".buy-btn").on("click", function (e) {
                 e.stopPropagation();
                 const productId = $(this)
-                  .closest(".product-card")
+                  .closest(".wsk-cp-product")
                   .data("product-id");
                 app_home.agregarProducto(productId, 1);
               });
@@ -100,15 +102,18 @@ $(document).ready(() => {
       const product = this.productos.find((p) => p.id == productId);
       if (product) {
         let html = `
-          <h5>${product.product_name}  MX $${product.price}</h5>
-          <img src="/cisnaturatienda/app/pimg/${product.thumb}" class="card-img-top" alt="...">
-          <p>${product.description}</p>                    
-          <div class="gap-2 btnAddBuy">
-            <button id="product-${product.id}-button" type="button" class="boton-agregar w-100 my-2" 
-              onclick="app_home.agregarProducto(${product.id}, 1); $('#productModal').modal('hide');">
-              <i class="bi bi-plus-circle-fill"></i>  Añadir al carrito
-            </button>
-          </div>
+          <img src="/cisnaturatienda/app/pimg/${product.thumb}" class="card-img-top" alt="product ${product.product_name}">
+            <h3>${product.product_name}</h3>
+          <p>${product.description}</p>
+            <div class="card-footer">
+              <div class="wcf-left"><span class="price">$${product.price} MX</span></div>
+              <div class="wcf-right">
+                <button class="buy-btn" id="product-${product.id}-button" type="button"
+                  onclick="app_home.agregarProducto(${product.id}); $('#productModal').modal('hide');">
+                  <i class="bi bi-bag-plus"></i>
+                </button>
+              </div>
+            </div>
         `;
         document.getElementById("productModalBody").innerHTML = html;
         $("#productModal").modal("show"); // Muestra el modal
@@ -118,12 +123,12 @@ $(document).ready(() => {
     },
     //metodo para agregar un producto al carrito
     //metodo para agregar productos al carrito del usuario
-    agregarProducto: async function (pid, cantidad) {
+    agregarProducto: async function (pid) {
       try {
         // Construye el cuerpo de la petición POST
         const body = new URLSearchParams();
         body.append("pid", pid);
-        body.append("cantidad", cantidad);
+        body.append("cantidad", "1");
         body.append("_ap", "1");
 
         const response = await fetch(this.routes.addproduct, {
