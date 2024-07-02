@@ -87,24 +87,29 @@ $(document).ready(() => {
       var html = "<p>Cargando productos</p>";
       if (Array.isArray(productos) && productos.length > 0) {
         html = productos.map(product => `
-                <div class="product-card" data-product-id="${product.id}" >
-                    <div class="product-image">
-                        <img src="/cisnaturatienda/app/pimg/${product.thumb}" alt="Product Image">
-                        <div class="card-overlay">
-                            <span class="ovtext">
-                                Ver detalles <i class="bi bi-eye-fill eyeColor"></i>
-                            </span>
-                        </div>
+            <div class="wsk-cp-product" data-product-id="${product.id}">
+              <div class="wsk-cp-img">
+                  <img src="/cisnaturatienda/app/pimg/${product.thumb}" alt="Product Image">
+              </div>
+              <div class="wsk-cp-text">
+                  <div class="title-product">
+                    <h3>${product.product_name}</h3>
+                  </div>
+                  <div class="description-prod">
+                    <p>${product.description}</p>
+                  </div>
+                  <div class="card-footer">
+                    <div class="wcf-left"><span class="price">${product.active == 1 ? "Habilitado" : "Deshabilitado"}</span></div>
+                    <div class="wcf-right">
+                      <span class="">stock: 12</span>
                     </div>
-                    <div class="product-info placeholder-glow">
-                        <span class="product-name ">${product.product_name}</span>
-                        <span class="product-price">MX $${product.price}</span>
-                    </div>
-                </div>
+                  </div>
+              </div>
+            </div>
             `
         ).join("");
         this.postsContent.html(html);
-        $(".product-card").on("click", function () {
+        $(".wsk-cp-product").on("click", function () {
           const productId = parseInt($(this).data("product-id"), 10);
           //console.log(productId);
           catalogo_admin.singleProduct(productId);

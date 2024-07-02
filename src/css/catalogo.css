@@ -233,46 +233,26 @@
   font-size:18px;
   font-weight:bold;
 }
-a.buy-btn{
+
+.buy-btn{
   display:block;
   color:#212121;
   text-align:center;
   font-size: 18px;
   width:35px;
   height:35px;
-  line-height:35px;
   border-radius:50%;
   border:1px solid #212121;
   transition: all 0.2s ease-in-out;
 }
-a.buy-btn:hover , a.buy-btn:active, a.buy-btn:focus{
-  border-color: #FF9800;
-  background: #FF9800;
+
+.buy-btn:hover , buy-btn:active, buy-btn:focus{
+  border: none ;
+  background: var(--cisgreen-400);
   color: #fff;
   text-decoration:none;
 }
-.wsk-btn{
-  display:inline-block;
-  color:#212121;
-  text-align:center;
-  font-size: 18px;
-  transition: all 0.2s ease-in-out;
-  border-color: #FF9800;
-  background: #FF9800;
-  padding:12px 30px;
-  border-radius:27px;
-  margin: 0 5px;
-}
-.wsk-btn:hover, .wsk-btn:focus, .wsk-btn:active{
-  text-decoration:none;
-  color:#fff;
-}  
-.red{
-  color:#F44336;
-  font-size:22px;
-  display:inline-block;
-  margin: 0 5px;
-}
+
 /**termina el estilo de todo el catalogo**/
 
 .ul-filter {

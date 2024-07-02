@@ -140,7 +140,7 @@ $(document).ready(() => {
     displayProducts: function(allProducts){
       if(allProducts.length > 0){
       const html = allProducts.map(product => `
-      <div class="wsk-cp-product" data-product-id="${product.id}" >
+      <div class="wsk-cp-product" data-product-id="${product.id}">
         <div class="wsk-cp-img">
             <img src="/cisnaturatienda/app/pimg/${product.thumb}" alt="Product Image">
         </div>
@@ -154,7 +154,9 @@ $(document).ready(() => {
             <div class="card-footer">
               <div class="wcf-left"><span class="price">$${product.price} MX</span></div>
               <div class="wcf-right">
-                <button id="product-${product.id}-button" type="button" class="buy-btn"><i class="zmdi zmdi-shopping-basket"></i> Añadir</button>
+                <button id="product-${product.id}-button" type="button" class="buy-btn">
+                  <i class="bi bi-bag-plus"></i>
+                </button>
               </div>
             </div>
         </div>
@@ -167,7 +169,7 @@ $(document).ready(() => {
           app.singleProduct(productId);
         });
         // Evento para agregar al carrito, deteniendo la propagación para no activar el evento del product card
-        $(".boton-agregar").on("click", function(e) {
+        $(".buy-btn").on("click", function(e) {
           e.stopPropagation(); // Detiene la propagación del evento para no disparar el click del card
           const productId = $(this).closest('.wsk-cp-product').data("product-id");
           app.agregarProducto(productId, 1);
@@ -217,7 +219,7 @@ $(document).ready(() => {
         // Construye el cuerpo de la petición POST
         const body = new URLSearchParams();
         body.append("pid", pid);
-        body.append("cantidad", cantidad);
+        body.append("cantidad", "1");
         body.append("_ap", "1");
 
         const response = await fetch(this.routes.addproduct, {
@@ -250,15 +252,18 @@ $(document).ready(() => {
       const product = this.allProducts.find(p => p.id == productId);
       if (product) {
         let html = `
-          <h5>${product.product_name}  MX $${product.price}</h5>
-          <img src="/cisnaturatienda/app/pimg/${product.thumb}" class="card-img-top" alt="...">
+          <img src="/cisnaturatienda/app/pimg/${product.thumb}" class="card-img-top" alt="product ${product.product_name}">
+            <h3>${product.product_name}</h3>
           <p>${product.description}</p>
-          <div class="gap-2 btnAddBuy">
-            <button id="product-${product.id}-button" type="button" class="boton-agregar w-100 my-2"
-              onclick="app.agregarProducto(${product.id}, 1, 1); $('#productModal').modal('hide');">
-              <i class="bi bi-plus-circle-fill"></i>  Añadir al carrito
-            </button>
-          </div>
+            <div class="card-footer">
+              <div class="wcf-left"><span class="price">$${product.price} MX</span></div>
+              <div class="wcf-right">
+                <button class="buy-btn" id="product-${product.id}-button" type="button"
+                  onclick="app_home.agregarProducto(${product.id}); $('#productModal').modal('hide');">
+                  <i class="bi bi-bag-plus"></i>
+                </button>
+              </div>
+            </div>
         `;
         document.getElementById("productModalBody").innerHTML = html;
         $("#productModal").modal("show"); // Muestra el modal
